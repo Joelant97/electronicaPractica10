@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import electronicapractica10.demo.repository.RepositorioCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -25,6 +26,8 @@ public class FileSystemStorageService implements StorageService {
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
     }
+    @Autowired
+    public RepositorioCliente repositorioCliente;
 
     @Override
     public void store(MultipartFile file) {
@@ -45,7 +48,6 @@ public class FileSystemStorageService implements StorageService {
             return null;
         }
     }
-
 
 
     @Override
