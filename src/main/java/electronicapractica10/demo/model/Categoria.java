@@ -3,6 +3,7 @@ package electronicapractica10.demo.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -10,32 +11,22 @@ public class Categoria implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-
     private String nombre;
-    private boolean subCategoria;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Categoria categoria;
+    @OneToMany(mappedBy = "categoria", orphanRemoval = true)
+    private Collection<Categoria> subCategoria;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Categoria categoriaPadre;
 
     @ElementCollection
     private List<Long> diasAlquilados;
 
-    public Categoria() {
-    }
-
-    public Categoria(String nombre, boolean subCategoria) {
+    public Categoria(String nombre, Categoria categoria, Collection<Categoria> subCategoria, List<Long> diasAlquilados) {
         this.nombre = nombre;
+        this.categoria = categoria;
         this.subCategoria = subCategoria;
-        this.diasAlquilados = new ArrayList<>();
-    }
-
-    public Categoria(String nombre, boolean subCategoria, Categoria categoriaPadre) {
-        this.nombre = nombre;
-        this.subCategoria = subCategoria;
-
-        if (subCategoria) {
-            this.categoriaPadre = categoriaPadre;
-        }
+        this.diasAlquilados = diasAlquilados;
     }
 
     public long getId() {
@@ -54,20 +45,20 @@ public class Categoria implements Serializable {
         this.nombre = nombre;
     }
 
-    public boolean isSubCategoria() {
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Collection<Categoria> getSubCategoria() {
         return subCategoria;
     }
 
-    public void setSubCategoria(boolean subCategoria) {
+    public void setSubCategoria(Collection<Categoria> subCategoria) {
         this.subCategoria = subCategoria;
-    }
-
-    public Categoria getCategoriaPadre() {
-        return categoriaPadre;
-    }
-
-    public void setCategoriaPadre(Categoria categoriaPadre) {
-        this.categoriaPadre = categoriaPadre;
     }
 
     public List<Long> getDiasAlquilados() {
