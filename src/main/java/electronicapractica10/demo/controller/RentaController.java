@@ -1,6 +1,6 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
 
-public class rentasController {
+public class RentaController {
     @Autowired
     private ClienteEquipoServiceImpl clienteEquipoService;
 

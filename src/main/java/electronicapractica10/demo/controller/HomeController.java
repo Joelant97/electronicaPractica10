@@ -1,15 +1,18 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
+import electronicapractica10.demo.model.Rol;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 @Controller
-public class homeController {
+public class HomeController {
 
 
 
@@ -19,21 +22,7 @@ public class homeController {
 
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(Model model) {
-
-        if(usuarioService.buscarTodosUsuarios().size() == 0) {
-            Set<Rol> roles = new HashSet<>();
-            Rol rol = new Rol();
-            rol.setNombreRol("ADMIN");
-            rolService.crearRol(rol);
-            Rol rol2 = new Rol();
-            rol2.setNombreRol("Vendedor");
-            rolService.crearRol(rol2);
-            usuarioService.crearUsuario(new Usuario());
-        }
-        return "login";
-    }
+    
 
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

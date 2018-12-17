@@ -1,4 +1,4 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
 
 import electronicapractica10.demo.model.Categoria;
 import electronicapractica10.demo.service.ServiciosCategoria;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-public class categoriaController {
+public class CategoriaController {
 
     @Autowired
     private ServiciosCategoria categoriaService;

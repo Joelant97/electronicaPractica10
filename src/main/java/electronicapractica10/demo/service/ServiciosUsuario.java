@@ -23,7 +23,7 @@ import java.util.Set;
 
 
 @Service
-public class ServiciosUsuario implements SecurityService{
+public class ServiciosUsuario {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -60,15 +60,7 @@ public class ServiciosUsuario implements SecurityService{
         return repositorioUsuario.findByUsername(username);
     }
 
-    @Override
-    public String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails)userDetails).getUsername();
-        }
 
-        return null;
-    }
 
     public void autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -88,6 +80,15 @@ public class ServiciosUsuario implements SecurityService{
 
     }
 
+
+    public String findLoggedInUsername() {
+        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if (userDetails instanceof UserDetails) {
+            return ((UserDetails)userDetails).getUsername();
+        }
+
+        return null;
+    }
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {

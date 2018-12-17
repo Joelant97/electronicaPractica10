@@ -1,6 +1,8 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
 
-public class UsuariosController {
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class UsuarioController {
 
     @Autowired
     private UsuarioServiceImpl usuarioService;
