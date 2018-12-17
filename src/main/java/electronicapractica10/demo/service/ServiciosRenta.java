@@ -26,9 +26,9 @@ public class ServiciosRenta {
 
     }
 
-    public List<Renta>listaRentaOrdenado(){
-        return repositorioRenta.rentasOrdenadas();
-    }
+    //public List<Renta>listaRentaOrdenado(){
+     //   return repositorioRenta.rentasOrdenadas();
+    //}
 
     public Renta getRentaById(long id ){
         return repositorioRenta.findById(id).get();

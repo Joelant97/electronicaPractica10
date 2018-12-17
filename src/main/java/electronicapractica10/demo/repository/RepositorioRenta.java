@@ -12,8 +12,9 @@ public interface RepositorioRenta extends JpaRepository<Renta, Long> {
     List<Renta> findAllByClienteOrderByFechaInicioRenta(Cliente cliente);
 
 
-    @Query("SELECT renta FROM Renta renta ORDER BY renta.fecha")
-    List<Renta> rentasOrdenadas();
+
+    //@Query("SELECT renta FROM Renta renta ORDER BY renta.fecha")
+    //List<Renta> rentasOrdenadas();
 
 }
 

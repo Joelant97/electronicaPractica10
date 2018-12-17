@@ -25,13 +25,13 @@ public class DemoApplication {
 
 
 
-    @Bean
+    /*@Bean
     CommandLineRunner init(StorageService storageService) {
         return (args) -> {
             storageService.deleteAll();
             storageService.init();
         };
-    }
+    } */
 }
 
 
