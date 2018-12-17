@@ -1,7 +1,7 @@
 package electronicapractica10.demo.Controllers;
 
 public class rentasController {
-    @Autowired
+  /*  @Autowired
     private ClienteEquipoServiceImpl clienteEquipoService;
 
 
@@ -52,5 +52,5 @@ public class rentasController {
     @GetMapping(value = "/rentado/{id}")
     public String entregado(Model model, @PathVariable("id") String id){
 
-    }
+    }*/
 }

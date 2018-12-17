@@ -12,27 +12,11 @@ import java.util.Locale;
 public class homeController {
 
 
-
+/*
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, HttpServletRequest request)
     {
 
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGET(Model model) {
-
-        if(usuarioService.buscarTodosUsuarios().size() == 0) {
-            Set<Rol> roles = new HashSet<>();
-            Rol rol = new Rol();
-            rol.setNombreRol("ADMIN");
-            rolService.crearRol(rol);
-            Rol rol2 = new Rol();
-            rol2.setNombreRol("Vendedor");
-            rolService.crearRol(rol2);
-            usuarioService.crearUsuario(new Usuario());
-        }
-        return "login";
     }
 
 
@@ -57,5 +41,5 @@ public class homeController {
         model.addAttribute("result", result);
         return result;
 
-    }
+    }*/
 }

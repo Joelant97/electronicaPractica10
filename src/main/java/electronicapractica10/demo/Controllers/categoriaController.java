@@ -14,7 +14,7 @@ import java.util.List;
 
 public class categoriaController {
 
-    @Autowired
+    /*@Autowired
     private ServiciosCategoria categoriaService;
 
     @RequestMapping(value = "/")
@@ -44,6 +44,6 @@ public class categoriaController {
         categoriaService.;
         return "redirect:/categorias/";
 
-    }
+    }*/
 
 }

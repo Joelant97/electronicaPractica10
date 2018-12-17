@@ -1,7 +1,7 @@
 package electronicapractica10.demo.Controllers;
 
 public class UsuariosController {
-
+/*
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
@@ -54,5 +54,5 @@ public class UsuariosController {
         rolService.borrarRolPorId(Long.parseLong(id));
         return "redirect:/usuarios/";
     }
-
+*/
 }

@@ -44,7 +44,7 @@ if (!Array.prototype.indexOf) {
         tooltip: false,
         tooltipOpts: {
             content: "%s | X: %x | Y: %y",
-            // allowed templates are:
+            // allowed public are:
             // %s -> series label,
             // %lx -> x axis label (requires flot-axislabels plugin https://github.com/markrcote/flot-axislabels),
             // %ly -> y axis label (requires flot-axislabels plugin https://github.com/markrcote/flot-axislabels),
