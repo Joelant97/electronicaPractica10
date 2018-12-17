@@ -11,7 +11,6 @@ public class Cliente implements Serializable{
 
     @Id
     @GeneratedValue
-
     private long id;
     private String nombre;
     private String cedula;
@@ -20,8 +19,8 @@ public class Cliente implements Serializable{
     private String telefono;
 
     public Cliente(){
-    }
 
+    }
 
     public Cliente(String nombre, String cedula, String foto, String correo, String telefono){
 
