@@ -14,11 +14,11 @@ import java.util.List;
 
 public class CategoriaController {
 
-    @Autowired
+    /*@Autowired
     private ServiciosCategoria categoriaService;
 
     @RequestMapping(value = "/")
-    public String categorias(Model model)
+    templates String categorias(Model model)
     {
         List<Categoria> categoriaList = new ArrayList<>();
         categoriaList = categoriaService. ();
@@ -27,7 +27,7 @@ public class CategoriaController {
     }
 
     @PostMapping(value = "/")
-    public String crearCategoria(@RequestParam("nombre") String nombre,
+    templates String crearCategoria(@RequestParam("nombre") String nombre,
                                  RedirectAttributes redirectAttributes) {
 
         Categoria categoria = new Categoria();
@@ -39,11 +39,11 @@ public class CategoriaController {
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String borrarCategoria(@PathVariable String id) {
+    templates String borrarCategoria(@PathVariable String id) {
         Categoria categoria = categoriaService.buscarPorId(Long.parseLong(id));
         categoriaService.;
         return "redirect:/categorias/";
 
-    }
+    }*/
 
 }
