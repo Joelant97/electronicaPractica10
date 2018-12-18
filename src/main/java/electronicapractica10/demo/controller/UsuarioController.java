@@ -1,7 +1,9 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
 
-public class UsuariosController {
-/*
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class UsuarioController {
+
     @Autowired
     private UsuarioServiceImpl usuarioService;
 
@@ -9,7 +11,7 @@ public class UsuariosController {
     private RolServiceImpl rolService;
 
     @GetMapping(value="/")
-    templates String usuarios(Model model)
+    public String usuarios(Model model)
     {
         List<Usuario> usuarios = new ArrayList<>();
         usuarios = usuarioService.buscarTodosUsuarios();
@@ -22,7 +24,7 @@ public class UsuariosController {
 
 
     @PostMapping("/")
-    templates String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
+    public String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
         Usuario u = new Usuario();
         u.setUsername(username);
         u.setPassword(password);
@@ -36,7 +38,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/modificar/")
-    templates String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("email2") String email, @RequestParam("rol2") String rol){
+    public String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("email2") String email, @RequestParam("rol2") String rol){
         Usuario u = usuarioService.buscarPorId(Long.parseLong(id));
         Rol r = rolService.findByNombreRol(rol);
         u.setRol(r);
@@ -50,9 +52,9 @@ public class UsuariosController {
 
 
     @PostMapping(value = "/eliminar/{id}")
-    templates String borrarRol(@PathVariable String id) {
+    public String borrarRol(@PathVariable String id) {
         rolService.borrarRolPorId(Long.parseLong(id));
         return "redirect:/usuarios/";
     }
-*/
+
 }
