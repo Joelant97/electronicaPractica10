@@ -13,6 +13,7 @@ public class Renta implements Serializable{
     private long id;
     private Date fechaInicioRenta;
     private Date fechaFinRenta;
+    private String estado;
 
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
@@ -29,14 +30,22 @@ public class Renta implements Serializable{
 
     }
 
-    public Renta(Date fechaInicioRenta, Date fechaFinRenta, List<Equipo> equipos, Cliente cliente, long total) {
+    public Renta(Date fechaInicioRenta, Date fechaFinRenta, String estado, List<Equipo> equipos, Cliente cliente, long total) {
         this.fechaInicioRenta = fechaInicioRenta;
         this.fechaFinRenta = fechaFinRenta;
+        this.estado = estado;
         this.equipos = equipos;
         this.cliente = cliente;
         this.total = total;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public long getId() {
         return id;

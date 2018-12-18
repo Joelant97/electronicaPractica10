@@ -26,6 +26,11 @@ public class ServiciosRenta {
 
     }
 
+    //Metodo Actualizar las Rentas:
+    public void actualizarRenta(Renta renta){
+        crearRenta(renta);
+    }
+
     //public List<Renta>listaRentaOrdenado(){
      //   return repositorioRenta.rentasOrdenadas();
     //}
@@ -38,6 +43,8 @@ public class ServiciosRenta {
         return repositorioRenta.findAllByClienteOrderByFechaInicioRenta(cliente);
 
     }
+
+
 
 
 }
