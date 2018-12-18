@@ -26,7 +26,7 @@ public class ServiciosRenta {
 
     }
 
-    //public List<Renta>listaRentaOrdenado(){
+    //templates List<Renta>listaRentaOrdenado(){
      //   return repositorioRenta.rentasOrdenadas();
     //}
 

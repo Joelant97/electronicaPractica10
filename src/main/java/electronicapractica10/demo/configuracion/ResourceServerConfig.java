@@ -38,8 +38,8 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.
-                jdbcAuthentication()
+                auth
+                .jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
@@ -56,7 +56,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         //Marcando las reglas para permitir unicamente los usuarios
         http
                 .authorizeRequests()
-                .antMatchers("/css/**", "/js/**", "/img/**").permitAll() //permitiendo llamadas a esas urls.
+                .antMatchers("/assets/**", "/css/**", "/javascripts/**", "/images/**").permitAll() //permitiendo llamadas a esas urls.
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
                 //.anyRequest().authenticated() //cualquier llamada debe ser validada

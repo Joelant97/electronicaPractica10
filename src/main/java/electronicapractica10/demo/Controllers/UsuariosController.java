@@ -9,7 +9,7 @@ public class UsuariosController {
     private RolServiceImpl rolService;
 
     @GetMapping(value="/")
-    public String usuarios(Model model)
+    templates String usuarios(Model model)
     {
         List<Usuario> usuarios = new ArrayList<>();
         usuarios = usuarioService.buscarTodosUsuarios();
@@ -22,7 +22,7 @@ public class UsuariosController {
 
 
     @PostMapping("/")
-    public String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
+    templates String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
         Usuario u = new Usuario();
         u.setUsername(username);
         u.setPassword(password);
@@ -36,7 +36,7 @@ public class UsuariosController {
     }
 
     @PostMapping("/modificar/")
-    public String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("email2") String email, @RequestParam("rol2") String rol){
+    templates String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("email2") String email, @RequestParam("rol2") String rol){
         Usuario u = usuarioService.buscarPorId(Long.parseLong(id));
         Rol r = rolService.findByNombreRol(rol);
         u.setRol(r);
@@ -50,7 +50,7 @@ public class UsuariosController {
 
 
     @PostMapping(value = "/eliminar/{id}")
-    public String borrarRol(@PathVariable String id) {
+    templates String borrarRol(@PathVariable String id) {
         rolService.borrarRolPorId(Long.parseLong(id));
         return "redirect:/usuarios/";
     }

@@ -13,7 +13,7 @@ public class rentasController {
     private EquipoServiceImpl equipoService;
 
     @GetMapping(value = "/")
-    public String alquileres(Model model)
+    templates String alquileres(Model model)
     {
         List<Equipo> equipos = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class rentasController {
     }
 
     @PostMapping(value = "/despacho/")
-    public String despacho(@RequestParam("client") String idcliente, @RequestParam("cant[]") List<String> cantidades, @RequestParam("ids[]") List<String> ids, @RequestParam("fecha") String fecha, @RequestParam("fechaentrega") String fechapromesa){
+    templates String despacho(@RequestParam("client") String idcliente, @RequestParam("cant[]") List<String> cantidades, @RequestParam("ids[]") List<String> ids, @RequestParam("fecha") String fecha, @RequestParam("fechaentrega") String fechapromesa){
 
         }
 
@@ -41,7 +41,7 @@ public class rentasController {
 
 
     @PostMapping(value = "/entrega/{id}")
-    public String entrega(@PathVariable("id") String id){
+    templates String entrega(@PathVariable("id") String id){
 
         ClienteEquipo a = clienteEquipoService.buscarPorId(Long.parseLong(id));
         a.setEstado("Completado");
@@ -50,7 +50,7 @@ public class rentasController {
     }
 
     @GetMapping(value = "/rentado/{id}")
-    public String entregado(Model model, @PathVariable("id") String id){
+    templates String entregado(Model model, @PathVariable("id") String id){
 
     }*/
 }
