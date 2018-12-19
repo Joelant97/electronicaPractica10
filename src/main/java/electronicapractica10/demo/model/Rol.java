@@ -25,6 +25,10 @@ public class Rol implements Serializable {
     private Rol rol;
 */
 
+    public Rol(String role) {
+        this.role = role;
+    }
+
     private boolean deleted = false;
 
     public long getId() {
@@ -43,14 +47,6 @@ public class Rol implements Serializable {
         this.deleted = deleted;
     }
 
-    public Rol() {
-
-
-    }
-
-    public Rol(String role) {
-        this.role = role;
-    }
 
     public String getRole() {
         return role;

@@ -38,9 +38,7 @@
 		<!-- start: page -->
 		<section class="body-sign">
 			<div class="center-sign">
-				<a href="/" class="logo pull-left">
-					<img src="" height="54" alt="Porto Admin" />
-				</a>
+
 
 				<div class="panel panel-sign">
 					<div class="panel-title-sign mt-xl text-right">
@@ -66,7 +64,7 @@
 									<a href="pages-recover-password.html" class="pull-right">Lost Password?</a>
 								</div>
 								<div class="input-group input-group-icon">
-									<input name="pwd" type="password" class="form-control input-lg" />
+									<input name="password" type="password" class="form-control input-lg" />
 									<span class="input-group-addon">
 										<span class="icon icon-lg">
 											<i class="fa fa-lock"></i>
@@ -126,5 +124,5 @@
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
 
-	</body><img src="http://www.ten28.com/fref.jpg">
+	</body>
 </html>

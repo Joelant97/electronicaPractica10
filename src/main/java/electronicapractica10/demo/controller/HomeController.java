@@ -11,7 +11,7 @@ import java.util.Locale;
 public class HomeController {
 
     @Autowired
-    private ServiciosUsuario usuarioService;
+    private ServiciosUsuario serviciosUsuario;
 
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, HttpServletRequest request)
@@ -19,16 +19,22 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login()
+    {
+        return "login";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(
             @RequestParam(value = "username", required = true) String username,
             @RequestParam(value = "password", required = true) String password
     ) {
-        //usuarioService.autoLogin(username, password);
+        serviciosUsuario.autoLogin(username, password);
 
-        return "login";
+        return "redirect:/";
     }
+
 
 /*
     @ResponseBody

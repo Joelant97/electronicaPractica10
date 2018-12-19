@@ -19,7 +19,7 @@ public class Usuario implements Serializable {
     private String telefono;
     private boolean activo;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Rol> roles;
 
     public Usuario(String username, boolean isAdmin, String password, String telefono, boolean activo, Set<Rol> roles) {

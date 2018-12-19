@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class SecurityService implements UserDetailsService {
+public class SecurityService {
 
     @Autowired
     private RepositorioUsuario repositorioUsuario;
@@ -38,30 +38,12 @@ public class SecurityService implements UserDetailsService {
         Rol rolAdmin = new Rol("ROLE_ADMIN");
         repositorioRol.save(rolAdmin);
 
-
         Usuario admin = new Usuario();
         admin.setUsername("admin");
         admin.setPassword(bCryptPasswordEncoder.encode("admin"));
-        admin.setUsername("Administrador");
         admin.setActivo(true);
         admin.setRoles(new HashSet<>(Arrays.asList(rolAdmin)));
         repositorioUsuario.save(admin);
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario user = repositorioUsuario.findByUsername(username);
-
-        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
-        for (Rol role : user.getRoles()) {
-            roles.add(new SimpleGrantedAuthority(role.getRole()));
-        }
-
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
-
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isAdmin(), true, true, true, grantedAuthorities);
-    }
-
-
 
 }

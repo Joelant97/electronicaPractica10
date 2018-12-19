@@ -14,8 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
-
-
 @EnableAutoConfiguration
 @ComponentScan
 @EnableConfigurationProperties(StorageProperties.class)
@@ -23,14 +21,9 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext =  SpringApplication.run(DemoApplication.class, args);
-
-
-
         SecurityService securityService = (SecurityService) applicationContext.getBean("securityService");
         securityService.crearUsuarioAdmin();
     }
-
-
 
     /*@Bean
     CommandLineRunner init(StorageService storageService) {
