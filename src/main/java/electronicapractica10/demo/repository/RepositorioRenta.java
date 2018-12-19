@@ -12,6 +12,10 @@ public interface RepositorioRenta extends JpaRepository<Renta, Long> {
     List<Renta> findAllByClienteOrderByFechaInicioRenta(Cliente cliente);
 
 
+    @Query(value = "SELECT CLI.NOMBRE, EQ.NOMBRE_EQUIPO, ABS(DATEDIFF('DAY',  ALQ.FECHA_INICIO_ALQUILER, ALQ.FECHA_FIN_ALQUILER )) AS DIAS " +
+            "FROM  ALQ INNER JOIN CLIENTE CLI ON CLI.ID = ALQ.CLIENTE_ID INNER JOIN EQUIPO EQ ON EQ.ID = ALQ.EQUIPO_ID " +
+            "WHERE ALQ.ESTADO = 'Pendiente' ORDER BY ALQ.FECHA_INICIO_ALQUILER", nativeQuery = true)
+    List<Object[]> equiposRentaNoDevueltos();
 
     //@Query("SELECT renta FROM Renta renta ORDER BY renta.fecha")
     //List<Renta> rentasOrdenadas();

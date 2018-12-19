@@ -21,6 +21,11 @@ public class ServiciosEquipo {
 
     }
 
+    @Transactional
+    public void actualizarEquipo(Equipo equipo){
+        crearEquipo(equipo);
+    }
+
     public List<Equipo> listaEquipos(){
         return repositorioEquipo.findAll();
     }

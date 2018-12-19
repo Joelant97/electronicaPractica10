@@ -20,6 +20,11 @@ public class ServiciosCategoria {
 
     }
 
+    @Transactional
+    public List<Categoria> findAllSubFamilias(){
+        return repositorioCategoria.findAll();
+    }
+
     public List<Categoria> listaCategoria(){
         return repositorioCategoria.findAll();
     }
@@ -28,8 +33,21 @@ public class ServiciosCategoria {
         return repositorioCategoria.findById(id).get();
     }
 
+    public Categoria buscarByNombre(String nombre){
+        return repositorioCategoria.findByNombre(nombre);
+    }
+
     public void eliminarCategoria(long id){
         repositorioCategoria.deleteById(id);
+    }
+
+
+
+    public Categoria buscarByNombreSubFamilia(String nombre){
+        return repositorioCategoria.findByNombre(nombre);
+    }
+    public boolean subFamiliaExiste(Categoria subFamilia){
+        return buscarByNombreSubFamilia(subFamilia.getNombre()) != null;
     }
 
 
