@@ -1,4 +1,4 @@
-package electronicapractica10.demo.Controllers;
+package electronicapractica10.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 @Controller
-public class homeController {
+public class HomeController {
 
     @RequestMapping(value = "/")
     public String index(Model model, Locale locale, HttpServletRequest request)
