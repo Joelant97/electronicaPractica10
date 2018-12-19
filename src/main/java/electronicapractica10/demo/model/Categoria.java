@@ -12,26 +12,51 @@ public class Categoria implements Serializable {
     @GeneratedValue
     private long id;
     private String nombre;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Categoria categoria;
-    @OneToMany(mappedBy = "categoria", orphanRemoval = true)
-    private Collection<Categoria> subCategoria;
+
+    //@OneToMany(mappedBy = "categoria", orphanRemoval = true)
+    //private Collection<Categoria> subCategoria;
+
+    private boolean subCategoria;
 
     @ElementCollection
-    private List<Long> diasAlquilados;
+    private List<Long> diasRentado;
+
+
 
     public Categoria (){
 
     }
 
-    public Categoria(String nombre, Categoria categoria, Collection<Categoria> subCategoria, List<Long> diasAlquilados) {
+    public Categoria(String nombre, Categoria categoria, boolean subCategoria, List<Long> diasRentado) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.subCategoria = subCategoria;
-        this.diasAlquilados = diasAlquilados;
+        this.diasRentado = diasRentado;
     }
 
+    public boolean isSubCategoria() {
+        return subCategoria;
+    }
+
+    public List<Long> getDiasRentado() {
+        return diasRentado;
+    }
+
+    public void setDiasRentado(List<Long> diasRentado) {
+        this.diasRentado = diasRentado;
+    }
+
+    public Categoria(String nombre, boolean subCategoria, Categoria categoria) {
+        this.nombre = nombre;
+        this.subCategoria = subCategoria;
+
+        if (subCategoria) {
+            this.categoria = categoria;
+        }
+    }
 
     public long getId() {
         return id;
@@ -40,6 +65,21 @@ public class Categoria implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+
+
+    //Prom. de dias de equipos Rentados:
+    public long getPromedioDiasRentado(){
+        if(this.diasRentado.size() == 0){
+            return 0;
+        }
+
+        long suma = 0;
+        for(long dias: this.diasRentado){
+            suma += dias;
+        }
+        return suma/this.diasRentado.size();
+    }
+
 
     public String getNombre() {
         return nombre;
@@ -57,19 +97,9 @@ public class Categoria implements Serializable {
         this.categoria = categoria;
     }
 
-    public Collection<Categoria> getSubCategoria() {
-        return subCategoria;
-    }
-
-    public void setSubCategoria(Collection<Categoria> subCategoria) {
+    public void setSubCategoria(boolean subCategoria) {
         this.subCategoria = subCategoria;
     }
 
-    public List<Long> getDiasAlquilados() {
-        return diasAlquilados;
-    }
 
-    public void setDiasAlquilados(List<Long> diasAlquilados) {
-        this.diasAlquilados = diasAlquilados;
-    }
 }
