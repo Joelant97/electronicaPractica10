@@ -73,6 +73,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
 
+
         //deshabilitando las seguridad contra los frame
         http.csrf().disable();
         http.headers().frameOptions().disable();

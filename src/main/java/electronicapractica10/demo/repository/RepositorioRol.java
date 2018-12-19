@@ -10,7 +10,7 @@ import java.util.Set;
 public interface RepositorioRol extends JpaRepository<Rol, Long> {
 
 
-    Rol findByNombreRol(String rol);
+    Rol findByRole(String rol);
 
 
 

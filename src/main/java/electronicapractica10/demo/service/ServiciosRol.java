@@ -38,7 +38,7 @@ public class ServiciosRol {
 
 
     public Rol findByNombreRol(String rol){
-        return repositorioRol.findByNombreRol(rol);
+        return repositorioRol.findByRole(rol);
     }
 
 

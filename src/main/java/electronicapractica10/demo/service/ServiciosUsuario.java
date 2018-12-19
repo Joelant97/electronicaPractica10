@@ -24,7 +24,7 @@ import java.util.Set;
 
 
 @Service
-public class ServiciosUsuario {
+public class ServiciosUsuario implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -72,9 +72,6 @@ public class ServiciosUsuario {
     }
 
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Transactional
     public Usuario buscarPorNombre(String username) {
         return repositorioUsuario.findByUsername(username);
@@ -82,7 +79,7 @@ public class ServiciosUsuario {
 
 
     public void autoLogin(String username, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = loadUserByUsername(username);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
@@ -96,7 +93,6 @@ public class ServiciosUsuario {
     public long getIDCount() {
 
         return repositorioUsuario.count() + 1;
-
     }
 
 
@@ -110,6 +106,7 @@ public class ServiciosUsuario {
     }
 
     @Transactional(readOnly = true)
+    @Override
     public UserDetails loadUserByUsername(String username) {
         Usuario user = repositorioUsuario.findByUsername(username);
 
