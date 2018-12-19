@@ -128,7 +128,7 @@ public class EquipoController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String borrarEquipo(@PathVariable String id) {
         Equipo equipo = serviciosEquipo.getEquipoById(Long.parseLong(id));
-        serviciosEquipo.eliminarEquipo(equipo);
+        serviciosEquipo.eliminarEquipo(equipo.getId());
         return "redirect:/equipos/";
 
     }
