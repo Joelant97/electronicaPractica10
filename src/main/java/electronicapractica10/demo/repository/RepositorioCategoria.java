@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface RepositorioCategoria extends JpaRepository<Categoria, Long> {
 
-
+    Categoria findByNombre(String nombre);
 
 }

@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 public class UsuarioController {
 
     @Autowired
@@ -43,7 +44,7 @@ public class UsuarioController {
         u.setUsername(username);
         u.setPassword(password);
         u.setActivo(true);
-        Rol r = serviciosRol.findByNombreRol(rol);
+        Rol r = serviciosRol.findByRole(rol);
         u.setTelefono(telefono);
         Set<Rol> roles = new HashSet<>();
         roles.add(r);
@@ -55,7 +56,7 @@ public class UsuarioController {
     @PostMapping("/modificar/")
     public String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("telefono2") String telefono, @RequestParam("rol2") String rol){
         Usuario u = serviciosUsuario.buscarById(Long.parseLong(id));
-        Rol r = serviciosRol.findByNombreRol(rol);
+        Rol r = serviciosRol.findByRole(rol);
         Set<Rol> roles = new HashSet<>();
         roles.add(r);
         u.setRoles(roles);

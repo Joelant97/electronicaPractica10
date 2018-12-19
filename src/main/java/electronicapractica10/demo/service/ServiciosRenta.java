@@ -31,9 +31,9 @@ public class ServiciosRenta {
         crearRenta(renta);
     }
 
-    //public List<Renta>listaRentaOrdenado(){
-     //   return repositorioRenta.rentasOrdenadas();
-    //}
+    public List<Object[]> equiposRentaNoDevueltos(){
+        return repositorioRenta.equiposRentaNoDevueltos();
+    }
 
     public Renta getRentaById(long id ){
         return repositorioRenta.findById(id).get();

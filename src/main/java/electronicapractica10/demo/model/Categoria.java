@@ -32,6 +32,7 @@ public class Categoria implements Serializable {
         this.diasAlquilados = diasAlquilados;
     }
 
+
     public long getId() {
         return id;
     }

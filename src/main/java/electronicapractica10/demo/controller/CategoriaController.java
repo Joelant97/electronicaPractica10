@@ -27,7 +27,6 @@ public class CategoriaController {
     }
 
 
-
     @PostMapping("/")
     public String crearFamilia(@RequestParam("nombre") String categoria){
         Categoria f = new Categoria();

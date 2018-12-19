@@ -37,7 +37,7 @@ public class ServiciosRol {
     }
 
 
-    public Rol findByNombreRol(String rol){
+    public Rol findByRole(String rol){
         return repositorioRol.findByRole(rol);
     }
 
@@ -47,7 +47,7 @@ public class ServiciosRol {
     }
 
     public boolean rolExiste(Rol rol){
-        return findByNombreRol(rol.getRole()) != null;
+        return findByRole(rol.getRole()) != null;
     }
 
 
