@@ -2,29 +2,34 @@ package electronicapractica10.demo.controller;
 
 import electronicapractica10.demo.model.Rol;
 import electronicapractica10.demo.model.Usuario;
+import electronicapractica10.demo.service.ServiciosRol;
+import electronicapractica10.demo.service.ServiciosUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class UsuarioController {
 
     @Autowired
-    private UsuarioServiceImpl usuarioService;
+    private ServiciosUsuario serviciosUsuario;
 
     @Autowired
-    private RolServiceImpl rolService;
+    private ServiciosRol serviciosRol;
 
     @GetMapping(value="/")
     public String usuarios(Model model)
     {
         List<Usuario> usuarios = new ArrayList<>();
-        usuarios = usuarioService.buscarTodosUsuarios();
-        List<Rol> roles = rolService.buscarTodosRoles();
+        usuarios = serviciosUsuario.findAllUsuario();
+        List<Rol> roles = serviciosRol.buscarTodosRoles();
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("roles", roles);
 
@@ -33,36 +38,40 @@ public class UsuarioController {
 
 
     @PostMapping("/")
-    public String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
+    public String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("telefono") String telefono, @RequestParam("rol") String rol){
         Usuario u = new Usuario();
         u.setUsername(username);
         u.setPassword(password);
-        u.setEmail(email);
-        u.setActive(1);
-        Rol r = new Rol();
-        r = rolService.findByNombreRol(rol);
-        u.setRol(r);
-        usuarioService.crearUsuario(u);
+        u.setActivo(true);
+        Rol r = serviciosRol.findByNombreRol(rol);
+        u.setTelefono(telefono);
+        Set<Rol> roles = new HashSet<>();
+        roles.add(r);
+        u.setRoles(roles);
+        serviciosUsuario.crearUsuario(u);
         return "redirect:/usuarios/";
     }
 
     @PostMapping("/modificar/")
-    public String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("email2") String email, @RequestParam("rol2") String rol){
-        Usuario u = usuarioService.buscarPorId(Long.parseLong(id));
-        Rol r = rolService.findByNombreRol(rol);
-        u.setRol(r);
+    public String modificarUsuario(@RequestParam("username2") String username, @RequestParam("id2") String id,@RequestParam("password2") String password, @RequestParam("telefono2") String telefono, @RequestParam("rol2") String rol){
+        Usuario u = serviciosUsuario.buscarById(Long.parseLong(id));
+        Rol r = serviciosRol.findByNombreRol(rol);
+        Set<Rol> roles = new HashSet<>();
+        roles.add(r);
+        u.setRoles(roles);
+
         u.setUsername(username);
         u.setPassword(password);
-        u.setEmail(email);
+        u.setTelefono(telefono);
 
-        usuarioService.actualizarUsuario(u);
+        serviciosUsuario.actualizarUsuario(u);
         return "redirect:/usuarios/";
     }
 
 
     @PostMapping(value = "/eliminar/{id}")
     public String borrarRol(@PathVariable String id) {
-        rolService.borrarRolPorId(Long.parseLong(id));
+        serviciosRol.borrarRolPorId(Long.parseLong(id));
         return "redirect:/usuarios/";
     }
 

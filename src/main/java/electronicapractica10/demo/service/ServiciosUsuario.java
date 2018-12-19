@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -42,6 +43,18 @@ public class ServiciosUsuario {
 
 
 
+
+    @Transactional
+    public List<Usuario> findAllUsuario(){
+
+        return repositorioUsuario.findAll();
+    }
+
+    @Transactional
+    public Usuario buscarById(Long id){
+        return repositorioUsuario.findById(id).get();
+    }
+
     @Transactional
     public Usuario crearUsuario(Usuario usuario) {
         usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
@@ -52,6 +65,13 @@ public class ServiciosUsuario {
         return usuario;
     }
 
+    //Metodo Actualiza el Usuario:
+    @Transactional
+    public void actualizarUsuario(Usuario usuario){
+        crearUsuario(usuario);
+    }
+
+
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -59,7 +79,6 @@ public class ServiciosUsuario {
     public Usuario buscarPorNombre(String username) {
         return repositorioUsuario.findByUsername(username);
     }
-
 
 
     public void autoLogin(String username, String password) {

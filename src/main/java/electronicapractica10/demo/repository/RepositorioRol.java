@@ -7,4 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepositorioRol extends JpaRepository<Rol, Long> {
 
+
+
+
+    Rol findByNombreRol(String rol);
+
 }

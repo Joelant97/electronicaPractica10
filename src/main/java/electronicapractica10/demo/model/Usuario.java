@@ -7,24 +7,29 @@ import java.util.Set;
 @Entity
 public class Usuario implements Serializable {
     @Id
+    @GeneratedValue
+    @Column(name = "id")
     private long id;
+    @Column(name = "username")
     private String username;
     private boolean isAdmin;
+    @Column(name = "password")
     private String password;
+    @Column(name = "telefono")
+    private String telefono;
     private boolean activo;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private
-    Set<Rol> roles;
+    private Set<Rol> roles;
 
-
-    public Usuario(long id, String username, boolean isAdmin, String password, boolean activo, Set<Rol> roles) {
-        this.id = id;
+    public Usuario(String username, boolean isAdmin, String password, String telefono, boolean activo, Set<Rol> roles) {
         this.username = username;
         this.isAdmin = isAdmin;
         this.password = password;
+        this.telefono = telefono;
         this.activo = activo;
         this.roles = roles;
+
     }
 
     public Usuario() {
@@ -71,6 +76,18 @@ public class Usuario implements Serializable {
         this.activo = activo;
     }
 
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
     public Set<Rol> getRoles() {
         return roles;
     }
@@ -78,6 +95,4 @@ public class Usuario implements Serializable {
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
-
-
 }
