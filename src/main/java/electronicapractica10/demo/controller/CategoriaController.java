@@ -3,47 +3,47 @@ package electronicapractica10.demo.controller;
 import electronicapractica10.demo.model.Categoria;
 import electronicapractica10.demo.service.ServiciosCategoria;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
+@RequestMapping("/familias")
 public class CategoriaController {
 
-    /*@Autowired
-    private ServiciosCategoria categoriaService;
+    @Autowired
+    private ServiciosCategoria serviciosCategoria;
 
-    @RequestMapping(value = "/")
-    templates String categorias(Model model)
+    @GetMapping(value="/")
+    public String familias(Model model)
     {
-        List<Categoria> categoriaList = new ArrayList<>();
-        categoriaList = categoriaService. ();
-        model.addAttribute("categorias",categoriaList);
-        return "categoria";
-    }
-
-    @PostMapping(value = "/")
-    templates String crearCategoria(@RequestParam("nombre") String nombre,
-                                 RedirectAttributes redirectAttributes) {
-
-        Categoria categoria = new Categoria();
-        categoria.setNombreCategoria(nombre);
-        categoriaService.crearCategoria(categoria);
-
-        return "redirect:/categorias/";
+        List<Categoria> categorias = new ArrayList<>();
+        categorias = serviciosCategoria.listaCategoria();
+        model.addAttribute("familias", categorias);
+        return "familias";
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    templates String borrarCategoria(@PathVariable String id) {
-        Categoria categoria = categoriaService.buscarPorId(Long.parseLong(id));
-        categoriaService.;
-        return "redirect:/categorias/";
 
-    }*/
+    @PostMapping("/")
+    public String crearFamilia(@RequestParam("nombre") String categoria){
+        Categoria f = new Categoria();
+        f.setNombre(categoria);
+        serviciosCategoria.crearCategoria(f);
+        return "redirect:/familias/";
+    }
+
+
+    @PostMapping(value = "/eliminar/{id}")
+    public String borrarFamilia(@PathVariable String id) {
+        serviciosCategoria.eliminarCategoria(Long.parseLong(id));
+        return "redirect:/familias/";
+
+    }
+
 
 }
+
