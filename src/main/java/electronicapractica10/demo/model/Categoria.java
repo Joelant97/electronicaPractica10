@@ -18,9 +18,12 @@ public class Categoria implements Serializable {
     @OneToMany(mappedBy = "categoria", orphanRemoval = true)
     private Collection<Categoria> subCategoria;
 
-
     @ElementCollection
     private List<Long> diasAlquilados;
+
+    public Categoria (){
+
+    }
 
     public Categoria(String nombre, Categoria categoria, Collection<Categoria> subCategoria, List<Long> diasAlquilados) {
         this.nombre = nombre;
