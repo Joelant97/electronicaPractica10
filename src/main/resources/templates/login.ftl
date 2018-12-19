@@ -39,7 +39,7 @@
 		<section class="body-sign">
 			<div class="center-sign">
 				<a href="/" class="logo pull-left">
-					<img src="assets/images/logo.png" height="54" alt="Porto Admin" />
+					<img src="" height="54" alt="Porto Admin" />
 				</a>
 
 				<div class="panel panel-sign">
@@ -47,7 +47,7 @@
 						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>
 					</div>
 					<div class="panel-body">
-						<form action="index.html" method="post">
+						<form action="/login" method="post">
 							<div class="form-group mb-lg">
 								<label>Username</label>
 								<div class="input-group input-group-icon">
