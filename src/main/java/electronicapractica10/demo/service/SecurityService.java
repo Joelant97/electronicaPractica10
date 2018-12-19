@@ -25,18 +25,21 @@ public class SecurityService implements UserDetailsService {
     @Autowired
     private RepositorioRol repositorioRol;
 
-    //Para encriptar la información.
+    //Para Encriptar la información.
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    //cualquier cosa...
 
     /**
      * Creando el usuario por defecto y su rol.
      */
     public void crearUsuarioAdmin(){
         System.out.println("Creación del usuario y rol en la base de datos");
-        Rol rolAdmin = new Rol("ROLE_ADMIN");
+
+        Rol rolAdmin = new Rol();
+        rolAdmin.setRole("ROLE_ADMIN");
+        //Rol rolAdmin = new Rol("ROLE_ADMIN");
         repositorioRol.save(rolAdmin);
+
 
         Usuario admin = new Usuario();
         admin.setUsername("admin");
