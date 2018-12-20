@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
-@Controller
+@Controller("/inicio")
 public class HomeController {
 
     @Autowired
     private ServiciosUsuario serviciosUsuario;
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "")
     public String index(Model model, Locale locale, HttpServletRequest request)
     {
         return "index";

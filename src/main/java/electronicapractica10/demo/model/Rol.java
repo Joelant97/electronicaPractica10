@@ -29,6 +29,10 @@ public class Rol implements Serializable {
         this.role = role;
     }
 
+    public Rol(){
+
+    }
+
     private boolean deleted = false;
 
     public long getId() {

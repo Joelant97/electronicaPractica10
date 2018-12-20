@@ -42,6 +42,7 @@ public class SecurityService {
         admin.setUsername("admin");
         admin.setPassword(bCryptPasswordEncoder.encode("admin"));
         admin.setActivo(true);
+        admin.setAdmin(true);
         admin.setRoles(new HashSet<>(Arrays.asList(rolAdmin)));
         repositorioUsuario.save(admin);
     }
