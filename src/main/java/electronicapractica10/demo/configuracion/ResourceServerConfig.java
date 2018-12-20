@@ -25,25 +25,15 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
 
-
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-                auth
-                .jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder());
+
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     /*
@@ -54,23 +44,19 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Marcando las reglas para permitir unicamente los usuarios
-        http
-                .authorizeRequests()
-                .antMatchers("/assets/**", "/css/**", "/javascripts/**", "/images/**").permitAll() //permitiendo llamadas a esas urls.
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/**").hasAnyAuthority("ADMIN", "USER")
-                //.anyRequest().authenticated() //cualquier llamada debe ser validada
-                .and()
-                .formLogin()
-                .loginPage("/login") //indicando la ruta que estaremos utilizando.
-                .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll();
+
+
+        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
+                .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/index/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/usuarios/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated() // cualquier llamada debe ser validada
+                .antMatchers("/**").fullyAuthenticated()
+                .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
+
+                .defaultSuccessUrl("/index")
+                .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
+                .permitAll().and().logout().permitAll();
 
 
 
