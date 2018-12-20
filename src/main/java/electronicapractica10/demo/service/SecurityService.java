@@ -37,11 +37,11 @@ public class SecurityService {
 
         Rol rolAdmin = new Rol("ROLE_ADMIN");
         repositorioRol.save(rolAdmin);
-
         Usuario admin = new Usuario();
         admin.setUsername("admin");
         admin.setPassword(bCryptPasswordEncoder.encode("admin"));
         admin.setActivo(true);
+        admin.setAdmin(true);
         admin.setRoles(new HashSet<>(Arrays.asList(rolAdmin)));
         repositorioUsuario.save(admin);
     }

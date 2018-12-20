@@ -29,10 +29,10 @@ public class Usuario implements Serializable {
         this.telefono = telefono;
         this.activo = activo;
         this.roles = roles;
-
     }
 
     public Usuario() {
+
     }
 
 
