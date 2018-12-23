@@ -25,13 +25,6 @@ public class DemoApplication {
         securityService.crearUsuarioAdmin();
     }
 
-    /*@Bean
-    CommandLineRunner init(StorageService storageService) {
-        return (args) -> {
-            storageService.deleteAll();
-            storageService.init();
-        };
-    } */
 }
 
 

@@ -46,7 +46,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         //Marcando las reglas para permitir unicamente los usuarios
 
 
-        http.authorizeRequests().antMatchers("/assets/**", "/css/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
+        http.authorizeRequests().antMatchers("/assets/**", "/vendor/**", "ajax", "/stylesheets/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
                 .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/index/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/usuarios/**").hasAnyRole("ADMIN", "USER")

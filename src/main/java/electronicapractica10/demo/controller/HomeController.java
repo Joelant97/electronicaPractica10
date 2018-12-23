@@ -36,16 +36,5 @@ public class HomeController {
     }
 
 
-/*
-    @ResponseBody
-    @PostMapping(value = "/graficar")
-    templates List<Object[]> graficar(@RequestParam("categoria") String categoria, Model model)
-    {
-        Categoria categoria1 = categoriaService.findByNombreCategoria(categoria);
 
-        model.addAttribute("categoria", categoria1);
-        model.addAttribute("result", result);
-        return result;
-
-    }*/
 }
