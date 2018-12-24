@@ -2,8 +2,7 @@ package electronicapractica10.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
 
 @Entity
@@ -67,7 +66,8 @@ public class Categoria implements Serializable {
     }
 
 
-    //Prom. de dias de equipos Rentados:
+    //Prom. de dias en el rentado de Equipos:
+
     public long getPromedioDiasRentado(){
         if(this.diasRentado.size() == 0){
             return 0;
