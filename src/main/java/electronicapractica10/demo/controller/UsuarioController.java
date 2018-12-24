@@ -25,7 +25,7 @@ public class UsuarioController {
     @Autowired
     private ServiciosRol serviciosRol;
 
-    @GetMapping(value="/")
+    @GetMapping(value="/usuarios")
     public String usuarios(Model model)
     {
         List<Usuario> usuarios = new ArrayList<>();

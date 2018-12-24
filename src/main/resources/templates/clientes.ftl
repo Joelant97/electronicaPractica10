@@ -5,7 +5,7 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
-		<title>Editable Tables | Okler Themes | Porto-Admin</title>
+		<title>Basic Forms | Okler Themes | Porto-Admin</title>
 		<meta name="keywords" content="HTML5 Admin Template" />
 		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
 		<meta name="author" content="okler.net">
@@ -23,8 +23,7 @@
 		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
 		<!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css" />
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
@@ -489,13 +488,13 @@
 											</li>
 										</ul>
 									</li>
-									<li class="nav-parent">
+									<li class="nav-parent nav-expanded nav-active">
 										<a>
 											<i class="fa fa-list-alt" aria-hidden="true"></i>
 											<span>Forms</span>
 										</a>
 										<ul class="nav nav-children">
-											<li>
+											<li class="nav-active">
 												<a href="forms-basic.html">
 													 Basic
 												</a>
@@ -527,7 +526,7 @@
 											</li>
 										</ul>
 									</li>
-									<li class="nav-parent nav-expanded nav-active">
+									<li class="nav-parent">
 										<a>
 											<i class="fa fa-table" aria-hidden="true"></i>
 											<span>Tables</span>
@@ -548,7 +547,7 @@
 													 Responsive
 												</a>
 											</li>
-											<li class="nav-active">
+											<li>
 												<a href="tables-editable.html">
 													 Editable
 												</a>
@@ -723,6 +722,7 @@
 				<section role="main" class="content-body">
 					<header class="page-header">
 						<h2>Clientes</h2>
+					
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
@@ -730,61 +730,257 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Tables</span></li>
-								<li><span>Editable</span></li>
+								<li><span>Forms</span></li>
+								<li><span>Basic</span></li>
 							</ol>
+					
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
 					</header>
-
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <form id="form" action="forms-validation.html" class="form-bordered">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            <div class="panel-actions">
+                                                <a href="#" class="fa fa-caret-down"></a>
+                                                <a href="#" class="fa fa-times"></a>
+                                            </div>
+                                            <h2 class="panel-title">Nuevo Cliente</h2>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Nombre Completo <span class="required">*</span></label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" name="fullname" class="form-control" placeholder="eg.: John Givez" required/>
+                                                </div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">Cedula<span class="required">*</span></label>
+												<div class="col-sm-6">
+													<input type="text" name="fullname" class="form-control" placeholder="eg.: 03100000000" required/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">Telefono<span class="required">*</span></label>
+												<div class="col-sm-6">
+													<input type="text" name="fullname" class="form-control" placeholder="eg.: 8095817000" required/>
+												</div>
+											</div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Email <span class="required">*</span></label>
+                                                <div class="col-sm-6">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-envelope"></i>
+                                                        </span>
+                                                        <input type="email" name="email" class="form-control" placeholder="eg.: email@email.com" required/>
+                                                    </div>
+                                                </div>
+											</div>
+											<div class="form-group">
+													<label class="col-md-3 control-label">Foto de perfil</label>
+													<div class="col-md-6">
+														<div class="fileupload fileupload-new" data-provides="fileupload">
+															<div class="input-append">
+																<div class="uneditable-input">
+																	<i class="fa fa-file fileupload-exists"></i>
+																	<span class="fileupload-preview"></span>
+																</div>
+																<span class="btn btn-default btn-file">
+																	<span class="fileupload-exists">Cambiar</span>
+																	<span class="fileupload-new">Buscar foto</span>
+																	<input type="file" />
+																</span>
+																<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+															</div>
+														</div>
+													</div>
+												</div>
+                                        </div>
+                                        <footer class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-sm-9 col-sm-offset-3">
+                                                    <button class="btn btn-primary">Crear</button>
+                                                    <button type="reset" class="btn btn-default">Reset</button>
+                                                </div>
+                                            </div>
+                                        </footer>
+                                    </section>
+                                </form>
+                            </div>
+    
 					<!-- start: page -->
-						<section class="panel">
-							<header class="panel-heading">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a>
-									<a href="#" class="fa fa-times"></a>
-								</div>
-						
-								<h2 class="panel-title">Default</h2>
-							</header>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="mb-md">
-											<button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel">
+									<header class="panel-heading">
+										<div class="panel-actions">
+											<a href="#" class="fa fa-caret-down"></a>
+											<a href="#" class="fa fa-times"></a>
 										</div>
+                                        <h2 class="panel-title">Clientes</h2>
+                                    </header>
+                                    
+                                    
+
+									<div class="panel-body">
+										<form class="form-horizontal form-bordered" method="get">
+
+                                            <div class="form-group">
+												<label class="col-md-3 control-label" for="inputRounded">Nombre</label>
+												<div class="col-md-6">
+													<input type="text" class="form-control input-rounded" id="inputRounded" >
+												</div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="inputRounded">Cedula</label>
+                                                <div class="col-md-6">
+                                                    <input type="text" class="form-control input-rounded" id="inputRounded" >
+                                                </div>
+                                            </div>
+						                    <div class="form-group">
+                                                    <label class="col-md-3 control-label" for="inputRounded">Nombre</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control input-rounded" id="inputRounded" >
+                                                    </div>
+                                                </div>
+                                            
+											<div class="form-group">
+												<label class=" col-md-3 control-label">Static control</label>
+												<div class="col-lg-6">
+													<p class="form-control-static">email@example.com</p>
+												</div>
+											</div>
+						
+				
+											<div class="form-group">
+												<label class="col-md-3 control-label">Right Icon</label>
+												<div class="col-md-6">
+													<div class="input-group input-group-icon">
+														<input type="text" class="form-control" placeholder="Right icon">
+														<span class="input-group-addon">
+															<span class="icon"><i class="fa fa-user"></i></span>
+														</span>
+													</div>
+												</div>
+											</div>
+						
+											<div class="form-group">
+												<label class="col-md-3 control-label">Search</label>
+												<div class="col-md-6">
+													<div class="input-group input-search">
+														<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
+														<span class="input-group-btn">
+															<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+														</span>
+													</div>
+												</div>
+											</div>
+						
+											<div class="form-group">
+												<label class="col-md-3 control-label">File Upload</label>
+												<div class="col-md-6">
+													<div class="fileupload fileupload-new" data-provides="fileupload">
+														<div class="input-append">
+															<div class="uneditable-input">
+																<i class="fa fa-file fileupload-exists"></i>
+																<span class="fileupload-preview"></span>
+															</div>
+															<span class="btn btn-default btn-file">
+																<span class="fileupload-exists">Change</span>
+																<span class="fileupload-new">Select file</span>
+																<input type="file" />
+															</span>
+															<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+														</div>
+													</div>
+												</div>
+											</div>
+						
+											
+						
+											<div class="form-group">
+												<label class="control-label col-md-3">Vertical Group w/ icon</label>
+												<div class="col-md-6">
+													<section class="form-group-vertical">
+														<div class="input-group input-group-icon">
+															<span class="input-group-addon">
+																<span class="icon"><i class="fa fa-user"></i></span>
+															</span>
+															<input class="form-control" type="text" placeholder="Username">
+														</div>
+														<div class="input-group input-group-icon">
+															<span class="input-group-addon">
+																<span class="icon"><i class="fa fa-key"></i></span>
+															</span>
+															<input class="form-control" type="text" placeholder="Password">
+														</div>
+													</section>
+												</div>
+											</div>
+						
+											<div class="form-group has-success">
+												<label class="col-md-3 control-label" for="inputSuccess">Input with success</label>
+												<div class="col-md-6">
+													<input type="text" class="form-control" id="inputSuccess">
+												</div>
+											</div>
+											<div class="form-group has-warning">
+												<label class="col-md-3 control-label" for="inputWarning">Input with warning</label>
+												<div class="col-md-6">
+													<input type="text" class="form-control" id="inputWarning">
+												</div>
+											</div>
+											<div class="form-group has-error">
+												<label class="col-md-3 control-label" for="inputError">Input with error</label>
+												<div class="col-md-6">
+													<input type="text" class="form-control" id="inputError">
+												</div>
+											</div>
+						
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="inputTooltip">Input with Tooltip</label>
+												<div class="col-md-6">
+													<input type="text" placeholder="Hover me" title="" data-toggle="tooltip" data-trigger="hover" class="form-control" data-original-title="Place your tooltip info here" id="inputTooltip">
+												</div>
+											</div>
+						
+											<div class="form-group">
+												<label class="col-md-3 control-label" for="inputPopover">Input with Popover</label>
+												<div class="col-md-6">
+													<input type="text" placeholder="Click Here" class="form-control" data-toggle="popover" data-placement="top" data-original-title="The Title" data-content="Content goes here..." data-trigger="click" id="inputPopover">
+												</div>
+											</div>
+						
+											<div class="form-group">
+												<label class="col-md-3 control-label">Column sizing</label>
+												<div class="col-sm-8">
+													<div class="row">
+														<div class="col-sm-2">
+															<input type="text" class="form-control" placeholder=".col-sm-2">
+														</div>
+														<div class="visible-xs mb-md"></div>
+														<div class="col-sm-3">
+															<input type="text" class="form-control" placeholder=".col-sm-3">
+														</div>
+														<div class="visible-xs mb-md"></div>
+														<div class="col-sm-4">
+															<input type="text" class="form-control" placeholder=".col-sm-4">
+														</div>
+													</div>
+						
+												</div>
+											</div>
+										</form>
 									</div>
-								</div>
-								<table class="table table-bordered table-striped mb-none" id="datatable-editable">
-									<thead>
-										<tr>
-											<th>Nombre</th>
-											<th>Cédula</th>
-											<th>Correo</th>
-											<th>Telefono</th>
-											<th>Foto</th>
-										</tr>
-									</thead>
-									<tbody>
-									<#list clientes as cliente>
-										<tr class="gradeX">
-											<td>${cliente.nombre}</td>
-											<td>$cliente.{cedula}</td>
-											<td>${cliente.correo}</td>
-											<td>${cliente.telefono}</td>
-											<td>${cliente.foto}</td>
-											<td class="actions">
-												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-												<a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-												<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
-											</td>
-										</tr>
-									</#list>
-										</tbody>
-								</table>
+								</section>
+						
 							</div>
-						</section>
+						</div>
+						
+					
+						</div>
 					<!-- end: page -->
 				</section>
 			</div>
@@ -858,29 +1054,6 @@
 			</aside>
 		</section>
 
-		<div id="dialog" class="modal-block mfp-hide">
-			<section class="panel">
-				<header class="panel-heading">
-					<h2 class="panel-title">Are you sure?</h2>
-				</header>
-				<div class="panel-body">
-					<div class="modal-wrapper">
-						<div class="modal-text">
-							<p>Are you sure that you want to delete this row?</p>
-						</div>
-					</div>
-				</div>
-				<footer class="panel-footer">
-					<div class="row">
-						<div class="col-md-12 text-right">
-							<button id="dialogConfirm" class="btn btn-primary">Confirm</button>
-							<button id="dialogCancel" class="btn btn-default">Cancel</button>
-						</div>
-					</div>
-				</footer>
-			</section>
-		</div>
-
 		<!-- Vendor -->
 		<script src="assets/vendor/jquery/jquery.js"></script>
 		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
@@ -891,9 +1064,8 @@
 		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		
 		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+		<script src="assets/vendor/jquery-autosize/jquery.autosize.js"></script>
+		<script src="assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
 		<script src="assets/javascripts/theme.js"></script>
@@ -904,8 +1076,5 @@
 		<!-- Theme Initialization Files -->
 		<script src="assets/javascripts/theme.init.js"></script>
 
-
-		<!-- Examples -->
-		<script src="assets/javascripts/tables/examples.datatables.editable.js"></script>
 	</body>
 </html>

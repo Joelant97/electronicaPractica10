@@ -1,9 +1,8 @@
 package electronicapractica10.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Loader;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -14,7 +13,9 @@ public class Cliente implements Serializable{
     private long id;
     private String nombre;
     private String cedula;
-    private String foto;
+    @Loader
+    @Column(name = "foto", columnDefinition = "BLOB")
+    private byte[] foto;
     private String correo;
     private String telefono;
 
@@ -22,8 +23,7 @@ public class Cliente implements Serializable{
 
     }
 
-
-    public Cliente(String nombre, String cedula, String foto, String correo, String telefono){
+    public Cliente(String nombre, String cedula, byte[] foto, String correo, String telefono){
 
         this.nombre = nombre;
         this.cedula = cedula;
@@ -35,10 +35,6 @@ public class Cliente implements Serializable{
 
     public long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -57,11 +53,11 @@ public class Cliente implements Serializable{
         this.cedula = cedula;
     }
 
-    public String getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 
@@ -80,6 +76,12 @@ public class Cliente implements Serializable{
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    @Override
+    public String toString(){
+      return this.nombre + this.cedula + this.telefono;
+    }
+
 }
 
 

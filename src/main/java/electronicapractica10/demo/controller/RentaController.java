@@ -19,12 +19,8 @@ import java.util.List;
 public class RentaController {
     @Autowired
     private ServiciosRenta serviciosRenta;
-
-
     @Autowired
     private ServiciosCliente serviciosCliente;
-
-
     @Autowired
     private ServiciosEquipo serviciosEquipo;
 

@@ -25,20 +25,25 @@ public class ServiciosCliente  {
         return cliente;
     }
 
+    @Transactional
+    public Cliente updateClient(Cliente cliente){
+        repositorioCliente.save(cliente);
+
+        return cliente;
+    }
+
     public void eliminarCliente(long id){
         repositorioCliente.deleteById(id);
-
     }
 
     public List<Cliente> getListaClientes(){
         return repositorioCliente.findAll();
     }
 
-
     public  Cliente getClienteByID(long id){
         return repositorioCliente.findById(id).get();
-
     }
+
 
 }
 

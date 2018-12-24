@@ -9,7 +9,6 @@ import java.util.List;
 public class Renta implements Serializable{
     @Id
     @GeneratedValue
-
     private long id;
     private Date fechaInicioRenta;
     private Date fechaFinRenta;

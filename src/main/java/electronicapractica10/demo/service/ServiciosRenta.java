@@ -18,12 +18,13 @@ public class ServiciosRenta {
 
     @Transactional
     public Renta crearRenta(Renta renta){
+
         return repositorioRenta.save(renta);
     }
 
     public List<Renta> listaRenta(){
-        return repositorioRenta.findAll();
 
+        return repositorioRenta.findAll();
     }
 
     //Metodo Actualizar las Rentas:
@@ -39,12 +40,20 @@ public class ServiciosRenta {
         return repositorioRenta.findById(id).get();
     }
 
-    public List<Renta> historiaRenta(Cliente cliente){
+    public List<Renta> historiaRentas(Cliente cliente){
         return repositorioRenta.findAllByClienteOrderByFechaInicioRenta(cliente);
 
     }
 
+    /**
+     * Retorna historial de renta de un cliente
+     * @param id de cliente
+     * @return
+     */
+    public List<Renta> historiaRentaCliente(long id){
+        return repositorioRenta.findByCliente_IdOrderByFechaInicioRenta(id);
 
+    }
 
 
 }
