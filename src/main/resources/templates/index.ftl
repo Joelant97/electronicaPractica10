@@ -248,13 +248,13 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="forms-basic.html">
-													 Basic
+												<a href="clientesview.html">
+													 Clientes
 												</a>
 											</li>
 											<li>
-												<a href="forms-advanced.html">
-													 Advanced
+												<a href="equipos.ftl">
+													 Equipos
 												</a>
 											</li>
 											<li>
