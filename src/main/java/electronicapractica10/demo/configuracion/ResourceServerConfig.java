@@ -54,7 +54,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").fullyAuthenticated()
                 .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
 
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
                 .permitAll().and().logout().permitAll();
 

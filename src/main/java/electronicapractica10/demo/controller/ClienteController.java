@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,8 +45,8 @@ public class ClienteController {
         return "clientesview";
     }
 
-    @GetMapping(value = "/{id}")
-    public String detalleCliente(@PathVariable String id) {
+    @GetMapping(value = "/detail/{id}/")
+    public String detalleCliente(@PathVariable @NotNull String id) {
         Cliente cliente = clienteService.getClienteByID(Long.parseLong(id));
         return "clientes";
 
@@ -66,7 +67,7 @@ public class ClienteController {
     }
 
 
-    @PostMapping(value = "/add")
+    @PostMapping(value = "/add/")
     public String crearCliente(@RequestParam("nombre") String nombre,
                                @RequestParam("cedula") String cedula,
                                @RequestParam("telefono") String telefono,
