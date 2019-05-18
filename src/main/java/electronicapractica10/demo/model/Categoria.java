@@ -19,7 +19,6 @@ public class Categoria implements Serializable {
     //private Collection<Categoria> subCategoria;
 
     private boolean subCategoria;
-
     @ElementCollection
     private List<Long> diasRentado;
 
@@ -36,6 +35,15 @@ public class Categoria implements Serializable {
         this.diasRentado = diasRentado;
     }
 
+    public Categoria(String nombre, boolean subCategoria, Categoria categoria) {
+        this.nombre = nombre;
+        this.subCategoria = subCategoria;
+
+        if (subCategoria) {
+            this.categoria = categoria;
+        }
+    }
+
     public boolean isSubCategoria() {
         return subCategoria;
     }
@@ -48,15 +56,6 @@ public class Categoria implements Serializable {
         this.diasRentado = diasRentado;
     }
 
-    public Categoria(String nombre, boolean subCategoria, Categoria categoria) {
-        this.nombre = nombre;
-        this.subCategoria = subCategoria;
-
-        if (subCategoria) {
-            this.categoria = categoria;
-        }
-    }
-
     public long getId() {
         return id;
     }
@@ -64,7 +63,6 @@ public class Categoria implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
 
     //Prom. de dias en el rentado de Equipos:
 
