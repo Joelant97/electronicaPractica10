@@ -35,7 +35,7 @@ public class SecurityService {
     public void crearUsuarioAdmin(){
         System.out.println("Creación del usuario y rol en la base de datos");
 
-        Rol rolAdmin = new Rol("ROLE_ADMIN");
+        Rol rolAdmin = new Rol("ADMIN");
         repositorioRol.save(rolAdmin);
         Usuario admin = new Usuario();
         admin.setUsername("admin");

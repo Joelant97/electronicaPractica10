@@ -13,6 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,6 @@ public class ServiciosUsuario implements UserDetailsService {
     @Autowired
     private RepositorioRol repositorioRol;
 
-
-
-
     @Transactional
     public List<Usuario> findAllUsuario(){
 
@@ -65,18 +63,17 @@ public class ServiciosUsuario implements UserDetailsService {
         return usuario;
     }
 
+
     //Metodo Actualiza el Usuario:
     @Transactional
     public void actualizarUsuario(Usuario usuario){
         crearUsuario(usuario);
     }
 
-
     @Transactional
     public Usuario buscarPorNombre(String username) {
         return repositorioUsuario.findByUsername(username);
     }
-
 
     public void autoLogin(String username, String password) {
         UserDetails userDetails = loadUserByUsername(username);
@@ -95,7 +92,6 @@ public class ServiciosUsuario implements UserDetailsService {
         return repositorioUsuario.count() + 1;
     }
 
-
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
@@ -107,9 +103,10 @@ public class ServiciosUsuario implements UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        Usuario user = repositorioUsuario.findByUsername(username);
+    public UserDetails loadUserByUsername(String username)
+    throws UsernameNotFoundException {
 
+        Usuario user = repositorioUsuario.findByUsername(username);
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Rol role : user.getRoles()){
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));

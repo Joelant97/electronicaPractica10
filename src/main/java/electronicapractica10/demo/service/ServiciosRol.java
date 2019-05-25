@@ -30,17 +30,13 @@ public class ServiciosRol {
     }
 
 
-
-
     public List<Rol> buscarTodosRoles(){
         return repositorioRol.findAll();
     }
 
-
     public Rol findByRole(String rol){
         return repositorioRol.findByRole(rol);
     }
-
 
     public Rol buscarPorId(long id){
         return repositorioRol.findById(id).get();

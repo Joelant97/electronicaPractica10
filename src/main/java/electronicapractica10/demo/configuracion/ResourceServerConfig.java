@@ -3,7 +3,6 @@ package electronicapractica10.demo.configuracion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,21 +18,19 @@ import javax.sql.DataSource;
 @Configurable
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(bCryptPasswordEncoder);
+            auth
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(bCryptPasswordEncoder);
     }
 
     /*
@@ -44,7 +41,6 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Marcando las reglas para permitir unicamente los usuarios
-
 
         http.authorizeRequests().antMatchers("/assets/**", "/vendor/**", "ajax", "/stylesheets/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
                 .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
@@ -58,32 +54,11 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
                 .permitAll().and().logout().permitAll();
 
-
-
         //deshabilitando las seguridad contra los frame
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
 
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return super.userDetailsService();
-    }
 
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
 }

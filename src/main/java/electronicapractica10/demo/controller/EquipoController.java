@@ -27,7 +27,6 @@ public class EquipoController {
 
     private static String UPLOADED_FOLDER = "/images";
 
-
     @Autowired
     private ServiciosRenta serviciosRenta;
 
@@ -46,16 +45,20 @@ public class EquipoController {
         //subFamilias:
         List<Categoria> subCategorias = serviciosCategoria.findAllSubFamilias();
         model.addAttribute("subfamilias", subCategorias);
-
         model.addAttribute("categorias", categories);
         model.addAttribute("equipos", equipos);
         return "equiposView";
     }
 
     @PostMapping("/add/")
-    public String crearEquipo(@RequestParam("foto") MultipartFile foto, @RequestParam("nombre") String nombre, @RequestParam("precio") String precio, @RequestParam("existencia") String existencia,
-                              @RequestParam("categoria") String categoria, @RequestParam("subfamilia") String subfamilia,
-                              RedirectAttributes redirectAttributes) {
+    public String crearEquipo(
+            @RequestParam("foto") MultipartFile foto,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("precio") String precio,
+            @RequestParam("existencia") String existencia,
+            @RequestParam("categoria") String categoria,
+            @RequestParam("subfamilia") String subfamilia,
+            RedirectAttributes redirectAttributes) {
 
         Equipo equipo = new Equipo();
         try {
@@ -94,9 +97,13 @@ public class EquipoController {
     }
 
     @PostMapping("/edit/{id}")
-    public String modificarEquipo(@RequestParam("nombre2") String nombre, @RequestParam("id2") String id,@RequestParam("precio2") String precio,
-                                  @RequestParam("existencia2") String existencia, @RequestParam("categoria2") String categoria,
-                                  @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
+    public String modificarEquipo(
+            @RequestParam("nombre2") String nombre,
+            @RequestParam("id2") String id,
+            @RequestParam("precio2") String precio,
+            @RequestParam("existencia2") String existencia,
+            @RequestParam("categoria2") String categoria,
+            @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
 
         Equipo equipo = serviciosEquipo.getEquipoById(Long.parseLong(id));
         equipo.setNombre(nombre);

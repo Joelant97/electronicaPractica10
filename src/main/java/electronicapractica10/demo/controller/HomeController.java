@@ -28,8 +28,8 @@ public class HomeController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(
             @RequestParam(value = "username", required = true) String username,
-            @RequestParam(value = "password", required = true) String password
-    ) {
+            @RequestParam(value = "password", required = true) String password)
+    {
         serviciosUsuario.autoLogin(username, password);
 
         return "redirect:/";
