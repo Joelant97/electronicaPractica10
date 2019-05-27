@@ -134,8 +134,8 @@ public class ClienteController {
     public String borrarCliente(@PathVariable String id) {
         Cliente cliente = clienteService.getClienteByID(Long.parseLong(id));
         clienteService.eliminarCliente(Long.parseLong(id));
-
         return "redirect:/clientes/";
+
     }
 
 }

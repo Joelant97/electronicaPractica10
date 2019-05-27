@@ -12,10 +12,13 @@ public class Equipo implements Serializable {
     private long id;
 
     private String nombre;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Categoria categoria;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Categoria subCategoria;
+
     private long existencia;
     private long costoPorDia;
     //private String foto;
@@ -83,6 +86,7 @@ public class Equipo implements Serializable {
     public void setCostoPorDia(long costoPorDia) {
         this.costoPorDia = costoPorDia;
     }
+
 
     public byte[] getFoto() {
         return foto;

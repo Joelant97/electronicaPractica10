@@ -25,7 +25,11 @@ import java.util.List;
 @RequestMapping("/equipos")
 public class EquipoController {
 
-    private static String UPLOADED_FOLDER = "/images";
+    private static String UPLOADED_FOLDER = "\\resources\\static\\fotos";
+
+
+
+
 
     @Autowired
     private ServiciosRenta serviciosRenta;
@@ -45,22 +49,19 @@ public class EquipoController {
         //subFamilias:
         List<Categoria> subCategorias = serviciosCategoria.findAllSubFamilias();
         model.addAttribute("subfamilias", subCategorias);
+
         model.addAttribute("categorias", categories);
         model.addAttribute("equipos", equipos);
-        return "equiposView";
+        return "equipos";
     }
 
-    @PostMapping("/add/")
-    public String crearEquipo(
-            @RequestParam("foto") MultipartFile foto,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("precio") String precio,
-            @RequestParam("existencia") String existencia,
-            @RequestParam("categoria") String categoria,
-            @RequestParam("subfamilia") String subfamilia,
-            RedirectAttributes redirectAttributes) {
+    @PostMapping("/")
+    public String crearEquipo(@RequestParam("foto") MultipartFile foto, @RequestParam("nombre") String nombre, @RequestParam("precio") String precio, @RequestParam("existencia") String existencia,
+                              @RequestParam("categoria") String categoria, @RequestParam("subfamilia") String subfamilia,
+                              RedirectAttributes redirectAttributes) {
 
         Equipo equipo = new Equipo();
+
         try {
 
             byte[] bytes = foto.getBytes();
@@ -77,16 +78,16 @@ public class EquipoController {
         equipo.setNombre(nombre);
         equipo.setCostoPorDia(Long.parseLong(precio));
         equipo.setExistencia(Integer.parseInt(existencia));
-        Categoria Categoria = serviciosCategoria.buscarByNombre(categoria);
-        System.out.println(Categoria.getNombre());
-        equipo.setCategoria(Categoria);
+        System.out.println(categoria);
+        Categoria categoria1 = serviciosCategoria.buscarByNombre(categoria);
+        equipo.setCategoria(categoria1);
         equipo.setSubCategoria(serviciosCategoria.buscarByNombreSubFamilia(subfamilia));
         serviciosEquipo.crearEquipo(equipo);
         return "redirect:/equipos/";
 
     }
 
-    @RequestMapping(value = "/detail/{id}/", method = RequestMethod.GET)
+    @RequestMapping(value = "/ver/{id}", method = RequestMethod.GET)
     public String ver(Model model, @PathVariable String id)
     {
         Equipo equipo = serviciosEquipo.getEquipoById(Long.parseLong(id));
@@ -96,14 +97,10 @@ public class EquipoController {
 
     }
 
-    @PostMapping("/edit/{id}")
-    public String modificarEquipo(
-            @RequestParam("nombre2") String nombre,
-            @RequestParam("id2") String id,
-            @RequestParam("precio2") String precio,
-            @RequestParam("existencia2") String existencia,
-            @RequestParam("categoria2") String categoria,
-            @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
+    @PostMapping("/modificar/")
+    public String modificarEquipo(@RequestParam("nombre2") String nombre, @RequestParam("id2") String id,@RequestParam("precio2") String precio,
+                                  @RequestParam("existencia2") String existencia, @RequestParam("categoria2") String categoria,
+                                  @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
 
         Equipo equipo = serviciosEquipo.getEquipoById(Long.parseLong(id));
         equipo.setNombre(nombre);
@@ -128,7 +125,7 @@ public class EquipoController {
     }
 
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String borrarEquipo(@PathVariable String id) {
         Equipo equipo = serviciosEquipo.getEquipoById(Long.parseLong(id));
         serviciosEquipo.eliminarEquipo(equipo.getId());
@@ -137,7 +134,7 @@ public class EquipoController {
     }
 
 
-    @RequestMapping(value = "/delivered/", method = RequestMethod.GET)
+    @RequestMapping(value = "/nodevueltos/", method = RequestMethod.GET)
     public String listadonodevueltos(Model model) {
 
         List<Object[]> nodevueltos = serviciosRenta.equiposRentaNoDevueltos();
