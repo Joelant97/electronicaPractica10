@@ -1,8 +1,10 @@
 package electronicapractica10.demo.configuracion;
 
+import electronicapractica10.demo.service.ServiciosUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,13 +27,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-            auth
-            .userDetailsService(userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder);
-    }
+
 
     /*
      * Permite configurar las reglas de seguridad.
@@ -49,7 +45,6 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() // cualquier llamada debe ser validada
                 .antMatchers("/**").fullyAuthenticated()
                 .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
-
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
                 .permitAll().and().logout().permitAll();
@@ -58,7 +53,5 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
-
-
 
 }
