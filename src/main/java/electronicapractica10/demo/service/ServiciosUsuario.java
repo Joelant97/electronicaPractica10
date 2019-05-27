@@ -6,7 +6,6 @@ import electronicapractica10.demo.model.Usuario;
 import electronicapractica10.demo.repository.RepositorioRol;
 import electronicapractica10.demo.repository.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +13,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,11 +34,13 @@ public class ServiciosUsuario implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     @Autowired
     private RepositorioUsuario repositorioUsuario;
 
     @Autowired
     private RepositorioRol repositorioRol;
+
 
 
 
@@ -66,17 +65,18 @@ public class ServiciosUsuario implements UserDetailsService {
         return usuario;
     }
 
-
     //Metodo Actualiza el Usuario:
     @Transactional
     public void actualizarUsuario(Usuario usuario){
         crearUsuario(usuario);
     }
 
+
     @Transactional
     public Usuario buscarPorNombre(String username) {
         return repositorioUsuario.findByUsername(username);
     }
+
 
     public void autoLogin(String username, String password) {
         UserDetails userDetails = loadUserByUsername(username);
@@ -95,6 +95,7 @@ public class ServiciosUsuario implements UserDetailsService {
         return repositorioUsuario.count() + 1;
     }
 
+
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if (userDetails instanceof UserDetails) {
@@ -106,10 +107,9 @@ public class ServiciosUsuario implements UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username)
-    throws UsernameNotFoundException {
-
+    public UserDetails loadUserByUsername(String username) {
         Usuario user = repositorioUsuario.findByUsername(username);
+
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Rol role : user.getRoles()){
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));

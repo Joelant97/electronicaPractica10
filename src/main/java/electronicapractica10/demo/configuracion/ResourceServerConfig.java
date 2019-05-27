@@ -1,6 +1,5 @@
 package electronicapractica10.demo.configuracion;
 
-import electronicapractica10.demo.service.ServiciosUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +19,6 @@ import javax.sql.DataSource;
 @Configurable
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -28,6 +26,15 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder);
+    }
 
     /*
      * Permite configurar las reglas de seguridad.
@@ -38,6 +45,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //Marcando las reglas para permitir unicamente los usuarios
 
+
         http.authorizeRequests().antMatchers("/assets/**", "/vendor/**", "ajax", "/stylesheets/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
                 .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/index/**").hasAnyRole("ADMIN", "USER")
@@ -45,13 +53,37 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() // cualquier llamada debe ser validada
                 .antMatchers("/**").fullyAuthenticated()
                 .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
+
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
                 .permitAll().and().logout().permitAll();
+
+
 
         //deshabilitando las seguridad contra los frame
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
 
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
+
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    }
 }
