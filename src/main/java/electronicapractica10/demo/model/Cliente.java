@@ -1,40 +1,55 @@
 package electronicapractica10.demo.model;
 
-import org.hibernate.annotations.Loader;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-public class Cliente implements Serializable{
+public class Cliente implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    @GeneratedValue
+    private Long id;
+
     private String nombre;
+
     private String cedula;
-    @Loader
-    @Column(name = "foto", columnDefinition = "BLOB")
-    private byte[] foto;
+    @Column()
+    private long telefono;
+    @Column(nullable = true)
     private String correo;
-    private String telefono;
 
-    public Cliente(){
+    @Column(columnDefinition = "TEXT")
+    private String foto;
 
+    private Boolean activo;
+
+    @OneToMany
+    private Set<Rol> rolSet;
+
+    public Cliente() {
     }
 
-    public Cliente(String nombre, String cedula, byte[] foto, String correo, String telefono){
-
+    public Cliente(String nombre, String cedula, int telefono, String correo, String foto, Boolean activo, Set<Rol> rolSet) {
         this.nombre = nombre;
         this.cedula = cedula;
-        this.foto = foto;
-        this.correo = correo;
         this.telefono = telefono;
-
+        this.correo = correo;
+        this.foto = foto;
+        this.activo = activo;
+        this.rolSet = rolSet;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -53,12 +68,12 @@ public class Cliente implements Serializable{
         this.cedula = cedula;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public long getTelefono() {
+        return telefono;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setTelefono(long telefono) {
+        this.telefono = telefono;
     }
 
     public String getCorreo() {
@@ -69,19 +84,27 @@ public class Cliente implements Serializable{
         this.correo = correo;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    @Override
-    public String toString(){
-      return this.nombre + this.cedula + this.telefono;
+    public Set<Rol> getRolSet() {
+        return rolSet;
     }
 
+    public void setRolSet(Set<Rol> rolSet) {
+        this.rolSet = rolSet;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }
-
-

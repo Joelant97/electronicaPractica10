@@ -36,8 +36,20 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-freemarker')
     runtimeOnly('com.h2database:h2')
+    runtime('org.springframework.boot:spring-boot-devtools')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
+
+    //Dependencia Jquery
+    compile 'org.webjars:jquery:3.3.1-1'
+
+    //Dependencia para Joda (DateTime):
+    compile group: 'joda-time', name: 'joda-time', version: '2.10'
+
+    //Spring Session.
+    compile('org.springframework.session:spring-session-core')
+    //Hazelcast.
+    compile('org.springframework.session:spring-session-hazelcast')
    
 }
 

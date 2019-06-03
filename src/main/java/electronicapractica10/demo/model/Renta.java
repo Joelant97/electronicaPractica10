@@ -2,80 +2,67 @@ package electronicapractica10.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
+import java.util.Set;
 
 @Entity
-public class Renta implements Serializable{
+public class Renta implements Serializable {
+
     @Id
     @GeneratedValue
-    private long id;
-    private Date fechaInicioRenta;
-    private Date fechaFinRenta;
-    private String estado;
+    private Long id;
 
+    private Date fecha;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private List<Equipo> equipos;
+    private Date fechaEntrega;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToOne
     private Cliente cliente;
 
-    private long total;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<EquipoRenta> equipoRenta;
 
+    private Boolean pendiente;
 
+    private int cantidadEquipos;
 
-    public Renta(){
+    private int costo;
 
+    public Renta() {
     }
 
-    public Renta(Date fechaInicioRenta, Date fechaFinRenta, String estado, List<Equipo> equipos, Cliente cliente, long total) {
-        this.fechaInicioRenta = fechaInicioRenta;
-        this.fechaFinRenta = fechaFinRenta;
-        this.estado = estado;
-        this.equipos = equipos;
+    public Renta(Date fecha, Date fechaEntrega, Cliente cliente, Set<EquipoRenta> equipoRenta, Boolean pendiente, int cantidadEquipos, int costo) {
+        this.fecha = fecha;
+        this.fechaEntrega = fechaEntrega;
         this.cliente = cliente;
-        this.total = total;
+        this.equipoRenta = equipoRenta;
+        this.pendiente = pendiente;
+        this.cantidadEquipos = cantidadEquipos;
+        this.costo = costo;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Date getFechaInicioRenta() {
-        return fechaInicioRenta;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaInicioRenta(Date fechaInicioRenta) {
-        this.fechaInicioRenta = fechaInicioRenta;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Date getFechaFinRenta() {
-        return fechaFinRenta;
+    public Date getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFechaFinRenta(Date fechaFinRenta) {
-        this.fechaFinRenta = fechaFinRenta;
-    }
-
-    public List<Equipo> getEquipos() {
-        return equipos;
-    }
-
-    public void setEquipos(List<Equipo> equipos) {
-        this.equipos = equipos;
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public Cliente getCliente() {
@@ -86,13 +73,35 @@ public class Renta implements Serializable{
         this.cliente = cliente;
     }
 
-    public long getTotal() {
-        return total;
+    public Set<EquipoRenta> getEquipoRenta() {
+        return equipoRenta;
     }
 
-    public void setTotal(long total) {
-        this.total = total;
+    public void setEquipoRenta(Set<EquipoRenta> equipoRenta) {
+        this.equipoRenta = equipoRenta;
+    }
+
+    public Boolean getPendiente() {
+        return pendiente;
+    }
+
+    public void setPendiente(Boolean pendiente) {
+        this.pendiente = pendiente;
+    }
+
+    public int getCantidadEquipos() {
+        return cantidadEquipos;
+    }
+
+    public void setCantidadEquipos(int cantidadEquipos) {
+        this.cantidadEquipos = cantidadEquipos;
+    }
+
+    public int getCosto() {
+        return costo;
+    }
+
+    public void setCosto(int costo) {
+        this.costo = costo;
     }
 }
-
-

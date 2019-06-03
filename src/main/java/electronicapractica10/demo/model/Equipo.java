@@ -1,49 +1,49 @@
 package electronicapractica10.demo.model;
 
-import org.hibernate.annotations.Loader;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class Equipo implements Serializable {
+
+
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Categoria categoria;
+    private int tarifa;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Categoria subCategoria;
+    @Column(columnDefinition = "TEXT")
+    private String foto;
 
-    private long existencia;
-    private long costoPorDia;
-    //private String foto;
-    @Loader
-    @Column(name = "foto", columnDefinition = "BLOB")
-    private byte[] foto;
+    private String familia;
+
+    private String subFamilia;
+
+    private Boolean activo;
+
+    private int cantidad;
 
     public Equipo() {
     }
 
-
-    public Equipo(String nombre, Categoria categoria, Categoria subCategoria, long existencia, long costoPorDia, byte[] foto) {
+    public Equipo(String nombre, int tarifa, String foto, String familia, String subFamilia, Boolean activo, int cantidad) {
         this.nombre = nombre;
-        this.categoria = categoria;
-        this.subCategoria = subCategoria;
-        this.existencia = existencia;
-        this.costoPorDia = costoPorDia;
+        this.tarifa = tarifa;
         this.foto = foto;
+        this.familia = familia;
+        this.subFamilia = subFamilia;
+        this.activo = activo;
+        this.cantidad = cantidad;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,44 +55,51 @@ public class Equipo implements Serializable {
         this.nombre = nombre;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public int getTarifa() {
+        return tarifa;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setTarifa(int tarifa) {
+        this.tarifa = tarifa;
     }
 
-    public Categoria getSubCategoria() {
-        return subCategoria;
-    }
-
-    public void setSubCategoria(Categoria subCategoria) {
-        this.subCategoria = subCategoria;
-    }
-
-    public long getExistencia() {
-        return existencia;
-    }
-
-    public void setExistencia(long existencia) {
-        this.existencia = existencia;
-    }
-
-    public long getCostoPorDia() {
-        return costoPorDia;
-    }
-
-    public void setCostoPorDia(long costoPorDia) {
-        this.costoPorDia = costoPorDia;
-    }
-
-
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public String getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(String familia) {
+        this.familia = familia;
+    }
+
+    public String getSubFamilia() {
+        return subFamilia;
+    }
+
+    public void setSubFamilia(String subFamilia) {
+        this.subFamilia = subFamilia;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 }

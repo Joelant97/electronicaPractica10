@@ -6,58 +6,63 @@ import java.util.Set;
 
 @Entity
 public class Usuario implements Serializable {
+
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private long id;
-    @Column(name = "username")
-    private String username;
-    private boolean isAdmin;
-    @Column(name = "password")
+    private Long id;
+
+    private String nombre;
+
+    private String usuario;
+
     private String password;
-    @Column(name = "telefono")
-    private String telefono;
+
     private boolean activo;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Rol> roles;
-
-    public Usuario(String username, boolean isAdmin, String password, String telefono, boolean activo, Set<Rol> roles) {
-        this.username = username;
-        this.isAdmin = isAdmin;
-        this.password = password;
-        this.telefono = telefono;
-        this.activo = activo;
-        this.roles = roles;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Rol> rolSet;
 
     public Usuario() {
-
     }
 
+    public Usuario(String nombre, String usuario, String password, boolean activo, Set<Rol> rolSet) {
+        this.nombre = nombre;
+        this.usuario = usuario;
+        this.password = password;
+        this.activo = activo;
+        this.rolSet = rolSet;
+    }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public Set<Rol> getRolSet() {
+        return rolSet;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
+    public void setRolSet(Set<Rol> rolSet) {
+        this.rolSet = rolSet;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getPassword() {
@@ -68,31 +73,11 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public boolean getActivo() {
+    public boolean isActivo() {
         return activo;
     }
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public Set<Rol> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Rol> roles) {
-        this.roles = roles;
     }
 }
