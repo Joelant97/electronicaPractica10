@@ -49,7 +49,7 @@ public class EquipoController {
 
         model.addAttribute("categorias", categories);
         model.addAttribute("equipos", equipos);
-        return "equiposView";
+        return "equipos";
     }
 
     @PostMapping("/add/")

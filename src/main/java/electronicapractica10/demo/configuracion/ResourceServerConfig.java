@@ -45,11 +45,11 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //Marcando las reglas para permitir unicamente los usuarios
 
-
         http.authorizeRequests().antMatchers("/assets/**", "/vendor/**", "ajax", "/stylesheets/**", "/javascripts/**", "/images/**").permitAll() // permitiendo llamadas a esas urls.
-                .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/index/**").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/usuarios/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/h2-console/**").permitAll().antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN", "USER")
+                .antMatchers("/inicio/**").hasAnyRole("ROLE_ADMIN", "USER")
+                .antMatchers("/usuarios/**").hasAnyRole("ROLE_ADMIN", "USER")
+                .antMatchers("/equipos/**").hasAnyRole("ROLE_ADMIN", "USER")
                 .anyRequest().authenticated() // cualquier llamada debe ser validada
                 .antMatchers("/**").fullyAuthenticated()
                 .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.

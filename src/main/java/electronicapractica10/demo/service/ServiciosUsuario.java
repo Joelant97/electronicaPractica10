@@ -42,8 +42,6 @@ public class ServiciosUsuario implements UserDetailsService {
     private RepositorioRol repositorioRol;
 
 
-
-
     @Transactional
     public List<Usuario> findAllUsuario(){
 
@@ -80,7 +78,8 @@ public class ServiciosUsuario implements UserDetailsService {
 
     public void autoLogin(String username, String password) {
         UserDetails userDetails = loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

@@ -89,7 +89,7 @@
 												<figure class="image">
 													<img src="assets/images/!sample-user.jpg" alt="Joseph Doe Junior" class="img-circle" />
 												</figure>
-												<span class="title">Joseph Doe</span>
+												<span class="title">Name </span>
 												<span class="message">Lorem ipsum dolor sit.</span>
 											</a>
 										</li>
@@ -111,15 +111,23 @@
 												<span class="message">Lorem ipsum dolor sit.</span>
 											</a>
 										</li>
+
 										<li>
 											<a href="#" class="clearfix">
 												<figure class="image">
 													<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
 												</figure>
-												<span class="title">Joseph Junior</span>
-												<span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
+												<span class="title">${username}</span>
+												<ul>
+													<#list roles as role>
+													<li>
+														<span class="message">${role}</span>
+													</li>
+													</#list>
+												</ul>
 											</a>
 										</li>
+
 									</ul>
 			
 									<hr />
@@ -191,7 +199,7 @@
 								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								<span class="name">John Doe Junior</span>
+								<span class="name">${username}</span>
 								<span class="role">administrator</span>
 							</div>
 			
