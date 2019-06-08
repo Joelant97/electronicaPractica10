@@ -1,16 +1,12 @@
 package electronicapractica10.demo.repository;
 
-import electronicapractica10.demo.model.Rol;
+import electronicapractica10.demo.model.Factura;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface RepositorioRol extends JpaRepository<Rol, Long> {
+public interface FacturaRepository extends JpaRepository<Factura, Long> {
 
-
-    Rol findByRole(String rol);
-
-
+    Factura findById(long id);
 
 }

@@ -1,63 +1,40 @@
 package electronicapractica10.demo.model;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import javax.annotation.Generated;
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Rol implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
-    private long id;
-    @Column(name = "role")
-    private String role;
+    private Long id;
 
-/*
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "rol_id", nullable = true, updatable = false)
-    private Rol rol;
-*/
+    private String nombre;
 
-    public Rol(String role) {
-        this.role = role;
+    public Rol() {
     }
 
-    public Rol(){
-
+    public Rol(String nombre) {
+        this.nombre = nombre;
     }
 
-    private boolean deleted = false;
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
 }
