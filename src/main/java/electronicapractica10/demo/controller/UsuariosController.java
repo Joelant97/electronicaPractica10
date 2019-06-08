@@ -3,12 +3,10 @@ package electronicapractica10.demo.controller;
 import java.util.List;
 import java.util.Locale;
 
-import javax.websocket.server.PathParam;
-
 import electronicapractica10.demo.model.Usuario;
 import electronicapractica10.demo.service.RolServices;
-import electronicapractica10.demo.service.UsuarioServices;
 
+import electronicapractica10.demo.service.ServiciosUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -31,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UsuariosController {
 
     @Autowired
-    UsuarioServices usuariosServices;
+    ServiciosUsuario usuariosServices;
 
     @Autowired
     RolServices rolServices;

@@ -19,104 +19,91 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
 public class ServiciosUsuario implements UserDetailsService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private RepositorioUsuario usuarioRepository;
 
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private RolRepository rolRepository;
 
+    //Para encriptar la información.
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    private RepositorioUsuario repositorioUsuario;
-
-    @Autowired
-    private RolRepository repositorioRol;
-
+    /**
+     * Funcion para crear administrador
+     */
     @Transactional
-    public List<Usuario> findAllUsuario(){
+    public void crearAdmin() {
 
-        return repositorioUsuario.findAll();
-    }
+        if (!buscarAdmin()) {
 
-    @Transactional
-    public Usuario buscarById(Long id){
-        return repositorioUsuario.findById(id).get();
-    }
-
-    @Transactional
-    public Usuario crearUsuario(Usuario usuario) {
-        usuario.setPassword(bCryptPasswordEncoder.encode(usuario.getPassword()));
-
-        //usuario.setRoles(new HashSet<>(repositorioRol.findAll()));
-
-        repositorioUsuario.save(usuario);
-        return usuario;
-    }
+            Rol rol = new Rol("ROLE_ADMIN");
+            rolRepository.save(rol);
 
 
-    //Metodo Actualiza el Usuario:
-    @Transactional
-    public void actualizarUsuario(Usuario usuario){
-        crearUsuario(usuario);
-    }
+            Usuario admin = new Usuario();
+            admin.setNombre("admin");
+            admin.setUsuario("admin");
+            admin.setPassword(bCryptPasswordEncoder.encode("admin"));
+            admin.setActivo(true);
+            admin.setRolSet(new HashSet<>(Arrays.asList(rol)));
 
-    @Transactional
-    public Usuario buscarPorNombre(String username) {
-        return repositorioUsuario.findByUsername(username);
-    }
-
-    public void autoLogin(String username, String password) {
-        UserDetails userDetails = loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            System.out.println("--> El Login funciona para el usuario: " + username);
-        }
-    }
-
-    public long getIDCount() {
-
-        return repositorioUsuario.count() + 1;
-    }
-
-    public String findLoggedInUsername() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails)userDetails).getUsername();
+            usuarioRepository.save(admin);
         }
 
-        return null;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
+    public void eliminarUsuario(long id) {
+
+        Usuario usuario = usuarioRepository.findById(id);
+        usuario.setActivo(false);
+        usuarioRepository.save(usuario);
+    }
+    /**
+     * Funcion para revisar si el admin existe.
+     */
+    private boolean buscarAdmin() {
+
+        Rol rol = rolRepository.findByNombre("ROLE_ADMIN");
+        if (rol == null){
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public List<Usuario> obtenerUsuarios() {
+
+        return usuarioRepository.findAllByActivo(true);
+
+    }
+
+    @Transactional
+    public void guardarUsuario(Usuario usuario) {
+
+        usuarioRepository.save(usuario);
+    }
+
+
     @Override
-    public UserDetails loadUserByUsername(String username)
-    throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario user = usuarioRepository.findByNombre(username);
 
-        Usuario user = repositorioUsuario.findByUsername(username);
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        for (Rol role : user.getRolSet()){
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getNombre()));
+        Set<GrantedAuthority> roles = new HashSet<GrantedAuthority>();
+        for (Rol role : user.getRolSet()) {
+            roles.add(new SimpleGrantedAuthority(role.getNombre()));
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsuario(), user.getPassword(), grantedAuthorities);
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
+
+        return new org.springframework.security.core.userdetails.User(user.getUsuario(), user.getPassword(), user.isActivo(), true, true, true, grantedAuthorities);
     }
-
-
 }
-
-
 

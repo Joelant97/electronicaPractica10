@@ -16,7 +16,7 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(Model model, @RequestParam Optional<String> error){
         model.addAttribute("error", error);
-        return "/freemarker/login";
+        return "login";
     }
 
     
