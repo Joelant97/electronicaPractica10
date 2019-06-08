@@ -1,19 +1,19 @@
 package electronicapractica10.demo.service;
 
-import java.util.List;
 
 import electronicapractica10.demo.model.Rol;
 import electronicapractica10.demo.repository.RolRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * RolServices
  */
 @Service
-public class RolServices {
+public class ServiciosRol {
 
     @Autowired
     RolRepository rolRepository;

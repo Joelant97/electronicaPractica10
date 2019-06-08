@@ -17,26 +17,26 @@
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
 
 		<!-- Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.css" />
-		<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.css" />
-		<link rel="stylesheet" href="assets/vendor/magnific-popup/magnific-popup.css" />
-		<link rel="stylesheet" href="assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
+		<link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="/assets/vendor/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="/assets/vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
 		<!-- Specific Page Vendor CSS -->
-		<link rel="stylesheet" href="assets/vendor/select2/select2.css" />
-		<link rel="stylesheet" href="assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
+		<link rel="stylesheet" href="/assets/vendor/select2/select2.css" />
+		<link rel="stylesheet" href="/assets/vendor/jquery-datatables-bs3/assets/css/datatables.css" />
 
 		<!-- Theme CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme.css" />
+		<link rel="stylesheet" href="/assets/stylesheets/theme.css" />
 
 		<!-- Skin CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/skins/default.css" />
+		<link rel="stylesheet" href="/assets/stylesheets/skins/default.css" />
 
 		<!-- Theme Custom CSS -->
-		<link rel="stylesheet" href="assets/stylesheets/theme-custom.css">
+		<link rel="stylesheet" href="/assets/stylesheets/theme-custom.css">
 
 		<!-- Head Libs -->
-		<script src="assets/vendor/modernizr/modernizr.js"></script>
+		<script src="/assets/vendor/modernizr/modernizr.js"></script>
 
 	</head>
 	<body>
@@ -738,53 +738,98 @@
 					</header>
 
 					<!-- start: page -->
-						<section class="panel">
-							<header class="panel-heading">
-								<div class="panel-actions">
-									<a href="#" class="fa fa-caret-down"></a>
-									<a href="#" class="fa fa-times"></a>
-								</div>
-						
-								<h2 class="panel-title">Default</h2>
-							</header>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="mb-md">
-											<button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
-										</div>
-									</div>
-								</div>
-								<table class="table table-bordered table-striped mb-none" id="datatable-editable">
-									<thead>
-										<tr>
-											<th>Nombre</th>
-											<th>Cédula</th>
-											<th>Correo</th>
-											<th>Telefono</th>
-											<th>Foto</th>
-										</tr>
-									</thead>
-									<tbody>
-									<#list clientes as cliente>
-										<tr class="gradeX">
-											<td>${cliente.nombre}</td>
-											<td>$cliente.{cedula}</td>
-											<td>${cliente.correo}</td>
-											<td>${cliente.telefono}</td>
-											<td>${cliente.foto}</td>
-											<td class="actions">
-												<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-												<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-												<a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-												<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
-											</td>
-										</tr>
-									</#list>
-										</tbody>
-								</table>
-							</div>
-						</section>
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <div class="panel-actions">
+                                <a href="#" class="fa fa-caret-down"></a>
+                                <a href="#" class="fa fa-times"></a>
+                            </div>
+
+                            <h2 class="panel-title">Clientes</h2>
+                        </header>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="mb-md">
+                                        <a class="popup-with-form btn btn-primary" href="#demo-form">Agregar <i class="fa fa-plus"></i></a>
+                                    </div>
+                                </div>
+                                <!-- Cliente Form -->
+                                <form id="demo-form" class="white-popup-block mfp-hide form-horizontal"
+							  	action="/clientes/add/" method="post" enctype='multipart/form-data'>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3>Formulario Cliente</h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-3 control-label">Nombre</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="nombre" class="form-control"  required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-3 control-label">Cédula</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="cedula" class="form-control"  required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-lg">
+                                        <label class="col-sm-3 control-label">Telefono</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="telefono" class="form-control"  required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" name="correo" class="form-control"  required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Foto de perfil</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" accept="image/png, image/jpeg" id="foto" name="foto">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-lg">
+                                        <div class="col-sm-9 col-sm-offset-3">
+                                            <button class="btn btn-primary">Guardar</button>
+                                            <button type="reset" class="btn btn-default">Reset</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <table class="table table-bordered table-striped mb-none" id="datatable-editable">
+                                <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Cédula</th>
+                                    <th>Correo</th>
+                                    <th>Telefono</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <#list clientes as cliente>
+                                    <tr class="gradeX">
+                                        <td>${cliente.getNombre()}</td>
+                                        <td>${cliente.getCedula()}</td>
+                                        <td>${cliente.getCorreo()}</td>
+                                        <td>${cliente.getTelefono()}</td>
+                                        <td class="actions">
+                                            <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+                                            <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                                            <a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+                                            <a href="delete/${cliente.getId()}" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    </tr>
+                                    </#list>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
 					<!-- end: page -->
 				</section>
 			</div>
@@ -882,30 +927,31 @@
 		</div>
 
 		<!-- Vendor -->
-		<script src="assets/vendor/jquery/jquery.js"></script>
-		<script src="assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
-		<script src="assets/vendor/bootstrap/js/bootstrap.js"></script>
-		<script src="assets/vendor/nanoscroller/nanoscroller.js"></script>
-		<script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-		<script src="assets/vendor/magnific-popup/magnific-popup.js"></script>
-		<script src="assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+		<script src="/assets/vendor/jquery/jquery.js"></script>
+		<script src="/assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="/assets/vendor/bootstrap/js/bootstrap.js"></script>
+		<script src="/assets/vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="/assets/vendor/magnific-popup/magnific-popup.js"></script>
+		<script src="/assets/vendor/jquery-placeholder/jquery.placeholder.js"></script>
 		
 		<!-- Specific Page Vendor -->
-		<script src="assets/vendor/select2/select2.js"></script>
-		<script src="assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
-		<script src="assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
+		<script src="/assets/vendor/select2/select2.js"></script>
+		<script src="/assets/vendor/jquery-datatables/media/js/jquery.dataTables.js"></script>
+		<script src="/assets/vendor/jquery-datatables-bs3/assets/js/datatables.js"></script>
 		
 		<!-- Theme Base, Components and Settings -->
-		<script src="assets/javascripts/theme.js"></script>
+		<script src="/assets/javascripts/theme.js"></script>
 		
 		<!-- Theme Custom -->
-		<script src="assets/javascripts/theme.custom.js"></script>
-		
+		<script src="/assets/javascripts/theme.custom.js"></script>
+
 		<!-- Theme Initialization Files -->
-		<script src="assets/javascripts/theme.init.js"></script>
+		<script src="/assets/javascripts/theme.init.js"></script>
 
 
 		<!-- Examples -->
-		<script src="assets/javascripts/tables/examples.datatables.editable.js"></script>
+		<script src="/assets/javascripts/tables/examples.datatables.editable.js"></script>
+        <script src="/assets/javascripts/ui-elements/examples.lightbox.js"></script>
 	</body>
 </html>
