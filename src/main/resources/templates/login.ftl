@@ -37,10 +37,9 @@
 	<body>
 		<!-- start: page -->
 		<section class="body-sign">
-			<div class="center-sign">
-
-
+			<div class="center-sign"
 				<div class="panel panel-sign">
+					<span> ${error} </span>
 					<div class="panel-title-sign mt-xl text-right">
 						<h2 class="title text-uppercase text-bold m-none"><i class="fa fa-user mr-xs"></i> Sign In</h2>
 					</div>

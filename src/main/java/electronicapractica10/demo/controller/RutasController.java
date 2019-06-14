@@ -18,20 +18,7 @@ public class RutasController {
     @RequestMapping(value = {"/"})
     public String index(Model model, Locale locale, HttpServletRequest request) {
 
-        model.addAttribute("titulo_inicio", messageSource.getMessage("titulo_inicio", null, locale));
-        model.addAttribute("titulo_clientes", messageSource.getMessage("titulo_clientes", null, locale));
-        model.addAttribute("titulo_usuarios", messageSource.getMessage("titulo_usuarios", null, locale));
-        model.addAttribute("titulo_equipos", messageSource.getMessage("titulo_equipos", null, locale));
-        model.addAttribute("titulo_alquileres", messageSource.getMessage("titulo_alquileres", null, locale));
-        model.addAttribute("titulo_reportes", messageSource.getMessage("titulo_reportes", null, locale));
-        model.addAttribute("puerto", request.getLocalPort());
-        return "/freemarker/index";
+        return "index";
     }
-
- 
-
-    
-
-
 
 }

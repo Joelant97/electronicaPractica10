@@ -28,37 +28,6 @@ public class SecurityService {
      * Creando el usuario por defecto y su rol.
      */
 
-
-    public void crearUsuarioAdmin(){
-        System.out.println("Creación del usuario y rol en la base de datos");
-
-//        Rol rolAdmin = new Rol("ADMIN");
-//        repositorioRol.save(rolAdmin);
-//        Usuario admin = new Usuario();
-//        admin.setUsuario("admin");
-//        admin.setPassword(bCryptPasswordEncoder.encode("admin"));
-//        admin.setActivo(true);
-//        admin.set(true);
-//        admin.setRoles(new HashSet<>(Arrays.asList(rolAdmin)));
-//        repositorioUsuario.save(admin);
-
-
-
-        Rol rol = new Rol("ROLE_ADMIN");
-        repositorioRol.save(rol);
-
-
-        Usuario admin = new Usuario();
-        admin.setNombre("admin");
-        admin.setUsuario("admin");
-        admin.setPassword(bCryptPasswordEncoder.encode("admin"));
-        admin.setActivo(true);
-        admin.setRolSet(new HashSet<>(Arrays.asList(rol)));
-
-        repositorioUsuario.save(admin);
-
-    }
-
     /**
      * Funcion para revisar si el admin existe.
      */

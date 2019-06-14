@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ public class ServiciosUsuario implements UserDetailsService {
 
     @Autowired
     private RepositorioUsuario usuarioRepository;
+
 
     @Autowired
     private RolRepository rolRepository;
@@ -47,8 +49,8 @@ public class ServiciosUsuario implements UserDetailsService {
 
 
             Usuario admin = new Usuario();
-            admin.setNombre("admin");
-            admin.setUsuario("admin");
+            admin.setNombre("lil");
+            admin.setUsuario("lil");
             admin.setPassword(bCryptPasswordEncoder.encode("admin"));
             admin.setActivo(true);
             admin.setRolSet(new HashSet<>(Arrays.asList(rol)));
