@@ -21,14 +21,12 @@
 					</form>
 			
 					<span class="separator"></span>
-			
 					<ul class="notifications">
 						<li>
 							<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
 								<i class="fa fa-tasks"></i>
 								<span class="badge">3</span>
 							</a>
-			
 							<div class="dropdown-menu notification-menu large">
 								<div class="notification-title">
 									<span class="pull-right label label-default">3</span>
@@ -117,13 +115,13 @@
 												<figure class="image">
 													<img src="assets/images/!sample-user.jpg" alt="Joseph Junior" class="img-circle" />
 												</figure>
-												<span class="title">${username}</span>
+												<span class="title">{{username}}</span>
 												<ul>
-													<#list roles as role>
+													< roles as role>
 													<li>
-														<span class="message">${role}</span>
+														<span class="message">{{role}}</span>
 													</li>
-													</#list>
+													<>
 												</ul>
 											</a>
 										</li>
@@ -199,7 +197,7 @@
 								<img src="assets/images/!logged-user.jpg" alt="Joseph Doe" class="img-circle" data-lock-picture="assets/images/!logged-user.jpg" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@JSOFT.com">
-								<span class="name">${username}</span>
+								<span class="name">{{username}}</span>
 								<span class="role">administrator</span>
 							</div>
 			

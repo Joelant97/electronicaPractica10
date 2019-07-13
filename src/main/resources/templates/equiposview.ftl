@@ -751,12 +751,12 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-md">
-                                        <a class="popup-with-form btn btn-primary" href="#demo-form">Agregar <i class="fa fa-plus"></i></a>
+                                        <a class="popup-with-form btn btn-primary" href="#equipo-form">Agregar <i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
-                                <!-- Cliente Form -->
-                                <form id="demo-form" class="white-popup-block mfp-hide form-horizontal"
-							  	action="/clientes/add/" method="post" enctype='multipart/form-data'>
+                                <!-- Equipos Form -->
+                                <form id="equipo-form" class="white-popup-block mfp-hide form-horizontal"
+							  	action="/equipos/crear/" method="post" enctype='multipart/form-data'>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <h3>Formulario Cliente</h3>
@@ -769,25 +769,31 @@
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Cédula</label>
+                                        <label class="col-sm-3 control-label">Existencia</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="cedula" class="form-control"  required />
+                                            <input type="number" name="existencia" class="form-control"  required />
                                         </div>
                                     </div>
                                     <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Telefono</label>
+                                        <label class="col-sm-3 control-label">Tarifa</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="telefono" class="form-control"  required />
+                                            <input type="number" name="tarifa" class="form-control" required />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Email</label>
+                                        <label class="col-sm-3 control-label">Familia</label>
                                         <div class="col-sm-9">
-                                            <input type="email" name="email" class="form-control"  required />
+                                            <input type="text" name="familia" class="form-control"  required />
                                         </div>
                                     </div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">SubFamilia</label>
+										<div class="col-sm-9">
+											<input type="text" name="subfamilia" class="form-control"  required />
+										</div>
+									</div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Foto de perfil</label>
+                                        <label class="col-sm-3 control-label">Foto de equipo</label>
                                         <div class="col-sm-9">
                                             <input type="file" accept="image/png, image/jpeg" id="foto" name="foto">
                                         </div>
@@ -850,26 +856,32 @@
                                 <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Cédula</th>
-                                    <th>Correo</th>
-                                    <th>Telefono</th>
+                                    <th>Existencia</th>
+                                    <th>Tarifa</th>
+                                    <th>Activo</th>
+									<th>Famiilia</th>
+									<th>SubFamilia</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-								<#list clientes as cliente>
-                                <tr class="gradeX">
-                                    <td>${cliente.getNombre()}</td>
-                                    <td>${cliente.getCedula()}</td>
-                                    <td>${cliente.getCorreo()}</td>
-                                    <td>${cliente.getTelefono()}</td>
-                                    <td class="actions">
-                                        <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                        <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
-                                        <a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                        <a href="delete/${cliente.getId()}"  class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
-								</#list>
+
+									<#list equipos as equipo>
+									<tr class="gradeX">
+										<td>${equipo.getNombre()}</td>
+										<td>${equipo.getCantidad()}</td>
+										<td>${equipo.getTarifa()}</td>
+										<td>${equipo.getActivo()?c}</td>
+										<td>${equipo.getFamilia()}</td>
+										<td>${equipo.getSubFamilia()}</td>
+										<td class="actions">
+											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
+											<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+											<a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+											<a href="delete/${equipo.getId()}"  class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+										</td>
+									</tr>
+									</#list>
+
                                 </tbody>
                             </table>
                         </div>

@@ -37,7 +37,7 @@ public class FacturaController {
     @RequestMapping("/index/facturas")
     public String index(Model model) {
         model.addAttribute("titulo", "Facturas");
-        return "/freemarker/facturas";
+        return "facturas";
     }
 
     @ResponseBody
@@ -54,7 +54,7 @@ public class FacturaController {
         Renta renta = rentaServices.buscarAlquiler(Integer.parseInt(parte[0]));
         renta.setPendiente(false);
 
-        for (EquipoRenta equipoRenta : renta.getEquipoRenta()){
+        for (EquipoRenta equipoRenta : renta.getEquipoRenta()) {
 
             Equipo equipo = equipoRenta.getEquipo();
             equipo.setCantidad(equipo.getCantidad() + renta.getCantidadEquipos());
@@ -68,7 +68,6 @@ public class FacturaController {
         factura.setTotal(Integer.parseInt(parte[1]));
 
         facturaServices.crearFactura(factura);
-
 
 
         return new ResponseEntity<>(facturaAlquiler, HttpStatus.OK);

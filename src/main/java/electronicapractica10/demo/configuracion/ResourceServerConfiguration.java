@@ -31,8 +31,10 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Marcando las reglas para permitir unicamente los usuarios
-        http.authorizeRequests().antMatchers("/assets/**").permitAll() // permitiendo llamadas a esas urls.
-                .antMatchers("/dbconsole/**").permitAll().antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN", "USER")
+        http.authorizeRequests()
+                .antMatchers("/assets/**", "/webjars/**").permitAll()
+                .antMatchers("/dbconsole/**").permitAll()
+                .antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN", "USER")
                 .antMatchers("/index/**").hasAnyRole("ROLE_ADMIN", "USER")
                 .antMatchers("/usuarios/**").hasAnyRole("ROLE_ADMIN", "USER")
                 .anyRequest().authenticated() // cualquier llamada debe ser validada
@@ -40,7 +42,7 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
                 .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/index/")
                 .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
                 .permitAll().and().logout().permitAll();
 

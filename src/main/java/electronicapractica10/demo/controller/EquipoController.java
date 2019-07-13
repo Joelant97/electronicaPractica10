@@ -85,11 +85,7 @@ public class EquipoController {
     @ResponseBody
     @RequestMapping(value = "/equipo/buscar/{id}", method = RequestMethod.GET)
     public Equipo buscarEquipo(@PathVariable(value = "id") long id) {
-
-
         return equipoServices.buscarEquipo(id);
-
-
     }
 
     @ResponseBody

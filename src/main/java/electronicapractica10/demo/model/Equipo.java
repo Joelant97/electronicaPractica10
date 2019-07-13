@@ -1,5 +1,7 @@
 package electronicapractica10.demo.model;
 
+import org.hibernate.annotations.Loader;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,8 +17,9 @@ public class Equipo implements Serializable {
 
     private int tarifa;
 
-    @Column(columnDefinition = "TEXT")
-    private String foto;
+    @Loader
+    @Column(name = "imagen", columnDefinition = "BLOB")
+    private byte[] imagen;
 
     private String familia;
 
@@ -29,10 +32,10 @@ public class Equipo implements Serializable {
     public Equipo() {
     }
 
-    public Equipo(String nombre, int tarifa, String foto, String familia, String subFamilia, Boolean activo, int cantidad) {
+    public Equipo(String nombre, int tarifa, byte[] foto, String familia, String subFamilia, Boolean activo, int cantidad) {
         this.nombre = nombre;
         this.tarifa = tarifa;
-        this.foto = foto;
+        this.imagen = foto;
         this.familia = familia;
         this.subFamilia = subFamilia;
         this.activo = activo;
@@ -63,12 +66,12 @@ public class Equipo implements Serializable {
         this.tarifa = tarifa;
     }
 
-    public String getFoto() {
-        return foto;
+    public byte[] getImagen() {
+        return imagen;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
 
     public String getFamilia() {

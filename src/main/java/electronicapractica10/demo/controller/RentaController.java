@@ -1,6 +1,7 @@
 package electronicapractica10.demo.controller;
 
 import electronicapractica10.demo.model.Cliente;
+import electronicapractica10.demo.model.Equipo;
 import electronicapractica10.demo.model.EquipoRenta;
 import electronicapractica10.demo.model.Renta;
 import electronicapractica10.demo.service.*;
@@ -22,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Controller
@@ -88,15 +90,14 @@ public class RentaController {
 
         return "/freemarker/alquileres";
     }
-
     @ResponseBody
     @RequestMapping(value = "/alquileres", produces = {"application/json"})
     public List<Renta> alquileres() {
         return rentaServices.listaAlquileres();
     }
 
-
-    @RequestMapping(value = "/alquiler/crear", method = RequestMethod.POST, consumes = "application/json")
+    @Deprecated
+    @RequestMapping(value = "/alquiler/crear", method = RequestMethod.POST)
     public ResponseEntity<List<RentaParametro>> crearAlquiler(@RequestBody List<RentaParametro> rentaParametroList) {
 
         Renta renta = new Renta();
@@ -155,6 +156,58 @@ public class RentaController {
     }
 
 
+    @PostMapping(value = "/despacho/")
+    public String despacho(@RequestParam("client") String idcliente,
+                           @RequestParam("cantidad") int cantidad,
+                           @RequestParam("ids[]") List<String> equiposid,
+                           @RequestParam("fecha") String fecha,
+                           @RequestParam("fechaentrega") String fechapromesa){
+
+        Cliente cliente = clienteServices.buscarCliente(Long.parseLong(idcliente));
+        Renta renta = new Renta();
+        Set<EquipoRenta> equipoRentaSet = new HashSet<>();
+/*
+        for (String equipoid: equiposid)
+         {
+            Equipo equipo = equipoServices.buscarEquipo(Long.parseLong(equipoid));
+             EquipoRenta equipoRenta = new EquipoRenta();
+
+             equipo.setCantidad(equipo.getCantidad() - Integer.parseInt(parte[1]));
+             crearEquipo(equipo);
+
+             equipoRenta.setEquipo(equipo);
+             equipoRenta.setCantidad(Integer.parseInt(parte[1]));
+             equipoRenta.setDevuelto(false);
+
+             equipoRentaSet.add(equipoRenta);
+
+
+            equipoRenta.add(equipo);
+            renta.setCantidadEquipos(cantidad);
+            renta.setCliente(cliente);
+            renta.setPendiente(true);
+
+            renta.setEquipoRenta(equipoRenta);
+            renta.setFecha(Date.valueOf(LocalDate.now()));
+
+
+
+            a.setEstado("Pendiente");
+            LocalDate date = LocalDate.parse(fecha);
+            LocalDate date2 = LocalDate.parse(fechapromesa);
+            a.setFechaInicioAlquiler(date);
+            a.setFechaFinAlquiler(date2);
+            a.setEquipo(equipo);
+            a.setCliente(cliente);
+            long numdays = ChronoUnit.DAYS.between(date,date2);
+            a.setCosto(1*equipo.getPrecio()*numdays);
+            clienteEquipoService.crearClienteEquipo(a);
+
+        }*/
+        return "redirect:/alquileres/";
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "/alquiler/buscar/{id}", method = RequestMethod.GET)
     public Renta buscarAlquiler(@PathVariable(value = "id") long id){
@@ -176,7 +229,6 @@ public class RentaController {
         return rentaServices.reporteEquipos();
     }
 
-
     @RequestMapping(value = "/index/alquiler/reportes", method = RequestMethod.GET)
     public String reportesAlquileres(Model model, Locale locale){
 
@@ -197,13 +249,9 @@ public class RentaController {
     @ResponseBody
     @RequestMapping(value = "/alquiler/devolver/{id}", method = RequestMethod.POST)
     public ResponseEntity<Long> devolverEquipo(@PathVariable(value = "id") long id) {
-
-
-
         equipoRentaServices.devolverEquipo(id);
 
         return new ResponseEntity<>(id, HttpStatus.OK);
-
     }
 
 }

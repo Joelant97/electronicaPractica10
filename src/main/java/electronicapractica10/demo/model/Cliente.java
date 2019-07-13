@@ -1,10 +1,6 @@
 package electronicapractica10.demo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -23,25 +19,22 @@ public class Cliente implements Serializable {
     @Column(nullable = true)
     private String correo;
 
-    @Column(columnDefinition = "TEXT")
-    private String foto;
+    @Lob
+    @Column
+    private byte[] foto;
 
     private Boolean activo;
-
-    @OneToMany
-    private Set<Rol> rolSet;
 
     public Cliente() {
     }
 
-    public Cliente(String nombre, String cedula, String telefono, String correo, String foto, Boolean activo, Set<Rol> rolSet) {
+    public Cliente(String nombre, String cedula, String telefono, String correo, byte[] foto, Boolean activo) {
         this.nombre = nombre;
         this.cedula = cedula;
         this.telefono = telefono;
         this.correo = correo;
         this.foto = foto;
         this.activo = activo;
-        this.rolSet = rolSet;
     }
 
     public Long getId() {
@@ -68,7 +61,6 @@ public class Cliente implements Serializable {
         this.cedula = cedula;
     }
 
-
     public String getTelefono() {
         return telefono;
     }
@@ -85,27 +77,15 @@ public class Cliente implements Serializable {
         this.correo = correo;
     }
 
-    public String getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 
-    public Set<Rol> getRolSet() {
-        return rolSet;
-    }
-
-    public void setRolSet(Set<Rol> rolSet) {
-        this.rolSet = rolSet;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
+    public void setActivo(boolean b) {
+        this.activo = b;
     }
 }
