@@ -1,108 +1,121 @@
 package electronicapractica10.demo.model;
 
+import electronicapractica10.demo.model.Categoria;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Loader;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Where(clause = "deleted = 0")
 public class Equipo implements Serializable {
-
 
     @Id
     @GeneratedValue
-    private Long id;
-
-    private String nombre;
-
-    private int tarifa;
-
+    @Column(name = "id")
+    private long id;
+    @Column(name = "nombreEquipo")
+    private String nombreEquipo;
+    @Column(name = "precio")
+    private float precio;
+    @Column(name = "existencia")
+    private int existencia;
     @Loader
     @Column(name = "imagen", columnDefinition = "BLOB")
     private byte[] imagen;
 
-    private String familia;
 
-    private String subFamilia;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "categoria_id", nullable = true, updatable = false)
+    private Categoria categoria;
 
-    private Boolean activo;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "subfamilia_id", nullable = true, updatable = false)
+    private SubFamilia subFamilia;
 
-    private int cantidad;
 
-    public Equipo() {
+    private boolean deleted = false;
+
+    @OneToMany(mappedBy = "equipo")
+    private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();
+
+
+    public Set<ClienteEquipo> getClienteEquipos() {
+        return clienteEquipos;
     }
 
-    public Equipo(String nombre, int tarifa, byte[] foto, String familia, String subFamilia, Boolean activo, int cantidad) {
-        this.nombre = nombre;
-        this.tarifa = tarifa;
-        this.imagen = foto;
-        this.familia = familia;
-        this.subFamilia = subFamilia;
-        this.activo = activo;
-        this.cantidad = cantidad;
+    public void setClienteEquipos(Set<ClienteEquipo> clienteEquipos) {
+        this.clienteEquipos = clienteEquipos;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreEquipo() {
+        return nombreEquipo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreEquipo(String nombreEquipo) {
+        this.nombreEquipo = nombreEquipo;
     }
 
-    public int getTarifa() {
-        return tarifa;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setTarifa(int tarifa) {
-        this.tarifa = tarifa;
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
 
-    public byte[] getImagen() {
-        return imagen;
+    public int getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(int existencia) {
+        this.existencia = existencia;
+    }
+
+    public String getImagen() {
+        return Base64.getEncoder().encodeToString(imagen);
+
     }
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
-    public String getFamilia() {
-        return familia;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setFamilia(String familia) {
-        this.familia = familia;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public String getSubFamilia() {
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public SubFamilia getSubFamilia() {
         return subFamilia;
     }
 
-    public void setSubFamilia(String subFamilia) {
+    public void setSubFamilia(SubFamilia subFamilia) {
         this.subFamilia = subFamilia;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
     }
 }

@@ -1,6 +1,5 @@
 package electronicapractica10.demo.model;
 
-import electronicapractica10.demo.model.SubFamilia;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
@@ -12,23 +11,22 @@ import java.util.List;
 
 @Entity
 @Where(clause = "deleted = 0")
-public class Categoria implements Serializable {
+public class SubFamilia implements Serializable {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private long id;
-    @Column(name = "nombreCategoria")
-    private String nombreCategoria;
+    @Column(name = "nombreSubFamilia")
+    private String nombreSubFamilia;
 
-    @OneToMany(  mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "categoria_id", nullable = true, updatable = false)
+    private Categoria categoria;
+
+    @OneToMany(  mappedBy = "subFamilia", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Equipo> equipos = new ArrayList<>();
-
-    @OneToMany(  mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<SubFamilia> subFamilia = new ArrayList<>();
-
 
     private boolean deleted = false;
 
@@ -40,12 +38,20 @@ public class Categoria implements Serializable {
         this.id = id;
     }
 
-    public String getNombreCategoria() {
-        return nombreCategoria;
+    public String getNombreSubFamilia() {
+        return nombreSubFamilia;
     }
 
-    public void setNombreCategoria(String nombreCategoria) {
-        this.nombreCategoria = nombreCategoria;
+    public void setNombreSubFamilia(String nombreSubFamilia) {
+        this.nombreSubFamilia = nombreSubFamilia;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public boolean isDeleted() {
@@ -62,13 +68,5 @@ public class Categoria implements Serializable {
 
     public void setEquipos(List<Equipo> equipos) {
         this.equipos = equipos;
-    }
-
-    public List<SubFamilia> getSubFamilia() {
-        return subFamilia;
-    }
-
-    public void setSubFamilia(List<SubFamilia> subFamilia) {
-        this.subFamilia = subFamilia;
     }
 }

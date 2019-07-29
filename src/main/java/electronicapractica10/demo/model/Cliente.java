@@ -1,56 +1,73 @@
 package electronicapractica10.demo.model;
 
+import org.hibernate.annotations.Loader;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Blob;
+import java.time.LocalDate;
+import java.util.Base64;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
+@Where(clause = "deleted = 0")
 public class Cliente implements Serializable {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
-    private Long id;
+    private long id;
 
+    @Column(name = "cedula")
+    private String cedula;
+
+    @Column(name = "nombre")
     private String nombre;
 
-    private String cedula;
-    @Column()
-    private String telefono;
-    @Column(nullable = true)
-    private String correo;
+    @Column(name = "apellido")
+    private String apellido;
 
-    @Lob
-    @Column
-    private byte[] foto;
+    @Column(name = "fechaNacimiento")
+    private LocalDate fechaNacimiento;
 
-    private Boolean activo;
+    @Loader
+    @Column(name = "imagen", columnDefinition = "BLOB")
+    private byte[] imagen;
 
-    public Cliente() {
+    private boolean deleted = false;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();
+
+
+    public Set<ClienteEquipo> getClienteEquipos() {
+        return clienteEquipos;
     }
 
-    public Cliente(String nombre, String cedula, String telefono, String correo, byte[] foto, Boolean activo) {
-        this.nombre = nombre;
+    public void setClienteEquipos(Set<ClienteEquipo> clienteEquipos) {
+        this.clienteEquipos = clienteEquipos;
+    }
+
+
+    public  Cliente(){
+
+    }
+    public Cliente(String cedula, String nombre, LocalDate fechaNacimiento) {
         this.cedula = cedula;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.foto = foto;
-        this.activo = activo;
+        this.nombre = nombre;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public String getCedula() {
@@ -61,31 +78,43 @@ public class Cliente implements Serializable {
         this.cedula = cedula;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public void setActivo(boolean b) {
-        this.activo = b;
+    public String getImagen() {
+        return Base64.getEncoder().encodeToString(imagen);
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

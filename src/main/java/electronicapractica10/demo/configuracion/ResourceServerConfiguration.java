@@ -2,7 +2,9 @@ package electronicapractica10.demo.configuracion;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,46 +12,80 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.sql.DataSource;
+
 @Configurable
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
 
-    // Opción JPA
-    @Qualifier("serviciosUsuario")
     @Autowired
-    private UserDetailsService userDetailsService;
+    public UserDetailsService userDetailsService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
+    @Autowired
+    private DataSource dataSource;
+
+
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Clase para encriptar contraseña
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        // Configuración JPA.
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select username, password, active from usuario where username = ?")
+                .authoritiesByUsernameQuery("select u.username, r.nombre_rol from usuario u inner join rol r on u.rol_id = r.id where u.username = ?")
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Marcando las reglas para permitir unicamente los usuarios
-        http.authorizeRequests()
-                .antMatchers("/assets/**", "/webjars/**").permitAll()
-                .antMatchers("/dbconsole/**").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ROLE_ADMIN", "USER")
-                .antMatchers("/index/**").hasAnyRole("ROLE_ADMIN", "USER")
-                .antMatchers("/usuarios/**").hasAnyRole("ROLE_ADMIN", "USER")
-                .anyRequest().authenticated() // cualquier llamada debe ser validada
-                .antMatchers("/**").fullyAuthenticated()
-                .and().formLogin().loginPage("/login") // indicando la ruta que estaremos utilizando.
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/index/")
-                .failureUrl("/login?error") // en caso de fallar puedo indicar otra pagina.
-                .permitAll().and().logout().permitAll();
+        //Marcando las reglas para permitir unicamente los usuarios
+        http
+                .authorizeRequests()
+                .antMatchers("/assets/**", "/javascripts/**",  "/img/**").permitAll() //permitiendo llamadas a esas urls.
+                .antMatchers("/h2/**").permitAll()
+                .antMatchers("/").hasAnyAuthority("ADMIN","Vendedor")
+                .antMatchers("/usuarios/**","/roles/**" ).hasAnyAuthority("ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/login") //indicando la ruta que estaremos utilizando.
+                .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .permitAll();
 
-        // deshabilitando las seguridad contra los frame internos.
-        // Necesario para H2.
+        //deshabilitando las seguridad contra los frame internos.
+        //Necesario para H2.
         http.csrf().disable();
         http.headers().frameOptions().disable();
+    }
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return super.userDetailsService();
+    }
+
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
 }

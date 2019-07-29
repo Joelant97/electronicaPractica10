@@ -1,68 +1,79 @@
 package electronicapractica10.demo.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Where(clause = "deleted = 0")
 public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
-
-    private String nombre;
-
-    private String usuario;
-
+    @Column(name = "id")
+    private long id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
+    private String email;
 
-    private boolean activo;
+    private int active;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Rol> rolSet;
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "rol_id", nullable = true, updatable = false)
+    private Rol rol;
 
-    public Usuario() {
+    public Usuario(){
+
     }
-
-    public Usuario(String nombre, String usuario, String password, boolean activo, Set<Rol> rolSet) {
-        this.nombre = nombre;
-        this.usuario = usuario;
+    public Usuario(long id, String username, String password, String email, Rol rol) {
+        this.id = id;
+        this.username = username;
         this.password = password;
-        this.activo = activo;
-        this.rolSet = rolSet;
+        this.email = email;
+        this.rol = rol;
+        this.active = 1;
     }
 
-    public Long getId() {
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    private boolean deleted = false;
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Set<Rol> getRolSet() {
-        return rolSet;
-    }
-
-    public void setRolSet(Set<Rol> rolSet) {
-        this.rolSet = rolSet;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -73,11 +84,19 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

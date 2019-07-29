@@ -1,64 +1,72 @@
 package electronicapractica10.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Where;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Where(clause = "deleted = 0")
 public class Factura implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    @Column(name = "id")
+    private long id;
+    @Column(name = "fechaFacturacion")
+    private Date fechaFacturacion;
+    @Column(name = "montoTotal")
+    private float montoTotal;
 
-    private Date fecha;
+    @OneToMany(mappedBy = "factura")
+    private Set<FacturaEquipo> facturaEquipos = new HashSet<FacturaEquipo>();
 
-    @OneToOne
-    private Renta renta;
-
-    private int total;
-
-    public Factura() {
+    public Set<FacturaEquipo> getFacturaEquipos() {
+        return facturaEquipos;
     }
 
-    public Factura(Date fecha, Renta renta, int total) {
-        this.fecha = fecha;
-        this.renta = renta;
-        this.total = total;
+    public void setFacturaEquipos(Set<FacturaEquipo> equipos) {
+        this.facturaEquipos = equipos;
     }
 
-    public Long getId() {
+    private boolean deleted = false;
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getFechaFacturacion() {
+        return fechaFacturacion;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaFacturacion(Date fechaFacturacion) {
+        this.fechaFacturacion = fechaFacturacion;
     }
 
-    public Renta getRenta() {
-        return renta;
+    public float getMontoTotal() {
+        return montoTotal;
     }
 
-    public void setRenta(Renta renta) {
-        this.renta = renta;
+    public void setMontoTotal(float montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
-    public int getTotal() {
-        return total;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
+
 }

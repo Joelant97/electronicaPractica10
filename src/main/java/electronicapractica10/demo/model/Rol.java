@@ -1,40 +1,52 @@
 package electronicapractica10.demo.model;
 
-import java.io.Serializable;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Where(clause = "deleted = 0")
 public class Rol implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    @Column(name = "id")
+    private long id;
+    @Column(name = "nombreRol")
+    private String nombreRol;
 
-    private String nombre;
+    @OneToMany(  mappedBy = "rol", cascade = CascadeType.ALL, orphanRemoval = true)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Usuario> usuarios = new ArrayList<>();
 
-    public Rol() {
-    }
+    private boolean deleted = false;
 
-    public Rol(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreRol() {
+        return nombreRol;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

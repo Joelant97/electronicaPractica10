@@ -1,104 +1,159 @@
 package electronicapractica10.demo.controller;
 
+import electronicapractica10.demo.model.Categoria;
 import electronicapractica10.demo.model.Equipo;
-import electronicapractica10.demo.service.EquipoServices;
+import electronicapractica10.demo.model.SubFamilia;
+import electronicapractica10.demo.service.CategoriaServiceImpl;
+import electronicapractica10.demo.service.ClienteEquipoServiceImpl;
+import electronicapractica10.demo.service.EquipoServiceImpl;
+import electronicapractica10.demo.service.SubFamiliaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Controller
+@RequestMapping("/equipos")
 public class EquipoController {
 
+    private static String UPLOADED_FOLDER = "/img/";
+
+
     @Autowired
-    EquipoServices equipoServices;
+    private EquipoServiceImpl equipoService;
+    @Autowired
+    private CategoriaServiceImpl categoriaService;
+    @Autowired
+    private SubFamiliaServiceImpl subFamiliaService;
 
     @Autowired
-    MessageSource messageSource;
+    private ClienteEquipoServiceImpl clienteEquipoService;
 
-    @RequestMapping("/index/equipos")
-    public String equipos(Model model, Locale locale) {
-        model.addAttribute("titulo_inicio", messageSource.getMessage("titulo_inicio", null, locale));
-        model.addAttribute("titulo_clientes", messageSource.getMessage("titulo_clientes", null, locale));
-        model.addAttribute("titulo_usuarios", messageSource.getMessage("titulo_usuarios", null, locale));
-        model.addAttribute("titulo_equipos", messageSource.getMessage("titulo_equipos", null, locale));
-        model.addAttribute("titulo_alquileres", messageSource.getMessage("titulo_alquileres", null, locale));
-        model.addAttribute("titulo_reportes", messageSource.getMessage("titulo_reportes", null, locale));
-
-
-        model.addAttribute("boton_crear", messageSource.getMessage("boton_crear", null, locale));
-        model.addAttribute("boton_editar", messageSource.getMessage("boton_editar", null, locale));
-        model.addAttribute("boton_eliminar", messageSource.getMessage("boton_eliminar", null, locale));
-        model.addAttribute("boton_cerrar", messageSource.getMessage("boton_cerrar", null, locale));
-
-
-        model.addAttribute("mostrando", messageSource.getMessage("mostrando", null, locale));
-        model.addAttribute("a", messageSource.getMessage("a", null, locale));
-        model.addAttribute("de", messageSource.getMessage("de", null, locale));
-        model.addAttribute("registros", messageSource.getMessage("registros", null, locale));
-
-        model.addAttribute("nuevo_equipo", messageSource.getMessage("nuevo_equipo", null, locale));
-        model.addAttribute("disponible", messageSource.getMessage("disponible", null, locale));
-
-
-        model.addAttribute("tabla_nombre", messageSource.getMessage("tabla_nombre", null, locale));
-        model.addAttribute("tabla_foto", messageSource.getMessage("tabla_foto", null, locale));
-        model.addAttribute("tabla_tarifa", messageSource.getMessage("tabla_tarifa", null, locale));
-        model.addAttribute("tabla_familia", messageSource.getMessage("tabla_familia", null, locale));
-        model.addAttribute("tabla_subFamilia", messageSource.getMessage("tabla_sub_familia", null, locale));
-        model.addAttribute("tabla_cantidad", messageSource.getMessage("tabla_cantidad", null, locale));
-        model.addAttribute("tabla_acciones", messageSource.getMessage("tabla_acciones", null, locale));
-
-
-        return "/freemarker/equipos";
+    @GetMapping("/")
+    public String equipos(Model model)
+    {
+        List<Equipo> equipos = new ArrayList<>();
+        equipos = equipoService.buscarTodosEquipos();
+        List<Categoria> categories = categoriaService.buscarTodasCategorias();
+        List<SubFamilia> subFamilias = subFamiliaService.buscarTodasSubFamilias();
+        model.addAttribute("subfamilias", subFamilias);
+        model.addAttribute("categorias", categories);
+        model.addAttribute("equipos", equipos);
+        return "equiposview";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/equiposDisponibles", produces = {"application/json"})
-    public List<Equipo> equiposDisponibles() {
-        return equipoServices.buscarEquiposDisponibles();
-    }
+    @PostMapping("/")
+    public String crearEquipo(@RequestParam("foto") MultipartFile foto,
+                              @RequestParam("nombre") String nombre,
+                              @RequestParam("precio") String precio,
+                              @RequestParam("existencia") String existencia,
+                              @RequestParam("categoria") String categoria,
+                              @RequestParam("subfamilia") String subfamilia,
+                              RedirectAttributes redirectAttributes) {
 
-    @ResponseBody
-    @RequestMapping(value = "/equipos", produces = {"application/json"})
-    public List<Equipo> equipos() {
-        return equipoServices.buscarEquipos();
-    }
 
-    @RequestMapping(value = "/equipo/crear", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<List<Equipo>> crearEquipo(@RequestBody List<Equipo> equipoList) {
 
-        for (Equipo equipo : equipoList) {
+        Equipo equipo = new Equipo();
 
-            equipoServices.crearEquipo(equipo);
+        try {
+
+            // Get the file and save it somewhere
+            byte[] bytes = foto.getBytes();
+            equipo.setImagen(bytes);
+            Path path = Paths.get(UPLOADED_FOLDER + foto.getOriginalFilename());
+            Files.write(path, bytes);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded '" + foto.getOriginalFilename() + "'");
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return new ResponseEntity<>(equipoList, HttpStatus.OK);
+        equipo.setNombreEquipo(nombre);
+        equipo.setPrecio(Float.parseFloat(precio));
+        equipo.setExistencia(Integer.parseInt(existencia));
+        System.out.println(categoria);
+        Categoria categoria1 = categoriaService.findByNombreCategoria(categoria);
+        equipo.setCategoria(categoria1);
+        equipo.setSubFamilia(subFamiliaService.findByNombreSubFamilia(subfamilia    ));
+        equipoService.crearEquipo(equipo);
+        return "redirect:/equipos/";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/equipo/buscar/{id}", method = RequestMethod.GET)
-    public Equipo buscarEquipo(@PathVariable(value = "id") long id) {
-        return equipoServices.buscarEquipo(id);
+    @RequestMapping(value = "/ver/{id}", method = RequestMethod.GET)
+    public String ver(Model model, @PathVariable String id)
+    {
+        Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
+
+        model.addAttribute("equipo", equipo);
+        return "verequipo";
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/equipo/eliminar/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Long> eliminarEquipo(@PathVariable(value = "id") long id) {
+    @PostMapping("/modificar/")
+    public String modificarEquipo(@RequestParam("nombre2") String nombre, @RequestParam("id2") String id,@RequestParam("precio2") String precio,
+                                  @RequestParam("existencia2") String existencia, @RequestParam("categoria2") String categoria,
+                                  @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
 
-        System.out.println("id:  " + id);
-        Equipo equipo = equipoServices.buscarEquipo(id);
-        equipoServices.eliminarEquipo(equipo);
+        Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
+        equipo.setNombreEquipo(nombre);
+        equipo.setPrecio(Float.parseFloat(precio));
+        equipo.setExistencia(Integer.parseInt(existencia));
+        equipo.setCategoria(categoriaService.findByNombreCategoria(categoria));
+        try {
 
-        return new ResponseEntity<>(id, HttpStatus.OK);
+            // Get the file and save it somewhere
+            byte[] bytes = foto.getBytes();
+            equipo.setImagen(bytes);
+            Path path = Paths.get(UPLOADED_FOLDER + foto.getOriginalFilename());
+            Files.write(path, bytes);
+
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded '" + foto.getOriginalFilename() + "'");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        equipoService.actualizarEquipo(equipo);
+        return "redirect:/equipos/";
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String borrarEquipo(@PathVariable String id) {
+        Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
+        equipoService.borrarEquipoPorId(equipo);
+        return "redirect:/equipos/";
 
     }
 
+
+    @RequestMapping(value = "/nodevueltos/", method = RequestMethod.GET)
+    public String listadonodevueltos(Model model) {
+
+        List<Object[]> nodevueltos = clienteEquipoService.equiposAlquiladosNoDevueltos();
+        model.addAttribute("objetos",nodevueltos);
+        return "nodevueltos";
+
+    }
+
+//    @RequestMapping(value = "/cliente", method = RequestMethod.PUT)
+//    public String agregarCliente(@RequestParam int id, @RequestParam String nombre){
+//        Estudiante estudiante = new Estudiante(matricula);
+//        estudiante.setNombre(nombre);
+//        return ""+estudiante.getMatricula();
+//    }
 
 }
