@@ -12,36 +12,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/familias")
+@RequestMapping("/categorias")
 public class CategoriasController {
 
     @Autowired
     private CategoriaServiceImpl categoriasService;
 
     @GetMapping(value="/")
-    public String familias(Model model)
+    public String categorias(Model model)
     {
         List<Categoria> categorias = new ArrayList<>();
         categorias = categoriasService.buscarTodasCategorias();
-        model.addAttribute("familias", categorias);
-        return "familias";
+        model.addAttribute("categorias", categorias);
+        return "categoriasview";
     }
 
 
 
-    @PostMapping("/")
-    public String crearFamilia(@RequestParam("nombre") String categoria){
+    @PostMapping("/crear/")
+    public String crearCategoria(@RequestParam("nombre") String categoria){
     Categoria f = new Categoria();
     f.setNombreCategoria(categoria);
     categoriasService.crearCategoria(f);
-        return "redirect:/familias/";
+        return "redirect:/categorias/";
     }
 
 
-    @PostMapping(value = "/eliminar/{id}")
-    public String borrarFamilia(@PathVariable String id) {
-       // categoriasService.borrarCategoriaPorId(Long.parseLong(id));
-        return "redirect:/familias/";
+    @GetMapping(value = "/eliminar/{id}")
+    public String borrarCategoria(@PathVariable Long id) {
+        Categoria categoria = categoriasService.buscarPorId(id);
+       categoriasService.borrarCategoriaPorId(categoria);
+        return "redirect:/categorias/";
 
     }
 }
