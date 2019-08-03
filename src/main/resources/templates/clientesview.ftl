@@ -138,18 +138,18 @@
 						<thead>
 						<tr>
 							<th>Nombre</th>
+							<th>Apellido</th>
 							<th>Cédula</th>
-							<th>Correo</th>
-							<th>Telefono</th>
+							<th>Fecha Nacimiento</th>
 						</tr>
 						</thead>
 						<tbody>
 						<#list clientes as cliente>
 							<tr class="gradeX">
 								<td>${cliente.getNombre()}</td>
+								<td>${cliente.getApellido()}</td>
 								<td>${cliente.getCedula()}</td>
-								<td>${cliente.getCorreo()}</td>
-								<td>${cliente.getTelefono()}</td>
+								<td>${cliente.getFechaNacimiento()}</td>
 								<td class="actions">
 									<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 									<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>

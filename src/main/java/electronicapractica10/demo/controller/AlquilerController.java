@@ -21,15 +21,10 @@ import java.util.List;
 @RequestMapping("/alquileres")
 public class AlquilerController {
 
-
     @Autowired
     private ClienteEquipoServiceImpl clienteEquipoService;
-
-
     @Autowired
     private ClienteServiceImpl clienteService;
-
-
     @Autowired
     private EquipoServiceImpl equipoService;
 
@@ -37,7 +32,6 @@ public class AlquilerController {
     public String alquileres(Model model)
     {
         List<Equipo> equipos = new ArrayList<>();
-
         List<ClienteEquipo> alquileres = new ArrayList<>();
         List<Cliente> clientes = new ArrayList<>();
         equipos = equipoService.buscarTodosEquipos();
@@ -46,12 +40,14 @@ public class AlquilerController {
         model.addAttribute("clientes", clientes);
         model.addAttribute("equipos", equipos);
         model.addAttribute("alquileres",alquileres);
-        return "alquileres";
-
+        return "alquileresview";
     }
 
     @PostMapping(value = "/despacho/")
-    public String despacho(@RequestParam("client") String idcliente, @RequestParam("cant[]") List<String> cantidades, @RequestParam("ids[]") List<String> ids, @RequestParam("fecha") String fecha, @RequestParam("fechaentrega") String fechapromesa){
+    public String despacho(@RequestParam("client") String idcliente,
+                           @RequestParam("cant[]") List<String> cantidades,
+                           @RequestParam("equipos[]") List<String> ids,
+                           @RequestParam("fechaentrega") String fechapromesa){
 
         Cliente c = clienteService.buscarPorId(Long.parseLong(idcliente));
         for(int i=0;i< ids.size();i++) {
@@ -59,13 +55,13 @@ public class AlquilerController {
             ClienteEquipo a = new ClienteEquipo();
             Equipo e = equipoService.buscarPorId(Long.parseLong(ids.get(i)));
             a.setEstado("Pendiente");
-            LocalDate date = LocalDate.parse(fecha);
+            LocalDate date = LocalDate.now();
             LocalDate date2 = LocalDate.parse(fechapromesa);
             a.setFechaInicioAlquiler(date);
             a.setFechaFinAlquiler(date2);
             a.setEquipo(e);
             a.setCliente(c);
-            long numdays = ChronoUnit.DAYS.between(date,date2);
+            long numdays = ChronoUnit.DAYS.between(date, date2);
             a.setCosto(1*e.getPrecio()*numdays);
             clienteEquipoService.crearClienteEquipo(a);
 

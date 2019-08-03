@@ -43,7 +43,6 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente")
     private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();
 
-
     public Set<ClienteEquipo> getClienteEquipos() {
         return clienteEquipos;
     }

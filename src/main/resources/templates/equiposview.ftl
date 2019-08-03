@@ -69,7 +69,7 @@
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Tarifa</label>
                                         <div class="col-sm-9">
-                                            <input type="number" name="tarifa" class="form-control" required />
+                                            <input type="number" name="precio" class="form-control" required />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -96,75 +96,24 @@
                                             <button type="reset" class="btn btn-default">Reset</button>
                                         </div>
                                     </div>
-
                                 </form>
-                                <!-- <form id="edit-form" class="white-popup-block mfp-hide form-horizontal"
-                                      action="edit/{cliente.getId()}" method="post" enctype='multipart/form-data'>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <h3>Formulario Cliente</h3>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Nombre</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="nombre" class="form-control" value="{cliente.getNombre()}" required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Cédula</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="cedula" class="form-control" value="{cliente.getCedula()}"  required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Telefono</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="telefono" class="form-control" value="{cliente.getTelefono()}"  required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Email</label>
-                                        <div class="col-sm-9">
-                                            <input type="email" name="correo" class="form-control" value="{cliente.getCorreo()}" required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-3 control-label">Foto de perfil</label>
-                                        <div class="col-sm-9">
-                                            <input type="file" accept="image/png, image/jpeg" id="foto" name="foto" value="{cliente.getCorreo()}">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-lg">
-                                        <div class="col-sm-9 col-sm-offset-3">
-                                            <button class="btn btn-primary">Modificar</button>
-                                            <button type="reset" class="btn btn-default">Reset</button>
-                                        </div>
-                                    </div>
-
-                                </form>  -->
                             </div>
                             <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                                 <thead>
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Existencia</th>
-                                    <th>Tarifa</th>
-                                    <th>Activo</th>
-									<th>Famiilia</th>
-									<th>SubFamilia</th>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Equipo</th>
+                                    <th>Estado</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
 									<#list equipos as equipo>
 									<tr class="gradeX">
-										<td>${equipo.getNombre()}</td>
-										<td>${equipo.getCantidad()}</td>
-										<td>${equipo.getTarifa()}</td>
-										<td>${equipo.getActivo()?c}</td>
-										<td>${equipo.getFamilia()}</td>
-										<td>${equipo.getSubFamilia()}</td>
+                                        <td class="text-center">${alquiler.getId()}</td>
+                                        <td class="text-center">${alquiler.getCliente().getNombre()} ${alquiler.getCliente().getApellido()}</td>
+                                        <td class="text-center">${alquiler.getEquipo().getNombreEquipo()}</td>
+                                        <td class="text-center">${alquiler.getEstado()}</td>
 										<td class="actions">
 											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 											<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
