@@ -61,7 +61,7 @@ public class ClienteController {
         return "historial";
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/add/")
     public String crearCliente(@RequestParam("foto") MultipartFile foto,
                                @RequestParam("nombre") String nombre,
                                @RequestParam("apellido") String apellido,

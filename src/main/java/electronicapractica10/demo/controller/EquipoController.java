@@ -54,12 +54,12 @@ public class EquipoController {
         return "equiposview";
     }
 
-    @PostMapping("/")
+    @PostMapping("/crear/")
     public String crearEquipo(@RequestParam("foto") MultipartFile foto,
                               @RequestParam("nombre") String nombre,
                               @RequestParam("precio") String precio,
                               @RequestParam("existencia") String existencia,
-                              @RequestParam("categoria") String categoria,
+                              @RequestParam("familia") String familia,
                               @RequestParam("subfamilia") String subfamilia,
                               RedirectAttributes redirectAttributes) {
 
@@ -85,10 +85,10 @@ public class EquipoController {
         equipo.setNombreEquipo(nombre);
         equipo.setPrecio(Float.parseFloat(precio));
         equipo.setExistencia(Integer.parseInt(existencia));
-        System.out.println(categoria);
-        Categoria categoria1 = categoriaService.findByNombreCategoria(categoria);
+        System.out.println(familia);
+        Categoria categoria1 = categoriaService.findByNombreCategoria(familia);
         equipo.setCategoria(categoria1);
-        equipo.setSubFamilia(subFamiliaService.findByNombreSubFamilia(subfamilia    ));
+        equipo.setSubFamilia(subFamiliaService.findByNombreSubFamilia(subfamilia));
         equipoService.crearEquipo(equipo);
         return "redirect:/equipos/";
     }
