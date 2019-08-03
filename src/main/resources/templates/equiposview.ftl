@@ -73,13 +73,13 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Familia</label>
+                                        <label class="col-sm-3 control-label">Categoria</label>
                                         <div class="col-sm-9">
                                             <input type="text" name="familia" class="form-control"  required />
                                         </div>
                                     </div>
 									<div class="form-group">
-										<label class="col-sm-3 control-label">SubFamilia</label>
+										<label class="col-sm-3 control-label">Sub-Categorias</label>
 										<div class="col-sm-9">
 											<input type="text" name="subfamilia" class="form-control"  required />
 										</div>
@@ -159,11 +159,11 @@
 
 									<#list equipos as equipo>
 									<tr class="gradeX">
-										<td>${equipo.getNombre()}</td>
+										<td>${equipo.getNombreEquipo()}</td>
 										<td>${equipo.getCantidad()}</td>
 										<td>${equipo.getTarifa()}</td>
 										<td>${equipo.getActivo()?c}</td>
-										<td>${equipo.getFamilia()}</td>
+										<td>${equipo.getCategoria()}</td>
 										<td>${equipo.getSubFamilia()}</td>
 										<td class="actions">
 											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>

@@ -93,7 +93,7 @@
                                     <div class="row mb-lg">
                                         <div class="col-sm-9 col-sm-offset-3">
                                             <button class="btn btn-primary">Guardar</button>
-                                            <button type="reset" class="btn btn-default">Reset</button>
+                                            <button type="reset" class="btn btn-default">Limpiar</button>
                                         </div>
                                     </div>
 
