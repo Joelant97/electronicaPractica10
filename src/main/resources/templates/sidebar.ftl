@@ -33,6 +33,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/categorias/">
+                            <i class="fa fa-list" aria-hidden="true"></i>
+                            <span>Categorias</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/equipos/">
                             <i class="fa fa-table" aria-hidden="true"></i>
                             <span>Equipos</span>
