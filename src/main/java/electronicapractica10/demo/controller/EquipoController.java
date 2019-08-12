@@ -37,7 +37,6 @@ public class EquipoController {
     private CategoriaServiceImpl categoriaService;
     @Autowired
     private SubFamiliaServiceImpl subFamiliaService;
-
     @Autowired
     private ClienteEquipoServiceImpl clienteEquipoService;
 
@@ -102,10 +101,22 @@ public class EquipoController {
         return "verequipo";
     }
 
+    @GetMapping("/{id}/")
+    @ResponseBody
+    public Equipo postResponseController(@PathVariable Long id ) {
+        Equipo equipo = equipoService.buscarPorId(id);
+
+        return equipo;
+    }
+
     @PostMapping("/modificar/")
-    public String modificarEquipo(@RequestParam("nombre2") String nombre, @RequestParam("id2") String id,@RequestParam("precio2") String precio,
-                                  @RequestParam("existencia2") String existencia, @RequestParam("categoria2") String categoria,
-                                  @RequestParam("foto2") MultipartFile foto,  RedirectAttributes redirectAttributes){
+    public String modificarEquipo(@RequestParam("nombre2") String nombre,
+                                  @RequestParam("id2") String id,
+                                  @RequestParam("precio2") String precio,
+                                  @RequestParam("existencia2") String existencia,
+                                  @RequestParam("categoria2") String categoria,
+                                  @RequestParam("foto2") MultipartFile foto,
+                                  RedirectAttributes redirectAttributes){
 
         Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
         equipo.setNombreEquipo(nombre);
@@ -130,7 +141,7 @@ public class EquipoController {
         return "redirect:/equipos/";
     }
 
-
+    /*
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String borrarEquipo(@PathVariable String id) {
         Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
@@ -138,7 +149,7 @@ public class EquipoController {
         return "redirect:/equipos/";
 
     }
-
+    */
 
     @RequestMapping(value = "/nodevueltos/", method = RequestMethod.GET)
     public String listadonodevueltos(Model model) {
@@ -148,12 +159,5 @@ public class EquipoController {
         return "nodevueltos";
 
     }
-
-//    @RequestMapping(value = "/cliente", method = RequestMethod.PUT)
-//    public String agregarCliente(@RequestParam int id, @RequestParam String nombre){
-//        Estudiante estudiante = new Estudiante(matricula);
-//        estudiante.setNombre(nombre);
-//        return ""+estudiante.getMatricula();
-//    }
 
 }

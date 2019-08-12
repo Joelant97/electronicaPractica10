@@ -10,7 +10,7 @@
 		<#include "sidebar.ftl">
 		<section role="main" class="content-body">
 			<header class="page-header">
-				<h2>Clientes</h2>
+				<h2>Usuarios</h2>
 				<div class="right-wrapper pull-right">
 					<ol class="breadcrumbs">
 						<li>
@@ -33,7 +33,7 @@
 						<a href="#" class="fa fa-times"></a>
 					</div>
 
-					<h2 class="panel-title">Default</h2>
+					<h2 class="panel-title">Usuarios</h2>
 				</header>
 				<div class="panel-body">
 					<div class="row">
@@ -44,40 +44,38 @@
 						</div>
 						<!-- Cliente Form -->
 						<form id="demo-form" class="white-popup-block mfp-hide form-horizontal"
-							  action="/clientes/add/" method="post" enctype='multipart/form-data'>
+							  action="/usuarios/crear/" method="post" enctype='multipart/form-data'>
 							<div class="row">
 								<div class="col-sm-12">
-									<h3>Formulario Cliente</h3>
+									<h3>Nuevo Usuario</h3>
 								</div>
 							</div>
 							<div class="form-group mt-lg">
-								<label class="col-sm-3 control-label">Nombre</label>
+								<label class="col-sm-3 control-label">nombre de usuario</label>
 								<div class="col-sm-9">
-									<input type="text" name="nombre" class="form-control"  required />
+									<input type="text" name="username" class="form-control"  required />
 								</div>
 							</div>
 							<div class="form-group mt-lg">
-								<label class="col-sm-3 control-label">Apellido</label>
+								<label class="col-sm-3 control-label">contraseña</label>
 								<div class="col-sm-9">
-									<input type="text" name="apellido" class="form-control"  required />
+									<input type="password" name="password" class="form-control"  required />
 								</div>
 							</div>
 							<div class="form-group mt-lg">
-								<label class="col-sm-3 control-label">Cédula</label>
+								<label class="col-sm-3 control-label">Email</label>
 								<div class="col-sm-9">
-									<input type="text" name="cedula" class="form-control"  required />
+									<input type="text" name="email" class="form-control"  required />
 								</div>
 							</div>
 							<div class="form-group mt-lg">
-								<label class="col-sm-3 control-label">Fecha de nacimiento</label>
+								<label class="col-sm-3 control-label">Rol</label>
 								<div class="col-sm-9">
-									<input type="date" name="fechaNacimiento" class="form-control"  required />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">Foto de perfil</label>
-								<div class="col-sm-9">
-									<input type="file" accept="image/png, image/jpeg" id="foto" name="foto">
+									<select id="rol" name="rol" class="form-control select2 select2-hidden-accessible" required>
+										<#list roles as rol>
+											<option value="${rol.getNombreRol()}">${rol.getNombreRol()}</option>
+										</#list>
+									</select>
 								</div>
 							</div>
 							<div class="row mb-lg">
@@ -137,24 +135,24 @@
 					<table class="table table-bordered table-striped mb-none" id="datatable-editable">
 						<thead>
 						<tr>
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Cédula</th>
-							<th>Fecha Nacimiento</th>
+							<th class="text-center">Nombre de Usuario</th>
+							<th class="text-center">Contraseña</th>
+							<th class="text-center">E-Mail</th>
+							<th class="text-center">Opciones</th>
+
 						</tr>
 						</thead>
 						<tbody>
-						<#list clientes as cliente>
+						<#list usuarios as usuario>
 							<tr class="gradeX">
-								<td>${cliente.getNombre()}</td>
-								<td>${cliente.getApellido()}</td>
-								<td>${cliente.getCedula()}</td>
-								<td>${cliente.getFechaNacimiento()}</td>
+								<td>${usuario.getUsername()}</td>
+								<td>${usuario.getPassword()}</td>
+								<td>${usuario.getEmail()}</td>
 								<td class="actions">
-									<a href="/clientes/profile/${cliente.getId()}" class=" on-editing save-row"><i class="fa fa-eye"></i></a>
+									<a href="/profile/${usuario.getId()}" class="hidden on-editing save-row"><i class="fa fa-eye"></i></a>
 									<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
 									<a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-									<a href="delete/${cliente.getId()}"  class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+									<a href="/usuarios/eliminar/${usuario.getId()}"  class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
 								</td>
 							</tr>
 						</#list>

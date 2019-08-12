@@ -15,7 +15,7 @@ public interface ClienteEquipoService {
     ClienteEquipo buscarPorId(long id);
     boolean clienteEquipoExiste(ClienteEquipo clienteEquipo);
     List<Object[]> equiposAlquiladosNoDevueltos();
-    List<Object[]> historialCliente(long id);
+    List<ClienteEquipo> historialCliente(long id);
     List<Object[]> promedioAlquilerPorFamilia(long id);
 
 

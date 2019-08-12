@@ -40,10 +40,10 @@ public class IndexController {
         List<Categoria> categorias = categoriaService.buscarTodasCategorias();
         model.addAttribute("categorias",categorias);
         model.addAttribute("puerto", ""+request.getLocalPort());
-//        model.addAttribute("saludo", messageSource.getMessage("saludo", null, locale));
+        //  model.addAttribute("saludo", messageSource.getMessage("saludo", null, locale));
 
         // model.addAttribute("derecho_autor", messageSource.getMessage("derecho_autor", null, locale));
-        return "clientes.ftl";
+        return "index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

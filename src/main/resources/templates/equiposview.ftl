@@ -101,19 +101,21 @@
                             <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Cliente</th>
-                                    <th>Equipo</th>
-                                    <th>Estado</th>
+                                    <th>Nombre</th>
+                                    <th>Existencia</th>
+                                    <th>Tarifa</th>
+									<th>Famiilia</th>
+									<th>SubFamilia</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 									<#list equipos as equipo>
 									<tr class="gradeX">
-                                        <td class="text-center">${alquiler.getId()}</td>
-                                        <td class="text-center">${alquiler.getCliente().getNombre()} ${alquiler.getCliente().getApellido()}</td>
-                                        <td class="text-center">${alquiler.getEquipo().getNombreEquipo()}</td>
-                                        <td class="text-center">${alquiler.getEstado()}</td>
+										<td>${equipo.getNombreEquipo()}</td>
+										<td>${equipo.getExistencia()}</td>
+										<td>${equipo.getPrecio()}</td>
+<#--										<td>${equipo.getCategoria()}</td>-->
+<#--										<td>${equipo.getSubFamilia()}</td>-->
 										<td class="actions">
 											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 											<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
@@ -155,7 +157,6 @@
 				</footer>
 			</section>
 		</div>
-
 <#include "footer.ftl">
 		<!-- Examples -->
 		<script src="/assets/javascripts/tables/examples.datatables.editable.js"></script>

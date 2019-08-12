@@ -50,7 +50,7 @@
                         <!-- Equipos Form -->
                         <div id="shop" class="white-popup-block mfp-hide">
                             <form id="alquiler-form" class=" form-horizontal"
-                                  action="/equipos/crear/" method="post" enctype='multipart/form-data'>
+                                  action="/alquileres/despachar/" method="post" enctype='multipart/form-data'>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <h3>Alquileres</h3>
@@ -82,7 +82,7 @@
                                     <label class="col-sm-3 control-label">Equipo</label>
                                     <div class="col-sm-9">
                                         <select id="equipo" name="equipos"
-                                                class="form-control select2 select2-hidden-accessible"
+                                                class="select2 select2-hidden-accessible"
                                                 required>
                                             <option value="">Seleccionar equipo</option>
                                             <#list equipos as equipo>
@@ -93,45 +93,40 @@
                                 </div>
                                 <div class="form-group mt-lg">
                                     <input type="hidden" id="cant[]" name="cant[]">
-                                    <input type="hidden" id="ids[]" name="ids[]">
+                                    <input type="hidden" id="ids[]" name="equipos">
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 my-2">
                                     <div class="form-group">
                                         <button type="button" id="add" name="agregar" onclick="setup()"
                                                 class="btn btn-primary form-control">+
                                         </button>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div id="foto" name="foto"></div>
+                                </div>
+                                <div class="table-responsive table-bordered card">
+                                    <table id="carrito" name="carrito" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nombre De Equipo</th>
+                                            <th>Precio por dia</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-info" data-backdrop="true">
+                                        Despachar
+                                    </button>
+                                </div>
                             </form>
-
-                            <div class="row">
-                                <div id="foto" name="foto"></div>
-                            </div>
-                            <br>
-
-                            <div class="table-responsive table-bordered card">
-                                <table id="carrito" name="carrito" class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nombre De Equipo</th>
-                                        <th>Precio por dia</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                    Cancelar
-                                </button>
-                                <button type="submit" class="btn btn-info" data-backdrop="true">
-                                    Despachar
-                                </button>
-                            </div>
                         </div
                     </div>
                     <table class="table table-bordered table-striped mb-none" id="datatable-editable">
@@ -150,13 +145,11 @@
                                 <td class="text-center">${alquiler.getCliente().getNombre()} ${alquiler.getCliente().getApellido()}</td>
                                 <td class="text-center">${alquiler.getEquipo().getNombreEquipo()}</td>
                                 <td class="text-center">${alquiler.getEstado()}</td>
-                                <td>${equipo.getFamilia()}</td>
-                                <td>${equipo.getSubFamilia()}</td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
                                     <a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                    <a href="delete/${equipo.getId()}" class="on-default remove-row"><i
+                                    <a href="/alquileres/eliminar/${alquiler.getId()}" class="on-default remove-row"><i
                                                 class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -199,69 +192,54 @@
 <script src="/assets/javascripts/tables/examples.datatables.editable.js"></script>
 <script src="/assets/javascripts/ui-elements/examples.lightbox.js"></script>
 <script>
-
-    var id = [];
-    var nombre = [];
-    var precio = [];
-    var nombrealq = [];
-    var precioalq = [];
-    var existencias = [];
+    var equipoActual;
+    var equipo;
     var ids = [];
-    var imgs = [];
 
-    <#list equipos as equipo>
-
-    id.push(${equipo.getId()});
-    imgs.push('${equipo.getImagen()}');
-    nombre.push('${equipo.getNombreEquipo()}');
-    precio.push('${equipo.getPrecio()}');
-    existencias.push(${equipo.getExistencia()});
-
-    </#list>
     $(function () {
         $('#add').prop('disabled', true);
     });
+
     $("#equipo").change(function () {
-        $('#foto').html("");
+        equipo = document.getElementById("equipo");
+        var equipo_value = equipo.options[equipo.selectedIndex].value;
+        var url = "/equipos/" + equipo_value + "/"
+        $.getJSON(url, function (data) {
+            if (data != null)
+                equipoActual = data;
 
-        for (var i = 0; i < id.length; i++) {
-            if (id[i] == document.getElementById("equipo").value) {
-                var picture = '<img src="data:image/jpeg;base64,' + imgs[i] + '" class="img-thumbnail" style="height:200px;width:auto; max-width:200px;">';
-                $('#foto').html(picture);
+        }).done(function () {
+            var picture = '<img src="data:image/jpeg;base64,' + equipoActual.imagen
+                + '" class="rounded mx-auto d-block" style="' +
+                'height: 200px;' +
+                'max-width: 200px;' +
+                'margin: auto;' +
+                'display: block;">';
+            $('#foto').html(picture);
 
-                if (existencias[i] == 0) {
-                    $('#add').prop('disabled', true);
-                } else {
-                    $('#add').prop('disabled', false);
-                }
-            }
+        }).fail(function () {
+            console.log("error al recibir equipo");
+        });
+
+        if (equipoActual.existencia == 0) {
+            $('#add').prop('disabled', true);
+        } else {
+            $('#add').prop('disabled', false);
         }
     });
 
-    (function setup() {
+    function setup() {
         "use strict";
-        var cliente = document.getElementById("cliente");
-        var fecha = document.getElementById("fecha");
-        var equipo_nombre = equipo.options[equipo.selectedIndex].value;
-        var equipo_id = equipo.options[equipo.selectedIndex].text;
-
-        document.getElementById("add").addEventListener("click", function () {
-            if(equipo_id in id) {
-                ids.push(equipo_id);
-                existencias[i] -= 1;
-                var markup = "<tr><td>" + equipo_id + "</td><td>" + equipo_nombre + "</td><td>" + precio[precio.indexOf(equipo_id)] + "</td></tr>";
-                console.log(markup)
-                $("#carrito tbody").append(markup);
-                console.log($("#carrito tbody"));
-            }
+        if (equipoActual !== null) {
+            var markup = "<tr><td>" + equipoActual.id + "</td><td>" + equipoActual.nombreEquipo + "</td><td>" + equipoActual.precio + "</td></tr>";
+            $("#carrito tbody").append(markup);
             equipo.selectedIndex = 0;
-            document.getElementById('ids[]').value = ids;
+            ids.push(equipoActual.id);
             $('#foto').html("");
             $('#add').prop('disabled', true);
-
+            document.getElementById('ids[]').value = ids;
         }
-        });
-    })();
+    }
 
 </script>
 </body>

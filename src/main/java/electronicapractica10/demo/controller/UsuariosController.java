@@ -31,12 +31,10 @@ public class UsuariosController {
         model.addAttribute("usuarios", usuarios);
         model.addAttribute("roles", roles);
 
-        return "usuarios";
+        return "usersview";
     }
 
-
-
-    @PostMapping("/")
+    @PostMapping("/crear/")
     public String crearUsuario(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("rol") String rol){
         Usuario u = new Usuario();
         u.setUsername(username);
@@ -47,7 +45,7 @@ public class UsuariosController {
         r = rolService.findByNombreRol(rol);
         u.setRol(r);
         usuarioService.crearUsuario(u);
-        return "redirect:/usuarios/";
+        return "redirect:/";
     }
 
     @PostMapping("/modificar/")
@@ -60,14 +58,14 @@ public class UsuariosController {
         u.setEmail(email);
 
         usuarioService.actualizarUsuario(u);
-        return "redirect:/usuarios/";
+        return "redirect:/";
     }
 
 
     @PostMapping(value = "/eliminar/{id}")
     public String borrarRol(@PathVariable String id) {
         rolService.borrarRolPorId(Long.parseLong(id));
-        return "redirect:/usuarios/";
+        return "redirect:/";
     }
 
 

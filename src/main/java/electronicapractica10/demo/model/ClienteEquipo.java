@@ -11,19 +11,58 @@ import java.time.LocalDate;
 @Where(clause = "deleted = 0")
 public class ClienteEquipo implements Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "alquiler_id")
+    private long id;
 
     @Column(name = "fechaInicioAlquiler")
     private LocalDate fechaInicioAlquiler;
+
     @Column(name = "fechaFinAlquiler")
     private LocalDate fechaFinAlquiler;
+
     @Column(name = "cantidad")
     private int cantidad;
+
     @Column(name = "costo")
     private float costo;
+
     @Column(name = "subtotal")
     private float subtotal;
+
     @Column(name = "total")
     private float total;
+
+    @Column(name = "estado")
+    private String estado;
+
+    private boolean deleted = false;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "equipo_id")
+    private Equipo equipo;
+
+
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
+    }
 
     public int getCantidad() {
         return cantidad;
@@ -81,23 +120,12 @@ public class ClienteEquipo implements Serializable {
         this.estado = estado;
     }
 
-    @Column(name = "estado")
-    private String estado;
-
-    @Id
-    @GeneratedValue
-    @Column(name = "alquiler_id")
-    private long id;
-
-    private boolean deleted = false;
-
-    public long getId()
-    {
+    public long getId() {
         return id;
     }
 
-    public void setId(long id){
-        this.id  = id;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isDeleted() {
@@ -108,26 +136,5 @@ public class ClienteEquipo implements Serializable {
         this.deleted = deleted;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "equipo_id")
-    private Equipo equipo;
-
-    public Equipo getEquipo() {
-        return equipo;
-    }
-
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
-    }
 }
+

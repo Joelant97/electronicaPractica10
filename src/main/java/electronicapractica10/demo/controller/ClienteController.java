@@ -3,6 +3,7 @@ package electronicapractica10.demo.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import electronicapractica10.demo.model.Cliente;
+import electronicapractica10.demo.model.ClienteEquipo;
 import electronicapractica10.demo.service.ClienteEquipoServiceImpl;
 import electronicapractica10.demo.service.ClienteServiceImpl;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
@@ -47,18 +48,14 @@ public class ClienteController {
         return "clientesview";
     }
 
-    @RequestMapping(value = "/historial/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
     public String historial(Model model, @PathVariable String id) {
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));
-        List<Object[]> historial = clienteEquipoService.historialCliente(Long.parseLong(id));
-        historial.forEach(objects -> {
-            objects[2] = objects[2].toString().split(" ")[0];
-            objects[3] = objects[3].toString().split(" ")[0];
-        });
+        List<ClienteEquipo> historial = clienteEquipoService.historialCliente(Long.parseLong(id));
 
         model.addAttribute("cliente", cliente);
         model.addAttribute("historial", historial);
-        return "historial";
+        return "userprofile";
     }
 
     @PostMapping(value = "/add/")
@@ -97,6 +94,7 @@ public class ClienteController {
         return "redirect:/clientes/";
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String borrarCliente(@PathVariable String id) {
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));
@@ -106,9 +104,13 @@ public class ClienteController {
     }
 
     @PostMapping("/modificar/")
-    public String modificarCliente(@RequestParam("nombre2") String nombre, @RequestParam("id2") String id, @RequestParam("apellido2") String apellido,
-                                   @RequestParam("cedula2") String cedula, @RequestParam("fechaNacimiento2") String fechaNacimiento,
-                                   @RequestParam("foto2") MultipartFile foto, RedirectAttributes redirectAttributes) {
+    public String modificarCliente(@RequestParam("nombre2") String nombre,
+                                   @RequestParam("id2") String id,
+                                   @RequestParam("apellido2") String apellido,
+                                   @RequestParam("cedula2") String cedula,
+                                   @RequestParam("fechaNacimiento2") String fechaNacimiento,
+                                   @RequestParam("foto2") MultipartFile foto,
+                                   RedirectAttributes redirectAttributes) {
 
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));
         cliente.setNombre(nombre);

@@ -50,8 +50,6 @@
                             <span>Alquileres</span>
                         </a>
                     </li>
-
-
                 </ul>
             </nav>
 

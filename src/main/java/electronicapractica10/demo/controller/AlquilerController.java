@@ -43,14 +43,14 @@ public class AlquilerController {
         return "alquileresview";
     }
 
-    @PostMapping(value = "/despacho/")
+    @PostMapping(value = "/despachar/")
     public String despacho(@RequestParam("client") String idcliente,
                            @RequestParam("cant[]") List<String> cantidades,
-                           @RequestParam("equipos[]") List<String> ids,
+                           @RequestParam("equipos") List<String> ids,
                            @RequestParam("fechaentrega") String fechapromesa){
 
         Cliente c = clienteService.buscarPorId(Long.parseLong(idcliente));
-        for(int i=0;i< ids.size();i++) {
+        for(int i=0; i< ids.size(); i++) {
             System.out.println(ids.get(i));
             ClienteEquipo a = new ClienteEquipo();
             Equipo e = equipoService.buscarPorId(Long.parseLong(ids.get(i)));
@@ -64,17 +64,15 @@ public class AlquilerController {
             long numdays = ChronoUnit.DAYS.between(date, date2);
             a.setCosto(1*e.getPrecio()*numdays);
             clienteEquipoService.crearClienteEquipo(a);
-
         }
         return "redirect:/alquileres/";
     }
-
 
     @PostMapping(value = "/entrega/{id}")
     public String entrega(@PathVariable("id") String id){
 
         ClienteEquipo a = clienteEquipoService.buscarPorId(Long.parseLong(id));
-        a.setEstado("Completado");
+        a.setEstado("Entregado");
         clienteEquipoService.actualizarClienteEquipo(a);
         return "redirect:/alquileres/";
     }
@@ -85,6 +83,5 @@ public class AlquilerController {
         model.addAttribute("alquiler",alquiler);
         return "alquiler";
     }
-
 
 }
