@@ -39,6 +39,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/subcategorias/">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                            <span>Sub-Categorias</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/equipos/">
                             <i class="fa fa-table" aria-hidden="true"></i>
                             <span>Equipos</span>

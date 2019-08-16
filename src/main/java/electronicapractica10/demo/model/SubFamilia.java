@@ -19,6 +19,9 @@ public class SubFamilia implements Serializable {
     private long id;
     @Column(name = "nombreSubFamilia")
     private String nombreSubFamilia;
+    @Column(name = "nombreCategoria")
+    private String nombreCategoria;
+
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "categoria_id", nullable = true, updatable = false)
@@ -46,12 +49,12 @@ public class SubFamilia implements Serializable {
         this.nombreSubFamilia = nombreSubFamilia;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getNombreCategoria() {
+        return nombreCategoria;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
     public boolean isDeleted() {

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/subfamilias")
+@RequestMapping("/subcategorias")
 public class SubFamiliaController {
 
 
@@ -33,19 +33,21 @@ public class SubFamiliaController {
         List<Categoria> categorias = categoriaService.buscarTodasCategorias();
         model.addAttribute("subFamilias",subFamilias);
         model.addAttribute("categorias",categorias);
-        return "subfamilias";
+        return "subcategoriasview";
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/crear/")
     public String crearSubFamilia(@RequestParam("nombre") String nombre, @RequestParam("categoria") String categoria,
                                   RedirectAttributes redirectAttributes) {
 
         SubFamilia subFamilia= new SubFamilia();
+        Categoria categoria1= categoriaService.findByNombreCategoria(categoria);
+
         subFamilia.setNombreSubFamilia(nombre);
-        subFamilia.setCategoria(categoriaService.findByNombreCategoria(categoria));
+        subFamilia.setNombreCategoria(categoria1.getNombreCategoria());
         subFamiliaService.crearSubFamilia(subFamilia);
 
-        return "redirect:/subfamilias/";
+        return "redirect:/subcategorias/";
     }
 
 
@@ -53,7 +55,7 @@ public class SubFamiliaController {
     public String borrarSubFamilia(@PathVariable String id) {
         SubFamilia subFamilia = subFamiliaService.buscarPorId(Long.parseLong(id));
         subFamiliaService.borrarSubFamiliaPorId(subFamilia);
-        return "redirect:/subfamilias/";
+        return "redirect:/subcategorias/";
 
     }
 
