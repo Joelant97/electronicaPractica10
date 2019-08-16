@@ -114,8 +114,8 @@
 										<td>${equipo.getNombreEquipo()}</td>
 										<td>${equipo.getExistencia()}</td>
 										<td>${equipo.getPrecio()}</td>
-<#--										<td>${equipo.getCategoria()}</td>-->
-<#--										<td>${equipo.getSubFamilia()}</td>-->
+									<td>${equipo.getCategoria().nombreCategoria}</td>
+										<td>${equipo.getSubFamilia().nombreSubFamilia}</td>
 										<td class="actions">
 											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 											<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
