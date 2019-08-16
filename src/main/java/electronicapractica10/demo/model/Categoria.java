@@ -1,5 +1,7 @@
 package electronicapractica10.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import electronicapractica10.demo.model.SubFamilia;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Where(clause = "deleted = 0")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Categoria implements Serializable {
 
     @Id
@@ -21,14 +24,13 @@ public class Categoria implements Serializable {
     @Column(name = "nombreCategoria")
     private String nombreCategoria;
 
-    @OneToMany(  mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Equipo> equipos = new ArrayList<>();
 
-    @OneToMany(  mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<SubFamilia> subFamilia = new ArrayList<>();
-
 
     private boolean deleted = false;
 

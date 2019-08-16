@@ -95,7 +95,7 @@ public class ClienteController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String borrarCliente(@PathVariable String id) {
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));
         clienteService.borrarClientePorId(cliente);
@@ -104,12 +104,12 @@ public class ClienteController {
     }
 
     @PostMapping("/modificar/")
-    public String modificarCliente(@RequestParam("nombre2") String nombre,
-                                   @RequestParam("id2") String id,
-                                   @RequestParam("apellido2") String apellido,
-                                   @RequestParam("cedula2") String cedula,
-                                   @RequestParam("fechaNacimiento2") String fechaNacimiento,
-                                   @RequestParam("foto2") MultipartFile foto,
+    public String modificarCliente(@RequestParam("nombre") String nombre,
+                                   @RequestParam("id") String id,
+                                   @RequestParam("apellido") String apellido,
+                                   @RequestParam("cedula") String cedula,
+                                   @RequestParam("fechaNacimiento") String fechaNacimiento,
+                                   @RequestParam("foto") MultipartFile foto,
                                    RedirectAttributes redirectAttributes) {
 
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));
@@ -135,12 +135,5 @@ public class ClienteController {
         clienteService.actualizarCliente(cliente);
         return "redirect:/clientes/";
     }
-
-//    @RequestMapping(value = "/cliente", method = RequestMethod.PUT)
-//    public String agregarCliente(@RequestParam int id, @RequestParam String nombre){
-//        Estudiante estudiante = new Estudiante(matricula);
-//        estudiante.setNombre(nombre);
-//        return ""+estudiante.getMatricula();
-//    }
-
+    
 }

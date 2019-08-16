@@ -15,7 +15,7 @@ public interface ClienteEquipoRepository extends JpaRepository<ClienteEquipo, Lo
             "WHERE ALQ.ESTADO = 'Pendiente' ORDER BY ALQ.FECHA_INICIO_ALQUILER", nativeQuery = true)
     List<Object[]> equiposAlquiladosNoDevueltos();
 
-    @Query(value = "SELECT  CLI.NOMBRE, EQ.NOMBRE_EQUIPO, ALQ.FECHA_INICIO_ALQUILER, ALQ.FECHA_FIN_ALQUILER, ALQ.ESTADO FROM ALQUILER ALQ " +
+    @Query(value = "SELECT  * FROM ALQUILER ALQ " +
             "INNER JOIN CLIENTE CLI ON CLI.id = ALQ.CLIENTE_ID INNER JOIN EQUIPO EQ ON EQ.ID = ALQ.EQUIPO_ID WHERE CLI.ID = :id", nativeQuery = true)
     List<ClienteEquipo> historialCliente(@Param("id") long id);
 
@@ -23,7 +23,4 @@ public interface ClienteEquipoRepository extends JpaRepository<ClienteEquipo, Lo
             "FROM ALQUILER ALQ INNER JOIN EQUIPO EQ ON EQ.ID = ALQ.EQUIPO_ID INNER JOIN SUB_FAMILIA S ON S.ID = EQ.SUBFAMILIA_ID " +
             "WHERE S.CATEGORIA_ID = :id GROUP BY S.NOMBRE_SUB_FAMILIA", nativeQuery = true)
     List<Object[]> promediosAlquiler(@Param("id") long id);
-
-
 }
-

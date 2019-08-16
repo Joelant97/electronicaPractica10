@@ -15,7 +15,7 @@
             <nav id="menu" class="nav-main" role="navigation">
                 <ul class="nav nav-main">
                     <li>
-                        <a href="/index/">
+                        <a href="/">
                             <i class="fa fa-home" aria-hidden="true"></i>
                             <span>Home</span>
                         </a>

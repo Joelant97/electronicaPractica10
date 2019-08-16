@@ -17,8 +17,8 @@ public class FacturaServiceImpl implements FacturaService {
     @Autowired
     private FacturaRepository facturaRepository;
 
-    public void crearFactura(Factura factura){
-        facturaRepository.save(factura);
+    public Factura crearFactura(Factura factura){
+        return facturaRepository.save(factura);
     }
     public void actualizarFactura(Factura factura){
         crearFactura(factura);

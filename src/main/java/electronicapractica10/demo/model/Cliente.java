@@ -1,5 +1,7 @@
 package electronicapractica10.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.Loader;
 import org.hibernate.annotations.Where;
 
@@ -15,6 +17,7 @@ import java.util.Set;
 
 @Entity
 @Where(clause = "deleted = 0")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Cliente implements Serializable {
 
     @Id

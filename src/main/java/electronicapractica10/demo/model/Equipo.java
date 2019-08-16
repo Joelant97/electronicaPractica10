@@ -1,5 +1,7 @@
 package electronicapractica10.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import electronicapractica10.demo.model.Categoria;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -14,6 +16,7 @@ import java.util.Set;
 
 @Entity
 @Where(clause = "deleted = 0")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Equipo implements Serializable {
 
     @Id
@@ -29,7 +32,7 @@ public class Equipo implements Serializable {
     @Loader
     @Column(name = "imagen", columnDefinition = "BLOB")
     private byte[] imagen;
-
+    private boolean deleted = false;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "categoria_id", nullable = true, updatable = false)
@@ -38,9 +41,6 @@ public class Equipo implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "subfamilia_id", nullable = true, updatable = false)
     private SubFamilia subFamilia;
-
-
-    private boolean deleted = false;
 
     @OneToMany(mappedBy = "equipo")
     private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();

@@ -6,6 +6,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -20,20 +21,17 @@ public class Factura implements Serializable {
     @Column(name = "id")
     private long id;
     @Column(name = "fechaFacturacion")
-    private Date fechaFacturacion;
+    private LocalDate fechaFacturacion;
+
     @Column(name = "montoTotal")
     private float montoTotal;
 
-    @OneToMany(mappedBy = "factura")
-    private Set<FacturaEquipo> facturaEquipos = new HashSet<FacturaEquipo>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
-    public Set<FacturaEquipo> getFacturaEquipos() {
-        return facturaEquipos;
-    }
-
-    public void setFacturaEquipos(Set<FacturaEquipo> equipos) {
-        this.facturaEquipos = equipos;
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<ClienteEquipo> alquileres = new HashSet<ClienteEquipo>();
 
     private boolean deleted = false;
 
@@ -45,11 +43,11 @@ public class Factura implements Serializable {
         this.id = id;
     }
 
-    public Date getFechaFacturacion() {
+    public LocalDate getFechaFacturacion() {
         return fechaFacturacion;
     }
 
-    public void setFechaFacturacion(Date fechaFacturacion) {
+    public void setFechaFacturacion(LocalDate fechaFacturacion) {
         this.fechaFacturacion = fechaFacturacion;
     }
 
@@ -69,4 +67,19 @@ public class Factura implements Serializable {
         this.deleted = deleted;
     }
 
+    public Set<ClienteEquipo> getAlquileres() {
+        return alquileres;
+    }
+
+    public void setAlquileres(Set<ClienteEquipo> alquiler) {
+        this.alquileres = alquiler;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

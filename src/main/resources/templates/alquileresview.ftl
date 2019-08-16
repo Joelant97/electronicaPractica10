@@ -82,8 +82,7 @@
                                     <label class="col-sm-3 control-label">Equipo</label>
                                     <div class="col-sm-9">
                                         <select id="equipo" name="equipos"
-                                                class="select2 select2-hidden-accessible"
-                                                required>
+                                                class="select2 select2-hidden-accessible form-control">
                                             <option value="">Seleccionar equipo</option>
                                             <#list equipos as equipo>
                                                 <option value="${equipo.getId()}">${equipo.getNombreEquipo()}</option>
@@ -93,7 +92,7 @@
                                 </div>
                                 <div class="form-group mt-lg">
                                     <input type="hidden" id="cant[]" name="cant[]">
-                                    <input type="hidden" id="ids[]" name="equipos">
+                                    <input type="hidden" id="ids[]" name="ids[]">
                                 </div>
                                 <div class="col-md-12 my-2">
                                     <div class="form-group">
@@ -146,8 +145,8 @@
                                 <td class="text-center">${alquiler.getEquipo().getNombreEquipo()}</td>
                                 <td class="text-center">${alquiler.getEstado()}</td>
                                 <td class="actions">
-                                    <a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-                                    <a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
+                                    <a href="/alquileres/entrega/${alquiler.getId()}" class="on-editing save-row" title="Marcar como entregado"><i class="fa fa-check-circle"></i></a>
+                                    <a href="/alquileres/factura/" class="on-editing cancel-row"><i class="fa fa-table"></i></a>
                                     <a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
                                     <a href="/alquileres/eliminar/${alquiler.getId()}" class="on-default remove-row"><i
                                                 class="fa fa-trash-o"></i></a>

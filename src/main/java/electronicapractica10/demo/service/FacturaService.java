@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FacturaService {
 
-    void crearFactura(Factura factura);
+    Factura crearFactura(Factura factura);
     void actualizarFactura(Factura factura);
     void borrarFacturaPorId(long id);
     void borrarTodasLasFacturas();
