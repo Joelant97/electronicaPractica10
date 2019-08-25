@@ -56,6 +56,8 @@ public class ResourceServerConfiguration extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
+                .exceptionHandling().accessDeniedPage("/login")
+                .and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
