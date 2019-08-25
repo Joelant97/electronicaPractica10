@@ -22,10 +22,9 @@
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
-                        <li><span>Tables</span></li>
-                        <li><span>Editable</span></li>
+                        <li><span><@spring.message "alquileres"/></span></li>
                     </ol>
-                    <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
+
                 </div>
             </header>
 
@@ -37,23 +36,22 @@
                         <a href="#" class="fa fa-times"></a>
                     </div>
 
-                    <h2 class="panel-title">Alquileres</h2>
+                    <h2 class="panel-title"><@spring.message "alquileres"/></h2>
                 </header>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="mb-md">
-                                <a class="popup-with-form btn btn-primary" href="#shop">Agregar <i
+                                <a class="popup-with-form btn btn-primary" href="#shop"><@spring.message "agregar"/> <i
                                             class="fa fa-plus"></i></a>
                             </div>
                         </div>
                         <!-- Equipos Form -->
                         <div id="shop" class="white-popup-block mfp-hide">
-                            <form id="alquiler-form" class=" form-horizontal"
-                                  action="/alquileres/despachar/" method="post" enctype='multipart/form-data'>
+                            <form id="alquiler-form" class=" form-horizontal" method="post" action="/alquileres/despachar/">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <h3>Alquileres</h3>
+                                        <h3><@spring.message "dashboard"/></h3>
                                     </div>
                                 </div>
                                 <div class="form-group mt-lg">
@@ -73,14 +71,14 @@
                                     <label class="col-sm-3 control-label">Fecha de entrega</label>
                                     <div class="col-sm-9">
                                         <div class="">
-                                            <input id="datepicker" name="fechaentrega"
+                                            <input id="entregadatepicker" name="fechaentrega"
                                                    class="form-control pull-right" type="date" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Equipo</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-5">
                                         <select id="equipo" name="equipos"
                                                 class="select2 select2-hidden-accessible form-control">
                                             <option value="">Seleccionar equipo</option>
@@ -89,52 +87,63 @@
                                             </#list>
                                         </select>
                                     </div>
+                                    <label class="col-sm-2 control-label">Cantidad</label>
+                                    <div class="col-sm-2">
+                                        <input id="cantidad" name="cantidad" type="number" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="form-group mt-lg">
                                     <input type="hidden" id="cant[]" name="cant[]">
                                     <input type="hidden" id="ids[]" name="ids[]">
                                 </div>
-                                <div class="col-md-12 my-2">
-                                    <div class="form-group">
+
+                                <div class="form-group my-2">
+                                    <div class="col-md-12 my-2 ">
                                         <button type="button" id="add" name="agregar" onclick="setup()"
                                                 class="btn btn-primary form-control">+
                                         </button>
                                     </div>
                                 </div>
-                                <div class="row">
+
+                                <div id="ran-out-alert" class="alert alert-danger" style="display: none;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×
+                                    </button>
+
+                                </div>
+
+                                <div class="row my-3">
                                     <div id="foto" name="foto"></div>
                                 </div>
-                                <div class="table-responsive table-bordered card">
-                                    <table id="carrito" name="carrito" class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre De Equipo</th>
-                                            <th>Precio por dia</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                <div class="row my-2">
+                                    <div class="table-responsive table-bordered card">
+                                        <table id="carrito" name="carrito" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th><@spring.message "nombre"/></th>
+                                                <th><@spring.message "preciodiario"/></th>
+                                                <th><@spring.message "cantidad"/></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Cancelar
-                                    </button>
-                                    <button type="submit" class="btn btn-info" data-backdrop="true">
-                                        Despachar
-                                    </button>
+                                    <button id="submitB" type="button" class="btn btn-info" data-backdrop="true"><@spring.message "confirmar"/></button>
                                 </div>
                             </form>
-                        </div
+                        </div>
                     </div>
                     <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Equipo</th>
-                            <th>Estado</th>
+                            <th><@spring.message "cliente"/></th>
+                            <th><@spring.message "equipo"/></th>
+                            <th><@spring.message "estado"/></th>
+                            <th><@spring.message "acciones"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -143,13 +152,17 @@
                                 <td class="text-center">${alquiler.getId()}</td>
                                 <td class="text-center">${alquiler.getCliente().getNombre()} ${alquiler.getCliente().getApellido()}</td>
                                 <td class="text-center">${alquiler.getEquipo().getNombreEquipo()}</td>
-                                <td class="text-center">${alquiler.getEstado()}</td>
+                                <#if alquiler.getEstado()  == "Pendiente">
+                                    <td><span class="label label-warning">${alquiler.getEstado()}</span></td>
+                                <#elseif alquiler.getEstado()  == "Entregado" >
+                                    <td><span class="label label-success">${alquiler.getEstado()}</span></td>
+                                </#if>
                                 <td class="actions">
-                                    <a href="/alquileres/entrega/${alquiler.getId()}" class="on-editing save-row" title="Marcar como entregado"><i class="fa fa-check-circle"></i></a>
-                                    <a href="/alquileres/factura/" class="on-editing cancel-row"><i class="fa fa-table"></i></a>
+                                    <a href="/alquileres/entrega/${alquiler.getId()}" class="on-editing save-row"
+                                       title="Marcar como entregado"><i class="fa fa-check-circle"></i></a>
                                     <a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-                                    <a href="/alquileres/eliminar/${alquiler.getId()}" class="on-default remove-row"><i
-                                                class="fa fa-trash-o"></i></a>
+                                    <a href="/alquileres/eliminar/${alquiler.getId()}" class="on-default remove-row">
+                                        <i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                         </#list>
@@ -163,83 +176,123 @@
     <#include "sidebar-right.ftl">
 </section>
 
-<div id="dialog" class="modal-block mfp-hide">
-    <section class="panel">
-        <header class="panel-heading">
-            <h2 class="panel-title">Are you sure?</h2>
-        </header>
-        <div class="panel-body">
-            <div class="modal-wrapper">
-                <div class="modal-text">
-                    <p>Are you sure that you want to delete this row?</p>
-                </div>
-            </div>
-        </div>
-        <footer class="panel-footer">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <button id="dialogConfirm" class="btn btn-primary">Confirm</button>
-                    <button id="dialogCancel" class="btn btn-default">Cancel</button>
-                </div>
-            </div>
-        </footer>
-    </section>
-</div>
-
 <#include "footer.ftl">
 <!-- Examples -->
 <script src="/assets/javascripts/tables/examples.datatables.editable.js"></script>
 <script src="/assets/javascripts/ui-elements/examples.lightbox.js"></script>
 <script>
-    var equipoActual;
-    var equipo;
-    var ids = [];
+    var equipoActual = {};
+    var clientActual = {};
+    var alquileres = [];
+    var alquilerActual = {};
 
     $(function () {
         $('#add').prop('disabled', true);
     });
 
     $("#equipo").change(function () {
-        equipo = document.getElementById("equipo");
+        var equipo = document.getElementById("equipo");
         var equipo_value = equipo.options[equipo.selectedIndex].value;
-        var url = "/equipos/" + equipo_value + "/"
-        $.getJSON(url, function (data) {
-            if (data != null)
-                equipoActual = data;
-
-        }).done(function () {
-            var picture = '<img src="data:image/jpeg;base64,' + equipoActual.imagen
-                + '" class="rounded mx-auto d-block" style="' +
-                'height: 200px;' +
-                'max-width: 200px;' +
-                'margin: auto;' +
-                'display: block;">';
-            $('#foto').html(picture);
-
-        }).fail(function () {
-            console.log("error al recibir equipo");
-        });
-
-        if (equipoActual.existencia == 0) {
-            $('#add').prop('disabled', true);
-        } else {
-            $('#add').prop('disabled', false);
+        if (equipoActual != null && equipo_value != equipoActual.id) {
+            var url = "/equipos/" + equipo_value + "/"
+            $.getJSON(url, function (data) {
+                if (data != null)
+                    equipoActual = data;
+            }).done(function () {
+                var picture = '<img src="data:image/jpeg;base64,' + equipoActual.imagen
+                    + '" class="rounded mx-auto d-block" style="' +
+                    'height: 200px;' +
+                    'max-width: 200px;' +
+                    'margin: auto;' +
+                    'display: block;">';
+                $('#foto').html(picture);
+            }).fail(function () {
+                console.log("error al recibir equipo");
+            });
+            if (equipoActual.existencia == 0) {
+                $('#add').prop('disabled', true);
+            } else {
+                $('#add').prop('disabled', false);
+            }
         }
+    });
+
+    $("#client").change(function () {
+        var client_value = document.getElementById("client").value;
+        if (client_value != clientActual.id) {
+            var url = "/clientes/" + client_value + "/"
+            $.getJSON(url, function (data) {
+                if (data != null)
+                    clientActual = data;
+            }).done(function () {
+
+            }).fail(function () {
+                console.log("error al recibir client");
+            });
+        }
+    });
+
+    $("#submitB").click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/alquileres/despachar/',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                Accept: "text/plain;charset=utf-8",
+            },
+            data: JSON.stringify(alquileres),
+
+        }).success(function(data, textStatus){
+            if (data) {
+                // data.redirect contains the string URL to redirect to
+                window.location.href = data;
+            }
+
+        });
     });
 
     function setup() {
         "use strict";
-        if (equipoActual !== null) {
-            var markup = "<tr><td>" + equipoActual.id + "</td><td>" + equipoActual.nombreEquipo + "</td><td>" + equipoActual.precio + "</td></tr>";
-            $("#carrito tbody").append(markup);
-            equipo.selectedIndex = 0;
-            ids.push(equipoActual.id);
-            $('#foto').html("");
-            $('#add').prop('disabled', true);
-            document.getElementById('ids[]').value = ids;
+        var cantidad = $('#cantidad').val();
+        if (equipoActual.id && clientActual.id && $('#entregadatepicker').val()) {
+            if (cantidad <= equipoActual.existencia && cantidad > 0) {
+                equipoActual.existencia -= cantidad;
+                alquilerActual = {
+                    'cliente': clientActual,
+                    'equipo': equipoActual,
+                    'fechaFinAlquiler': $('#entregadatepicker').val(),
+                    'cantidad': cantidad,
+                    'costo': equipoActual.precio,
+                    'estado': "Pendiente",
+                    'total': null,
+                    'subtotal': null,
+                    'deleted': false,
+                };
+                alquileres.push(alquilerActual);
+
+                var markup = "<tr>" +
+                    "<td>" + equipoActual.id + "</td>" +
+                    "<td>" + equipoActual.nombreEquipo + "</td>" +
+                    "<td>" + equipoActual.precio + "</td>" +
+                    "<td>" + cantidad + "</td>" +
+                    "</tr>";
+                $("#carrito tbody").append(markup);
+                equipo.selectedIndex = 0;
+                $('#foto').html("");
+                $('#add').prop('disabled', true);
+            } else {
+                var text = '<strong>Oh snap!</strong> Ya no quedan tantas. Solo hay ' + equipoActual.existencia + ' unidades disponibles';
+                $('#ran-out-alert').append(text);
+                $('#ran-out-alert').show();
+            }
+        }
+        else {
+            var text = '<strong>No tan rapido!</strong> primero debes seleccionar el cliente, equipo y la fecha de entrega ';
+            $('#ran-out-alert').append(text);
+            $('#ran-out-alert').show();
         }
     }
-
 </script>
 </body>
 </html>

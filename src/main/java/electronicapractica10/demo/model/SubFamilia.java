@@ -3,6 +3,7 @@ package electronicapractica10.demo.model;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class SubFamilia implements Serializable {
     @GeneratedValue
     @Column(name = "id")
     private long id;
-    @Column(name = "nombreSubFamilia")
+    @Column(name = "nombreSubFamilia", unique = true)
     private String nombreSubFamilia;
     @Column(name = "nombreCategoria")
     private String nombreCategoria;
@@ -71,5 +72,13 @@ public class SubFamilia implements Serializable {
 
     public void setEquipos(List<Equipo> equipos) {
         this.equipos = equipos;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

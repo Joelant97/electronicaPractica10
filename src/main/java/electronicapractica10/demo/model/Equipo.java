@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Where(clause = "deleted = 0")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id", scope = Equipo.class)
 public class Equipo implements Serializable {
 
     @Id
@@ -42,17 +42,6 @@ public class Equipo implements Serializable {
     @JoinColumn(name = "subfamilia_id", nullable = true, updatable = false)
     private SubFamilia subFamilia;
 
-    @OneToMany(mappedBy = "equipo")
-    private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();
-
-
-    public Set<ClienteEquipo> getClienteEquipos() {
-        return clienteEquipos;
-    }
-
-    public void setClienteEquipos(Set<ClienteEquipo> clienteEquipos) {
-        this.clienteEquipos = clienteEquipos;
-    }
 
     public long getId() {
         return id;

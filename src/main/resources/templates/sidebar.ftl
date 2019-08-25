@@ -9,7 +9,6 @@
             <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
         </div>
     </div>
-
     <div class="nano">
         <div class="nano-content">
             <nav id="menu" class="nav-main" role="navigation">
@@ -17,103 +16,62 @@
                     <li>
                         <a href="/">
                             <i class="fa fa-home" aria-hidden="true"></i>
-                            <span>Home</span>
+                            <span><@spring.message "home"/></span>
                         </a>
                     </li>
                     <li>
                         <a href="/usuarios/">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            <span>Usuarios</span>
+                            <span><@spring.message "usuarios"/></span>
                         </a>
                     </li>
                     <li>
                         <a href="/clientes/">
                             <i class="fa fa-users" aria-hidden="true"></i>
-                            <span>Clientes</span>
+                            <span><@spring.message "clientes"/></span>
                         </a>
                     </li>
                     <li>
                         <a href="/categorias/">
                             <i class="fa fa-list" aria-hidden="true"></i>
-                            <span>Categorias</span>
+                            <span><@spring.message "categorias"/></span>
                         </a>
                     </li>
                     <li>
                         <a href="/subcategorias/">
                             <i class="fa fa-table" aria-hidden="true"></i>
-                            <span>Sub-Categorias</span>
+                            <span><@spring.message "subcategorias"/></span>
                         </a>
                     </li>
                     <li>
                         <a href="/equipos/">
                             <i class="fa fa-table" aria-hidden="true"></i>
-                            <span>Equipos</span>
+                            <span><@spring.message "equipos"/></span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/alquileres/">
+                    <li class="nav-parent">
+                        <a>
                             <i class="fa fa-list" aria-hidden="true"></i>
-                            <span>Alquileres</span>
+                            <span><@spring.message "alquileres"/></span>
                         </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="/alquileres/"><@spring.message "administrar"/></a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a href="/alquileres/nodevueltos/"><@spring.message "nodevueltos"/></a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
 
             <hr class="separator" />
-
-            <#--<div class="sidebar-widget widget-tasks">-->
-                <#--<div class="widget-header">-->
-                    <#--<h6>Projects</h6>-->
-                    <#--<div class="widget-toggle">+</div>-->
-                <#--</div>-->
-                <#--<div class="widget-content">-->
-                    <#--<ul class="list-unstyled m-none">-->
-                        <#--<li><a href="#">Porto HTML5 Template</a></li>-->
-                        <#--<li><a href="#">Tucson Template</a></li>-->
-                        <#--<li><a href="#">Porto Admin</a></li>-->
-                    <#--</ul>-->
-                <#--</div>-->
-            <#--</div>-->
-
             <hr class="separator" />
 
-            <#--<div class="sidebar-widget widget-stats">-->
-                <#--<div class="widget-header">-->
-                    <#--<h6>Company Stats</h6>-->
-                    <#--<div class="widget-toggle">+</div>-->
-                <#--</div>-->
-                <#--<div class="widget-content">-->
-                    <#--<ul>-->
-                        <#--<li>-->
-                            <#--<span class="stats-title">Stat 1</span>-->
-                            <#--<span class="stats-complete">85%</span>-->
-                            <#--<div class="progress">-->
-                                <#--<div class="progress-bar progress-bar-primary progress-without-number" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;">-->
-                                    <#--<span class="sr-only">85% Complete</span>-->
-                                <#--</div>-->
-                            <#--</div>-->
-                        <#--</li>-->
-                        <#--<li>-->
-                            <#--<span class="stats-title">Stat 2</span>-->
-                            <#--<span class="stats-complete">70%</span>-->
-                            <#--<div class="progress">-->
-                                <#--<div class="progress-bar progress-bar-primary progress-without-number" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">-->
-                                    <#--<span class="sr-only">70% Complete</span>-->
-                                <#--</div>-->
-                            <#--</div>-->
-                        <#--</li>-->
-                        <#--<li>-->
-                            <#--<span class="stats-title">Stat 3</span>-->
-                            <#--<span class="stats-complete">2%</span>-->
-                            <#--<div class="progress">-->
-                                <#--<div class="progress-bar progress-bar-primary progress-without-number" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">-->
-                                    <#--<span class="sr-only">2% Complete</span>-->
-                                <#--</div>-->
-                            <#--</div>-->
-                        <#--</li>-->
-                    <#--</ul>-->
-                <#--</div>-->
-            <#--</div>-->
+
         </div>
 
     </div>

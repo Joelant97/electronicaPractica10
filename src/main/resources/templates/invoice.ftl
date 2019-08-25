@@ -72,6 +72,7 @@
                                     <th id="cell-id" class="text-semibold">#</th>
                                     <th id="cell-item" class="text-semibold">Item</th>
                                     <th id="cell-price" class="text-center text-semibold">Price</th>
+                                    <th id="cell-price" class="text-center text-semibold">Cantidad</th>
                                     <th id="cell-total" class="text-center text-semibold">Total</th>
                                 </tr>
                                 </thead>
@@ -81,6 +82,7 @@
                                         <td>${alquiler.getId()}</td>
                                         <td class="text-semibold text-dark">${alquiler.getEquipo().getNombreEquipo()}</td>
                                         <td class="text-center">${alquiler.getEquipo().getPrecio()}</td>
+                                        <td class="text-center">${alquiler.getCantidad()}</td>
                                         <td class="text-center">${alquiler.getCosto()}</td>
                                     </tr>
                                 </#list>
@@ -113,9 +115,7 @@
                     </div>
 
                     <div class="text-right mr-lg">
-                        <a href="#" class="btn btn-default">Submit Invoice</a>
-                        <a href="pages-invoice-print.html" target="_blank" class="btn btn-primary ml-sm"><i
-                                    class="fa fa-print"></i> Print</a>
+                        <a href="/alquileres/" class="btn btn-default">Submit Invoice</a>
                     </div>
                 </div>
             </section>

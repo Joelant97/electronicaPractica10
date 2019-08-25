@@ -9,11 +9,13 @@ import electronicapractica10.demo.service.ClienteServiceImpl;
 import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -56,6 +58,20 @@ public class ClienteController {
         model.addAttribute("cliente", cliente);
         model.addAttribute("historial", historial);
         return "userprofile";
+    }
+
+    @GetMapping("/{id}/")
+    @ResponseBody
+    public Cliente postResponseController(@PathVariable Long id ) {
+        Cliente cliente;
+        try {
+            cliente = clienteService.buscarPorId(id);
+        }
+        catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        }
+
+        return cliente;
     }
 
     @PostMapping(value = "/add/")
@@ -104,12 +120,12 @@ public class ClienteController {
     }
 
     @PostMapping("/modificar/")
-    public String modificarCliente(@RequestParam("nombre") String nombre,
-                                   @RequestParam("id") String id,
-                                   @RequestParam("apellido") String apellido,
-                                   @RequestParam("cedula") String cedula,
-                                   @RequestParam("fechaNacimiento") String fechaNacimiento,
-                                   @RequestParam("foto") MultipartFile foto,
+    public String modificarCliente(@RequestParam("nombre2") String nombre,
+                                   @RequestParam("id2") String id,
+                                   @RequestParam("apellido2") String apellido,
+                                   @RequestParam("cedula2") String cedula,
+                                   @RequestParam("fechaNacimiento2") String fechaNacimiento,
+                                   @RequestParam("foto2") MultipartFile foto,
                                    RedirectAttributes redirectAttributes) {
 
         Cliente cliente = clienteService.buscarPorId(Long.parseLong(id));

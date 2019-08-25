@@ -6,6 +6,7 @@ import electronicapractica10.demo.service.ClienteServiceImpl;
 import electronicapractica10.demo.service.EquipoServiceImpl;
 import electronicapractica10.demo.service.FacturaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,48 +45,40 @@ public class AlquilerController {
         return "alquileresview";
     }
 
-    @PostMapping(value = "/despachar/")
-    public String despacho(@RequestParam("client") String idcliente,
-                           @RequestParam("cant[]") List<String> cantidades,
-                           @RequestParam("ids[]") String ids,
-                           @RequestParam("fechaentrega") String fechapromesa){
+    @RequestMapping(method = RequestMethod.POST, value = "/despachar/", produces = MediaType.TEXT_PLAIN_VALUE)
+    public @ResponseBody String despacho(@RequestBody List<ClienteEquipo> alquileres){
 
-        Cliente c = clienteService.buscarPorId(Long.parseLong(idcliente));
-        String [] equipos_ids =  ids.split(",");
         float precioTotal = 0;
         Factura factura = new Factura();
         factura.setFechaFacturacion(LocalDate.now());
-        factura.setCliente(c);
+        Cliente cl = new Cliente();
+        Equipo eq;
 
-       for(int i=0; i <equipos_ids.length; i++) {
-            ClienteEquipo a = new ClienteEquipo();
-            Equipo e = equipoService.buscarPorId(Long.parseLong(equipos_ids[i]));
-            LocalDate date = LocalDate.now();
-            LocalDate date2 = LocalDate.parse(fechapromesa);
-            long numdays = ChronoUnit.DAYS.between(date, date2);
-
-            a.setEstado("Pendiente");
-            a.setFechaInicioAlquiler(date);
-            a.setFechaFinAlquiler(date2);
-            a.setEquipo(e);
-            a.setCliente(c);
-            a.setCosto(1*e.getPrecio()*numdays);
-            clienteEquipoService.crearClienteEquipo(a);
-
-            factura.getAlquileres().add(a);
-            precioTotal += a.getCosto();
+       for(ClienteEquipo alquiler : alquileres) {
+           alquiler.setFechaInicioAlquiler(LocalDate.now());
+           long numdays = ChronoUnit.DAYS.between(alquiler.getFechaInicioAlquiler(), alquiler.getFechaFinAlquiler());
+           alquiler.setCosto(alquiler.getCantidad() * alquiler.getEquipo().getPrecio() * numdays);
+           equipoService.actualizarEquipo(alquiler.getEquipo());
+           cl = clienteService.buscarPorId(alquiler.getCliente().getId());
+           eq = equipoService.buscarPorId(alquiler.getEquipo().getId());
+           alquiler.setEquipo(eq);
+           alquiler.setCliente(cl);
+           ClienteEquipo createdAlquiler = clienteEquipoService.crearClienteEquipo(alquiler);
+           factura.getAlquileres().add(createdAlquiler);
+           precioTotal += alquiler.getCosto();
         }
+        factura.setCliente(cl);
         factura.setMontoTotal(precioTotal);
-
         Factura nuevafactura = facturaService.crearFactura(factura);
-        return String.format("redirect:/alquileres/factura/%d", nuevafactura.getId());
+
+        return "/alquileres/factura/"+nuevafactura.getId();
     }
 
     @GetMapping(value = "/entrega/{id}")
     public String entrega(@PathVariable("id") String id){
-
         ClienteEquipo a = clienteEquipoService.buscarPorId(Long.parseLong(id));
         a.setEstado("Entregado");
+        a.getEquipo().setExistencia(a.getCantidad());
         clienteEquipoService.actualizarClienteEquipo(a);
         return "redirect:/alquileres/";
     }
@@ -97,4 +90,17 @@ public class AlquilerController {
         return "invoice";
     }
 
+    @RequestMapping(value = "/nodevueltos/", method = RequestMethod.GET)
+    public String nodevueltosList(Model model) {
+        List<Object[]> nodevueltos = clienteEquipoService.equiposAlquiladosNoDevueltos();
+        model.addAttribute("alquileres", nodevueltos);
+        return "retornosView";
+    }
+
+   @GetMapping(value = "/famaverage/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+   @ResponseBody
+   public  List<Object[]> familiaAverage(@PathVariable("id") Long id){
+        List<Object[]> avg = clienteEquipoService.promedioAlquilerPorFamilia(id);
+        return avg;
+    }
 }

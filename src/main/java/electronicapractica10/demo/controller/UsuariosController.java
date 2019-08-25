@@ -45,7 +45,7 @@ public class UsuariosController {
         r = rolService.findByNombreRol(rol);
         u.setRol(r);
         usuarioService.crearUsuario(u);
-        return "redirect:/";
+        return "redirect:/usuarios/";
     }
 
     @PostMapping("/modificar/")
@@ -58,14 +58,13 @@ public class UsuariosController {
         u.setEmail(email);
 
         usuarioService.actualizarUsuario(u);
-        return "redirect:/";
+        return "redirect:/usuarios/";
     }
 
 
-    @PostMapping(value = "/eliminar/{id}")
+    @GetMapping(value = "/eliminar/{id}")
     public String borrarRol(@PathVariable String id) {
-        rolService.borrarRolPorId(Long.parseLong(id));
-        return "redirect:/";
+        return "redirect:/usuarios/";
     }
 
 

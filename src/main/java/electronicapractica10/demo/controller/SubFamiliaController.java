@@ -19,7 +19,6 @@ import java.util.List;
 public class SubFamiliaController {
 
 
-
     @Autowired
     private SubFamiliaServiceImpl subFamiliaService;
     @Autowired
@@ -37,12 +36,13 @@ public class SubFamiliaController {
     }
 
     @PostMapping(value = "/crear/")
-    public String crearSubFamilia(@RequestParam("nombre") String nombre, @RequestParam("categoria") String categoria,
+    public String crearSubFamilia(@RequestParam("nombre") String nombre,
+                                  @RequestParam("categoria") String categoria,
                                   RedirectAttributes redirectAttributes) {
 
-        SubFamilia subFamilia= new SubFamilia();
-        Categoria categoria1= categoriaService.findByNombreCategoria(categoria);
-
+        SubFamilia subFamilia = new SubFamilia();
+        Categoria categoria1 = categoriaService.findByNombreCategoria(categoria);
+        subFamilia.setCategoria(categoria1);
         subFamilia.setNombreSubFamilia(nombre);
         subFamilia.setNombreCategoria(categoria1.getNombreCategoria());
         subFamiliaService.crearSubFamilia(subFamilia);
@@ -51,7 +51,7 @@ public class SubFamiliaController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
     public String borrarSubFamilia(@PathVariable String id) {
         SubFamilia subFamilia = subFamiliaService.buscarPorId(Long.parseLong(id));
         subFamiliaService.borrarSubFamiliaPorId(subFamilia);

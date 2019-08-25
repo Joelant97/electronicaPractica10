@@ -30,7 +30,7 @@ public class Factura implements Serializable {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private Set<ClienteEquipo> alquileres = new HashSet<ClienteEquipo>();
 
     private boolean deleted = false;

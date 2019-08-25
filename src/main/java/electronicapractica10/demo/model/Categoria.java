@@ -21,7 +21,7 @@ public class Categoria implements Serializable {
     @GeneratedValue
     @Column(name = "id")
     private long id;
-    @Column(name = "nombreCategoria")
+    @Column(name = "nombreCategoria", unique = true)
     private String nombreCategoria;
 
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)

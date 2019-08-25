@@ -1,7 +1,7 @@
 package electronicapractica10.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -11,14 +11,15 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "alquiler")
 @Where(clause = "deleted = 0")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class ClienteEquipo implements Serializable {
 
     @Id
     @GeneratedValue
     @Column(name = "alquiler_id")
-    private long id;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Long id;
 
+    @CreationTimestamp
     @Column(name = "fechaInicioAlquiler")
     private LocalDate fechaInicioAlquiler;
 
@@ -42,6 +43,7 @@ public class ClienteEquipo implements Serializable {
 
     private boolean deleted = false;
 
+    @JsonIdentityReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
@@ -123,11 +125,13 @@ public class ClienteEquipo implements Serializable {
         this.estado = estado;
     }
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+
+    public void setId(Long id) {
         this.id = id;
     }
 

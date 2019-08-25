@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface ClienteEquipoRepository extends JpaRepository<ClienteEquipo, Long> {
 
-    @Query(value = "SELECT CLI.NOMBRE, EQ.NOMBRE_EQUIPO, ABS(DATEDIFF('DAY',  ALQ.FECHA_INICIO_ALQUILER, ALQ.FECHA_FIN_ALQUILER )) AS DIAS " +
+    @Query(value = "SELECT ALQ.ALQUILER_ID, CLI.NOMBRE, EQ.NOMBRE_EQUIPO, ALQ.FECHA_INICIO_ALQUILER, ABS(DATEDIFF('DAY',  ALQ.FECHA_INICIO_ALQUILER, ALQ.FECHA_FIN_ALQUILER )) AS DIAS " +
             "FROM ALQUILER ALQ INNER JOIN CLIENTE CLI ON CLI.ID = ALQ.CLIENTE_ID INNER JOIN EQUIPO EQ ON EQ.ID = ALQ.EQUIPO_ID " +
-            "WHERE ALQ.ESTADO = 'Pendiente' ORDER BY ALQ.FECHA_INICIO_ALQUILER", nativeQuery = true)
+            "WHERE ALQ.ESTADO = 'Pendiente' ORDER BY ALQ.FECHA_FIN_ALQUILER ", nativeQuery = true)
     List<Object[]> equiposAlquiladosNoDevueltos();
 
     @Query(value = "SELECT  * FROM ALQUILER ALQ " +
@@ -23,4 +23,6 @@ public interface ClienteEquipoRepository extends JpaRepository<ClienteEquipo, Lo
             "FROM ALQUILER ALQ INNER JOIN EQUIPO EQ ON EQ.ID = ALQ.EQUIPO_ID INNER JOIN SUB_FAMILIA S ON S.ID = EQ.SUBFAMILIA_ID " +
             "WHERE S.CATEGORIA_ID = :id GROUP BY S.NOMBRE_SUB_FAMILIA", nativeQuery = true)
     List<Object[]> promediosAlquiler(@Param("id") long id);
+
+    //List<ClienteEquipo> findAllByEstadoOrderByFechaInicioAlquiler(Date)
 }

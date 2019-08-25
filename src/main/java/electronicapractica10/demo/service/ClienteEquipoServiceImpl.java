@@ -16,8 +16,8 @@ public class ClienteEquipoServiceImpl implements ClienteEquipoService {
     @Autowired
     private ClienteEquipoRepository clienteEquipoRepository;
 
-    public void crearClienteEquipo(ClienteEquipo clienteEquipo){
-        clienteEquipoRepository.save(clienteEquipo);
+    public ClienteEquipo crearClienteEquipo(ClienteEquipo clienteEquipo){
+        return clienteEquipoRepository.save(clienteEquipo);
     }
     public void actualizarClienteEquipo(ClienteEquipo clienteEquipo){
         crearClienteEquipo(clienteEquipo);

@@ -14,7 +14,7 @@
 
 				<section role="main" class="content-body">
 					<header class="page-header">
-						<h2>Sub-Categorias</h2>
+						<h2><@spring.message "subcategorias"/></h2>
 						<div class="right-wrapper pull-right">
 							<ol class="breadcrumbs">
 								<li>
@@ -22,8 +22,7 @@
 										<i class="fa fa-home"></i>
 									</a>
 								</li>
-								<li><span>Tables</span></li>
-								<li><span>Editable</span></li>
+								<li><span><@spring.message "subcategorias"/></span></li>
 							</ol>
 							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
 						</div>
@@ -43,7 +42,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="mb-md">
-                                        <a class="popup-with-form btn btn-primary" href="#equipo-form">Agregar <i class="fa fa-plus"></i></a>
+                                        <a class="popup-with-form btn btn-primary" href="#equipo-form"><@spring.message "agregar"/> <i class="fa fa-plus"></i></a>
                                     </div>
                                 </div>
                                 <!-- Categorias Form -->
@@ -54,6 +53,19 @@
                                             <h3>Formulario Sub-Categorias</h3>
                                         </div>
                                     </div>
+									<div class="form-group mt-lg">
+										<label class="col-sm-3 control-label">Lista de Categorias</label>
+										<div class="col-sm-9">
+											<select id="categoria" name="categoria" class="form-control"
+													style="width: 100%;" tabindex="-1" aria-hidden="true"
+													required >
+												<option selected="selected">Seleccionar Categoria</option>
+												<#list categorias as categoria>
+													<option value="${categoria.getNombreCategoria()}">${categoria.getNombreCategoria()}</option>
+												</#list>
+											</select>
+										</div>
+									</div>
                                     <div class="form-group mt-lg">
                                         <label class="col-sm-3 control-label">Nombre</label>
                                         <div class="col-sm-9">
@@ -61,19 +73,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group mt-lg">
-                                        <label class="col-sm-3 control-label">Lista de Categorias</label>
-                                        <div class="col-sm-9">
-                                            <select id="categoria" name="categoria" class="form-control"
-                                                    style="width: 100%;" tabindex="-1" aria-hidden="true"
-                                                    required>
-                                                <option selected="selected">Seleccionar Categoria</option>
-                                        <#list categorias as categoria>
-                                            <option value="${categoria.getId()}">${categoria.getNombreCategoria()}</option>
-										</#list>
-                                            </select>
-                                        </div>
-                                    </div>
+
 
                                     <div class="row mb-lg">
                                         <div class="col-sm-9 col-sm-offset-3">
@@ -89,9 +89,9 @@
                             <table class="table table-bordered table-striped mb-none" id="datatable-editable">
                                 <thead>
                                 <tr>
-                                    <th>Nombre de Sub-Categoria</th>
-                                    <th>Categoria</th>
-									<th>Actions</th>
+                                    <th><@spring.message "nombre"/></th>
+                                    <th><@spring.message "categoria"/></th>
+									<th><@spring.message "acciones"/></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -105,7 +105,7 @@
 											<a href="#" class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
 											<a href="#" class="hidden on-editing cancel-row"><i class="fa fa-times"></i></a>
 											<a href="#edit-form" class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-											<a href="/subcategorias/eliminar/${subfamilia.getId()}"  class="on-default remove-row"><i class="fa fa-trash-o"></i></a>
+
 										</td>
 									</tr>
 									</#list>

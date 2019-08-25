@@ -157,17 +157,5 @@ public class EquipoController {
         Equipo equipo = equipoService.buscarPorId(Long.parseLong(id));
         equipoService.borrarEquipoPorId(equipo);
         return "redirect:/equipos/";
-
     }
-
-
-    @RequestMapping(value = "/nodevueltos/", method = RequestMethod.GET)
-    public String listadonodevueltos(Model model) {
-
-        List<Object[]> nodevueltos = clienteEquipoService.equiposAlquiladosNoDevueltos();
-        model.addAttribute("objetos",nodevueltos);
-        return "nodevueltos";
-
-    }
-
 }

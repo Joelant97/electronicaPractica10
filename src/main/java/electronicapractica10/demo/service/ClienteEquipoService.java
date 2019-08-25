@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ClienteEquipoService {
 
-    void crearClienteEquipo(ClienteEquipo clienteEquipo);
+    ClienteEquipo crearClienteEquipo(ClienteEquipo clienteEquipo);
     void actualizarClienteEquipo(ClienteEquipo clienteEquipo);
     void borrarClienteEquipoPorId(ClienteEquipo clienteEquipo);
     void borrarTodosLosClientesEquipos();

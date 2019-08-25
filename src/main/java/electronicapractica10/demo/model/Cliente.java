@@ -17,7 +17,6 @@ import java.util.Set;
 
 @Entity
 @Where(clause = "deleted = 0")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Cliente implements Serializable {
 
     @Id
@@ -42,17 +41,6 @@ public class Cliente implements Serializable {
     private byte[] imagen;
 
     private boolean deleted = false;
-
-    @OneToMany(mappedBy = "cliente")
-    private Set<ClienteEquipo> clienteEquipos = new HashSet<ClienteEquipo>();
-
-    public Set<ClienteEquipo> getClienteEquipos() {
-        return clienteEquipos;
-    }
-
-    public void setClienteEquipos(Set<ClienteEquipo> clienteEquipos) {
-        this.clienteEquipos = clienteEquipos;
-    }
 
 
     public  Cliente(){

@@ -104,7 +104,6 @@
                                              aria-valuemin="0" aria-valuemax="100" style="width: 98%;"></div>
                                     </div>
                                 </li>
-
                                 <li>
                                     <p class="clearfix mb-xs">
                                         <span class="message pull-left">Uploading something big</span>

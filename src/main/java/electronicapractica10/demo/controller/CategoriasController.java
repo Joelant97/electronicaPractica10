@@ -27,8 +27,6 @@ public class CategoriasController {
         return "categoriasview";
     }
 
-
-
     @PostMapping("/crear/")
     public String crearCategoria(@RequestParam("nombre") String categoria){
     Categoria f = new Categoria();
@@ -37,7 +35,6 @@ public class CategoriasController {
         return "redirect:/categorias/";
     }
 
-
     @GetMapping(value = "/eliminar/{id}")
     public String borrarCategoria(@PathVariable Long id) {
         Categoria categoria = categoriasService.buscarPorId(id);
@@ -45,4 +42,7 @@ public class CategoriasController {
         return "redirect:/categorias/";
 
     }
+
+
+
 }

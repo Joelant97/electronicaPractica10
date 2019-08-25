@@ -74,15 +74,4 @@ public class IndexController {
     }
 
 
-    @ResponseBody
-    @PostMapping(value = "/graficar")
-    public List<Object[]> graficar(@RequestParam("categoria") String categoria, Model model)
-    {
-        Categoria categoria1 = categoriaService.findByNombreCategoria(categoria);
-        List<Object[]> result = clienteEquipoService.promedioAlquilerPorFamilia(categoriaService.findByNombreCategoria(categoria).getId());
-        model.addAttribute("categoria", categoria1);
-        model.addAttribute("result", result);
-        return result;
-
-    }
 }
